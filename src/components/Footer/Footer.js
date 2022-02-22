@@ -6,8 +6,8 @@ import './Footer.css'
 export default class Footer extends Component {
   render() {
     return (
-      <footer>
-        <div className="wrapper container px-5 px-lg-0">
+      <footer className='mt-0'>
+        <div className="wrapper container">
           <div className="navigations d-flex flex-wrap">
             <div className="footer-nav destinations">
               <h3>Destinations</h3>
