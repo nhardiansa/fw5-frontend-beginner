@@ -116,7 +116,7 @@ footer > hr {
 }
 
 .icons > svg {
-  width: 1.2em;
+  font-size: 1.2em;
   margin-inline: 0.5em;
   fill: #393939;
 }

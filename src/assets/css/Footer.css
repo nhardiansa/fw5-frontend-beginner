@@ -1,0 +1,107 @@
+:root {
+  --one-color: #FF7C52;
+  --two-color: #FFA780;
+  --three-color: #E69580;
+  --four-color: #DCA7A3;
+  --five-color: #FFE5D2;
+}
+
+html {
+  font-size: 12px;
+}
+
+/* Footer start */
+footer {
+  /* margin-top: 6rem; */
+  padding-top: 4.75rem;
+  padding-bottom: 2rem;
+  background: #F9F9FB;
+
+  font-family: Mulish, sans-serif;
+}
+
+footer .wrapper .navigations .footer-nav {
+  width: 50%;
+  margin-bottom: 2rem;
+}
+
+footer .wrapper .navigations .footer-nav h3 {
+  font-weight: bold;
+  font-size: 1.1875rem;
+  line-height: 3.75rem;
+}
+
+footer .wrapper .navigations .footer-nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+footer .wrapper .navigations .footer-nav li {
+  list-style: none;
+  font-size: 1.125rem;
+  line-height: 2.375rem;
+}
+
+footer .wrapper .navigations .footer-nav li a {
+  color: #848484;
+  text-decoration: none;
+}
+
+footer .wrapper .ts .copywriting {
+  font-size: 1.125rem;
+  margin-top: 1.6rem;
+}
+
+footer .wrapper .ts .copyright {
+  font-size: 1.0625rem;
+  margin-top: 3.3rem;
+}
+
+footer hr.line-separator {
+  width: 80%;
+  margin-top: 4.625rem;
+  border: 1px solid #C4C4C4;
+  background:#C4C4C4;
+}
+
+footer .socmed {
+  margin-top: 2rem;
+}
+
+footer .socmed svg {
+  font-size: 1.375rem;
+  margin-inline: 1rem;
+}
+/* Footer end */
+
+@media (min-width: 768px) {
+  /* Footer start */
+  footer .wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 4rem;
+  }
+
+  footer .wrapper .ts {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  footer .wrapper .navigations {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  footer .wrapper .navigations .footer-nav {
+    width: 33.33%;
+  }
+  /* Footer end */
+}
+
+@media (min-width: 992px) {
+  /* Footer start */
+  footer .wrapper .ts .copywriting {
+    width: 19rem;
+  }
+  /* Footer end */
+}

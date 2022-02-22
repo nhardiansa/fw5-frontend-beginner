@@ -1,0 +1,429 @@
+:root {
+  --one-color: #FF7C52;
+  --two-color: #FFA780;
+  --three-color: #E69580;
+  --four-color: #DCA7A3;
+  --five-color: #FFE5D2;
+
+  --nunito-font: "Nunito", sans-serif;
+  --playfair-font: "Playfair Display", serif;
+  --rubik-font: "Rubik", sans-serif;
+  --mulish-font: "Mulish", sans-serif;
+  --poppins-font: "Poppins", sans-serif;
+}
+
+html {
+  font-size: 14px;
+}
+
+/* Navbar start */
+nav {
+  font-family: var(--nunito-font);
+  z-index: 1;
+}
+
+nav .navbar-toggler {
+  border: none;
+}
+
+nav .navbar-brand img, footer .ts img {
+  width: 2.5625rem;
+}
+
+.login-btn {
+  border: 1px solid var(--one-color);
+  color: var(--one-color);
+}
+
+.register-btn {
+  background: var(--one-color);
+  color: #fff;
+}
+/* Navbar end */
+
+/* Jumbotron start */
+.jumbotron {
+  /* background-image: url("../../assets/img/jumbotron.png"); */
+  background-image: url("../img/jumbotron.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+
+  padding-top: 8rem !important;
+  padding-bottom: 10rem !important;
+}
+
+.jumbotron .hero-content > h1 {
+  font-family: 'Playfair Display', serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 4rem;
+  /* line-height: 80px; */
+  color: #FFFFFF;
+  mix-blend-mode: normal;
+}
+
+.jumbotron .hero-content > p {
+  font-family: var(--nunito-font);
+  font-style: normal;
+  font-weight: 900;
+  color: #FFFFFF;
+  font-size: 1.4rem;
+
+  margin-top: 2.5rem;
+}
+
+.jumbotron .hero-content > .aesthetic-line {
+  width: 10%;
+  border: 1px solid #FFFFFF;
+  background: #FFFFFF;
+}
+
+.jumbotron .hero-content .filter-input {
+  font-family: var(--nunito-font) ;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.125rem;
+  color: #393939;
+  mix-blend-mode: normal;
+
+  background: rgba(255, 255, 255, 0.5);
+  border: 0.8px solid #AFB0B9;
+  border-radius: 0.6rem;
+
+  padding: 0.8rem;
+}
+
+.jumbotron svg {
+  color: #393939;
+
+  position: absolute;
+  right: 15%;
+  top: 35%;
+}
+
+.jumbotron select.filter-input:focus ~ .down-icon {
+  transform: rotate(180deg);
+}
+
+.jumbotron .hero-content button.search-btn {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 1.125rem;
+  color: #fff;
+  background: var(--one-color);
+  border-radius: 8px;
+  border: none;
+
+  padding: 0.6rem 2rem;
+}
+/* Jumbotron end */
+
+/* Popular start */
+.popular {
+  margin-top: 3rem;
+}
+
+.popular a {
+  color: #FB8F1D;
+  text-decoration: none;
+
+  font-family: var(--nunito-font);
+  font-style: normal;
+  font-weight: normal;
+
+  font-size: 1.065rem;
+}
+
+.popular a .icon {
+  font-size: 0.9rem;
+}
+
+.popular h2, .testimonial h2 {
+  font-family: Playfair Display, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.popular .popular-vehicles .image-wrapper {
+  width: 75%;
+  height: 23rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.popular .popular-vehicles img {
+  border-radius: 0.5rem 0.5rem 0.5rem 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.popular .image-desc{
+  background: #FFFFFF;
+  border-radius: 0 0.5rem 0 0;
+  padding: 1rem 0 0 1rem;
+  width: 50%;
+  bottom: -1rem;
+  left: -1px;
+}
+
+.popular .image-desc h3, .popular .image-desc p {
+  font-family: Nunito, serif;
+  color: #042521;
+  font-style: normal;
+}
+
+.popular .image-desc h3 {
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+.popular .image-desc p {
+  font-size: 0.85rem;
+}
+/* Popular end */
+
+/* Testimonial start */
+.testimonial {
+  margin-top: 8.13rem; 
+}
+
+.testimonial .testimonial-wrapper {
+  margin-top: 3.7rem;
+}
+
+.testimonial .image-wrapper .navigation {
+  background: #FFFFFF;
+  bottom: -1px;
+  right: -1px;
+
+  border-radius: 1rem 0 0 0;
+  padding-top: 1.25rem;
+  padding-left: 1.875rem;
+}
+
+.testimonial .image-wrapper img.user-image {
+  border-radius: 1rem;
+  width: 100%;
+  height: 30.75rem;
+  object-fit: cover;
+}
+
+.testimonial .image-wrapper .navigation img.prev-image {
+  transform: rotate(180deg);
+
+  margin-right: 1rem;
+}
+
+.testimonial .image-wrapper .navigation img.prev-image.disabled {
+  opacity: 0.15;
+}
+
+.testimonial .feedback-col .stars {
+  margin-bottom: 1.9rem;
+}
+
+.testimonial .feedback-col .stars svg {
+  font-size: 1.4rem;
+  color: #FFBB0C;
+  margin-inline: 0.495rem;
+}
+
+.testimonial .feedback-col .desc {
+  font-family: Mulish, sans-serif;
+  font-size: 1.5rem;
+
+  width: 100%;
+}
+
+.testimonial .feedback-col .user {
+  font-family: var(--nunito-font);
+}
+
+.testimonial .feedback-col .user .name {
+  font-weight: bold;
+  font-size: 1.375rem;
+  line-height: 3rem;
+  color: #000000;
+  margin: 0;
+}
+
+.testimonial .feedback-col .user .occupation {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1rem;
+  line-height: 3rem;
+  color: rgba(57, 57, 57, 0.85);
+  mix-blend-mode: normal;
+  margin: 0;
+}
+/* Testimonial end */
+
+/* Footer start */
+footer {
+  margin-top: 6rem;
+  padding-top: 4.75rem;
+  padding-bottom: 2rem;
+  background: #F9F9FB;
+
+  font-family: Mulish, sans-serif;
+}
+
+footer .wrapper .navigations .footer-nav {
+  width: 50%;
+  margin-bottom: 2rem;
+}
+
+footer .wrapper .navigations .footer-nav h3 {
+  font-weight: bold;
+  font-size: 1.1875rem;
+  line-height: 3.75rem;
+}
+
+footer .wrapper .navigations .footer-nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+footer .wrapper .navigations .footer-nav li {
+  list-style: none;
+  font-size: 1.125rem;
+  line-height: 2.375rem;
+}
+
+footer .wrapper .navigations .footer-nav li a {
+  color: #848484;
+  text-decoration: none;
+}
+
+footer .wrapper .ts .copywriting {
+  font-size: 1.125rem;
+  margin-top: 1.6rem;
+}
+
+footer .wrapper .ts .copyright {
+  font-size: 1.0625rem;
+  margin-top: 3.3rem;
+}
+
+footer hr.line-separator {
+  width: 80%;
+  margin-top: 4.625rem;
+  border: 1px solid #C4C4C4;
+  background:#C4C4C4;
+}
+
+footer .socmed {
+  margin-top: 2rem;
+}
+
+footer .socmed .icon {
+  font-size: 1.375rem;
+  margin-inline: 1rem;
+}
+/* Footer end */
+
+@media (min-width: 768px) { 
+  .jumbotron .hero-content > h1 {
+    width: 50%;
+  }
+
+  .jumbotron .hero-content > p {
+    margin-top: 2.5rem;
+  }
+
+  .jumbotron .hero-content > .aesthetic-line {
+    width: 3.5%;
+  }
+
+  .select-group {
+    width: 50%;
+  }
+
+  .popular .image-desc {
+    width: 75%;
+  }
+
+  .testimonial .feedback-col .desc {
+    width: 75%;
+  }
+
+  footer .wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 4rem;
+  }
+
+  footer .wrapper .ts {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  footer .wrapper .navigations {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  footer .wrapper .navigations .footer-nav {
+    width: 33.33%;
+  }
+}
+
+
+@media (min-width: 992px) { 
+
+  html {
+    font-size: 16px !important;
+  }
+  
+  nav a.nav-link {
+    margin-inline: 1rem;
+  }
+
+  nav .navbar-nav {
+    margin-inline: 1rem;
+  }
+
+  nav .auth > .btn {
+    align-self: center;
+    margin-inline: 0.7em;
+    padding: 0.5em 2em;
+  }
+
+  nav .navbar-nav {
+    align-items: center;
+  }
+
+  .jumbotron {
+    padding-top: 10rem !important;
+  }
+
+  .jumbotron .hero-content > h1 {
+    width: 35%;
+  }
+
+  .select-group {
+    width: 40%;
+  }
+
+  .popular .head-section {
+    margin-bottom: 3rem !important;
+  }
+
+  .popular .image-desc {
+    width: 50%;
+  }
+
+  .testimonial .image-wrapper {
+    width: 24rem;
+  }
+
+  .testimonial .feedback-col .desc {
+    width: 28.125rem;
+  }
+
+  footer .wrapper .ts .copywriting {
+    width: 19rem;
+  }
+}

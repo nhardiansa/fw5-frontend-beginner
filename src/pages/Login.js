@@ -21,9 +21,10 @@ export default class Login extends Component {
     const { email, password } = this.state
 
     if (!(email === 'admin@mail.com' && password === '1234')) {
-      return console.log('Invalid credentials');
+      return alert('Invalid credentials');
     }
 
+    this.props.setLogin(true)
     return console.log('Login success');
   }
 

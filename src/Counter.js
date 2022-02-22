@@ -29,8 +29,16 @@ export class Counter extends React.Component {
       borderRadius: '50%',
       fontSize: '1rem',
     }
+
+    const container = {
+      display: 'flex',
+      // alignItems: 'center',
+      margin: 'auton',
+      width: '100%',
+      height: '100%'
+    }
     return (
-      <div style={{display: 'flex', alignItems: 'center'}}>
+      <div style={container}>
         <button style={style} onClick={this.decrementNumber}>-</button>
         <p> {this.state.number} </p>
         <button style={style} onClick={this.incrementNumber}>+</button>

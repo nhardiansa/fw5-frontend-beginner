@@ -1,0 +1,63 @@
+:root {
+  --one-color: #FF7C52;
+  --two-color: #FFA780;
+  --three-color: #E69580;
+  --four-color: #DCA7A3;
+  --five-color: #FFE5D2;
+}
+
+html {
+  font-size: 14px;
+}
+
+/* Navbar start */
+nav {
+  font-family: Nunito, sans-serif;
+  z-index: 1;
+}
+
+nav .navbar-toggler {
+  border: none;
+}
+
+nav .navbar-brand img, footer .ts img {
+  width: 2.5625rem;
+}
+
+.login-btn {
+  border-color: var(--one-color);
+  color: var(--one-color);
+}
+
+.register-btn {
+  background: var(--one-color);
+  color: #fff;
+}
+/* Navbar end */
+
+@media (min-width: 992px) { 
+
+  html {
+    font-size: 16px;
+  }
+  
+  /* Navbar start */
+  nav a.nav-link {
+    margin-inline: 1rem;
+  }
+  
+  nav .navbar-nav {
+    margin-inline: 1rem;
+  }
+
+  nav .auth > .btn {
+    align-self: center;
+    margin-inline: 0.7em;
+    padding: 0.5em 2em;
+  }
+  
+  nav .navbar-nav {
+    align-items: center;
+  }
+  /* Navbar end */
+}
