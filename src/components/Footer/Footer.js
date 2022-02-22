@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedin, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
-import carWheel from '../assets/img/car-wheel.png'
-import '../assets/css/Footer.css'
+import carWheel from '../../assets/img/car-wheel.png'
+import './Footer.css'
 
 export default class Footer extends Component {
   render() {
