@@ -75,6 +75,22 @@ nav .profile img.profile-pict {
   width: 2.5rem;
   height: 2.5rem;
 }
+
+nav .auth .btn {
+  padding: 0.5rem;
+}
+
+nav .login-btn {
+  border: 1px solid var(--one-color);
+  background: #FFFFFF;
+  box-shadow: none;
+  color: var(--one-color);
+}
+
+nav .register-btn {
+  background: var(--one-color);
+  color: #fff;
+}
 /* Navbar end */
 
 @media (min-width: 992px) {
@@ -97,6 +113,12 @@ nav .profile img.profile-pict {
 
   nav .navbar-nav {
     align-items: center;
+  }
+
+  nav .auth > .btn {
+    align-self: center;
+    margin-inline: 0.7em;
+    padding: 0.5em 2em;
   }
   /* Navbar end */
 }
