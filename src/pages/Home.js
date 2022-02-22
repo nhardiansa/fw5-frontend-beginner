@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {FaChevronDown, FaStar} from 'react-icons/fa'
 import NavbarLogOut from '../components/NavbarLogOut';
-import Footer from '../components/Footer';
-import '../assets/css/Home.css'
+import Footer from '../components/Footer/Footer';
+import VehicleImage from '../components/VehicleImage/VehicleImage';
 
 import testimonialImage from '../assets/img/testimonial-user-pict/edward-newgate.png';
 import navigationIcon from '../assets/img/circle-chevron-arrow.svg'
@@ -12,9 +12,9 @@ import telukBogam from '../assets/img/popular/iqx-azmi.png'
 import bromo from '../assets/img/popular/manny-moreno.png'
 import malioboro from '../assets/img/popular/chuttersnap.png'
 
+import '../assets/css/Home.css'
 export default class Home extends Component {
   render() {
-    const imagePath = '../assets/img/popular/';
     const popularVehicles = [
       {
         name: 'Merapi',
@@ -118,13 +118,7 @@ export default class Home extends Component {
             className="popular-vehicles d-flex flex-column align-items-center flex-md-row row"
           >
             {popularVehicles.map((vehicle, idx) => (
-              <div key={idx} className="image-wrapper position-relative col">
-                <img src={vehicle.img} alt="" srcSet="" />
-                <div className="image-desc position-absolute">
-                  <h3 className="vehicle-name">{vehicle.name}</h3>
-                  <p className="location">Yogyakarta</p>
-                </div>
-              </div>
+              <VehicleImage key={idx} src={vehicle.img} name={vehicle.name} location={vehicle.location} />
             ))}
           </div>
           <a className="d-block d-md-none text-center mt-4" href="/"
