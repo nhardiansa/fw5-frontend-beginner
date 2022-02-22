@@ -118,7 +118,7 @@ export default class Home extends Component {
             className="popular-vehicles d-flex flex-column align-items-center flex-md-row row"
           >
             {popularVehicles.map((vehicle, idx) => (
-              <VehicleImage key={idx} src={vehicle.img} name={vehicle.name} location={vehicle.location} />
+              <VehicleImage key={idx} src={vehicle.img} name={vehicle.name} location={vehicle.location} className='col p-0 me-md-3' />
             ))}
           </div>
           <a className="d-block d-md-none text-center mt-4" href="/"
