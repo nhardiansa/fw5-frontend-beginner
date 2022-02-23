@@ -1,17 +1,23 @@
 import React, { Component } from 'react'
 import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 
+import sideImg from '../../assets/img/side-login-img.png';
 import googleIcon from '../../assets/img/google-icon.svg'
 import logo from '../../assets/img/car-wheel.png'
 
-import './Register.css'
+import './style.css'
 
 export default class Register extends Component {
   render() {
     return (
-      <main>
-        <div id="side-image" class=""></div>
-        <section class="login-section">
+      <main className='row g-0 p-0'>
+        {/* <div id="side-image" class=""></div> */}
+        <img 
+          src={sideImg} 
+          alt="" 
+          className='side-img img-fluid d-none d-lg-block col-6'
+        />
+        <section class="login-section col-lg-6 col-12">
           <div class="main">
             <h1 class="text-center text-lg-start mt-5 mb-5">Sign Up</h1>
             <form action="#" class="login-form d-flex flex-column mb-3">

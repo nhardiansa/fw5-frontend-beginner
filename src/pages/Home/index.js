@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import {FaChevronDown, FaStar} from 'react-icons/fa'
-import NavbarLogOut from '../components/NavbarLogOut';
-import Footer from '../components/Footer/Footer';
-import VehicleImage from '../components/VehicleImage/VehicleImage';
+import NavbarLogOut from '../../components/NavbarLogOut';
+import Footer from '../../components/Footer/Footer';
+import VehicleImage from '../../components/VehicleImage/VehicleImage';
 
-import testimonialImage from '../assets/img/testimonial-user-pict/edward-newgate.png';
-import navigationIcon from '../assets/img/circle-chevron-arrow.svg'
+import testimonialImage from '../../assets/img/testimonial-user-pict/edward-newgate.png';
+import navigationIcon from '../../assets/img/circle-chevron-arrow.svg'
 
-import merapi from '../assets/img/popular/eric-muhr.png'
-import telukBogam from '../assets/img/popular/iqx-azmi.png'
-import bromo from '../assets/img/popular/manny-moreno.png'
-import malioboro from '../assets/img/popular/chuttersnap.png'
+import merapi from '../../assets/img/popular/eric-muhr.png'
+import telukBogam from '../../assets/img/popular/iqx-azmi.png'
+import bromo from '../../assets/img/popular/manny-moreno.png'
+import malioboro from '../../assets/img/popular/chuttersnap.png'
 
-import '../assets/css/Home.css'
+import './style.css'
 export default class Home extends Component {
   render() {
     const popularVehicles = [

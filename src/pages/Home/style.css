@@ -43,8 +43,7 @@ nav .navbar-brand img, footer .ts img {
 
 /* Jumbotron start */
 .jumbotron {
-  /* background-image: url("../../assets/img/jumbotron.png"); */
-  background-image: url("../img/jumbotron.png");
+  background-image: url("../../assets/img/jumbotron.png");
   background-size: cover;
   width: 100%;
   height: 100%;

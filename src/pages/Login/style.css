@@ -16,8 +16,8 @@ html {
   font-size: 14px;
 }
 
-#side-image {
-  display: none;
+.side-image {
+  overflow: hidden;
 }
 
 h1 {
@@ -90,6 +90,7 @@ footer {
   background: #F9F9FB;
   margin-top: 2em;
   padding-top: 3em;
+  min-height: auto;
 }
 
 footer > img {
@@ -133,7 +134,7 @@ footer > hr {
   }
 
   #side-image {
-    background-image: url("../img/side-login-img.png");
+    background-image: url("../../assets/img/side-login-img.png");
     background-size: cover;
     background-repeat: no-repeat;
     display: block;

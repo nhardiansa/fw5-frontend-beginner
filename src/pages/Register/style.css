@@ -19,6 +19,10 @@ h1 {
   font-size: 3em;
 }
 
+.side-img {
+  object-fit: cover;
+}
+
 .main, footer {
   padding-inline: 3em;
 }
