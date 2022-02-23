@@ -1,0 +1,204 @@
+:root {
+  --one-color: #FF7C52;
+  --two-color: #FFA780;
+  --three-color: #E69580;
+  --four-color: #DCA7A3;
+  --five-color: #FFE5D2;
+}
+
+html {
+  font-size: 12px;
+}
+
+body {
+  height: 1000px;
+}
+
+/* Main start */
+main {
+  padding-top: 7.5rem;
+  padding-bottom: 3rem;
+}
+
+main .edit-title {
+  font-family: Nunito;
+  font-style: normal;
+  color: #000000;
+  font-weight: bold;
+  font-size: 2.25rem;
+  line-height: 1.5rem;
+}
+
+main .contact img {
+  width: 50%;
+}
+
+main .contact .contact-info h2 {
+  font-family: Playfair Display, serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 1.5rem;
+  color: #000000;
+}
+
+main .contact .contact-info p {
+  font-family: Nunito, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #B8BECD;
+
+  margin: 0;
+}
+
+main .img-wrapper .contact-img {
+  width: 9rem;
+  object-fit: cover;
+}
+
+main .edit-btn {
+  width: 3rem;
+  height: 3rem;
+  padding-top: 0.5rem;
+  padding-right: 0.6rem;
+
+  bottom: 0;
+  right: 0;
+
+  position: absolute;
+
+  background: var(--one-color);
+  color: var(--five-color);
+}
+
+main .gender {
+  font-family: Nunito;
+  font-style: normal;
+  font-size: 1.5rem;
+  color: #6A4029;
+
+  margin-top: 4rem;
+}
+
+.checkmark {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  border: 4px solid #9F9F9F;
+}
+
+.radio-input {
+  position: relative;
+}
+
+.radio-input input {
+  position: absolute;
+  opacity: 0;
+  left: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+}
+
+.gender-option label {
+  color: #9F9F9F;
+  cursor: pointer;
+}
+
+.radio-input input:checked ~ .checkmark {
+  background: var(--one-color);
+  border: 5px solid #393939;
+}
+
+.radio-input input:checked ~ label {
+  color: #393939;
+  font-weight: bold;
+}
+
+main .gender {
+  width: 75%;
+}
+
+main .form-section {
+  font-family: Nunito, sans-serif;
+  font-style: normal;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+main .form-section h2 {
+  font-weight: 900;
+  color: #4F5665;
+}
+
+main .form-section .input-lable {
+  color: #9F9F9F;
+}
+
+main .form-section .text-input {
+  border: none;
+  border-bottom: 1px solid #000000;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  width: 100%;
+}
+
+main .form-section textarea.text-input {
+  padding-top: 1rem;
+  padding-bottom: 0 !important;
+}
+
+main .form-section .text-input:focus {
+  outline: none;
+}
+
+main .form-section .button-groups button, main .form-section .button-groups a {
+  font-weight: 900;
+  padding: 0.875rem !important;
+  margin-bottom: 1rem;
+  border-radius: 0.625rem;
+
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+main .form-section .button-groups button.save {
+  background: var(--one-color);
+  color: #ffff;
+}
+
+main .form-section .button-groups > a.edit-password {
+  background: var(--five-color);
+  color: var(--one-color);
+}
+
+main .form-section .button-groups button.cancel {
+  background:  rgba(203, 203, 212, 0.27);;
+}
+  /* Main end */
+  
+@media (min-width: 768px) { 
+  /* Main start */
+  main .form-section .button-groups button, main .form-section .button-groups a {
+    padding: 2rem 4.5rem !important;
+  }
+
+  main .gender {
+    width: 40%;
+  }
+  /* Main end */
+}
+
+@media (min-width: 992px) { 
+  html {
+    font-size: 16px;
+  }
+
+  /* Main start */
+  main .gender {
+    width: 30%;
+  }
+  /* Main end */
+}
