@@ -1,0 +1,87 @@
+:root {
+  --one-color: #FF7C52;
+  --two-color: #FFA780;
+  --three-color: #E69580;
+  --four-color: #DCA7A3;
+  --five-color: #FFE5D2;
+
+  --nunito-font: "Nunito", sans-serif;
+  --playfair-font: "Playfair Display", serif;
+  --rubik-font: "Rubik", sans-serif;
+  --mulish-font: "Mulish", sans-serif;
+  --poppins-font: "Poppins", sans-serif;
+}
+
+html {
+  font-size: 12px;
+}
+
+/* Main start */
+main {
+  padding: 6rem 0;
+  font-family: var(--nunito-font);
+}
+
+.view-more-title {
+  font-family: var(--playfair-font);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.click-suggestion, .no-items {
+  color: #B8BECD;
+  font-size: 1.2rem;
+}
+
+.view-more-item {
+  width: 70%;
+}
+
+.item-desc {
+  bottom: 0px;
+  background: #ffffff;
+  left: 0px;
+  padding: 1rem 3rem 0 0;
+  border-radius: 0 0.5rem 0 0;
+  cursor: pointer;
+}
+
+.item-img {
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+.item-location {
+  line-height: 0;
+}
+.item-name {
+  font-size: 1.1rem;
+}
+
+/* Main end */
+
+@media screen and (min-width: 768px) {
+  /* Main start */
+  .view-more-item {
+    min-width: 30% !important;
+    height: auto;
+  }
+  /* Main end */
+}
+
+@media screen and (min-width: 992px) {
+  html {
+    font-size: 16px;
+  }
+
+  /* Main start */
+  main {
+    padding: 9rem 0;
+  }
+
+  .view-more-item {
+    min-width: 20% !important;
+    height: auto;
+  }
+  /* Main end */
+}
