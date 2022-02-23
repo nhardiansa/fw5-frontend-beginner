@@ -1,0 +1,251 @@
+:root {
+  --one-color: #FF7C52;
+  --two-color: #FFA780;
+  --three-color: #E69580;
+  --four-color: #DCA7A3;
+  --five-color: #FFE5D2;
+
+  --nunito-font: "Nunito", sans-serif;
+  --playfair-font: "Playfair Display", serif;
+  --rubik-font: "Rubik", sans-serif;
+  --mulish-font: "Mulish", sans-serif;
+}
+
+html {
+  font-size: 12px;
+}
+/* Main start */
+main {
+  font-family: var(--nunito-font);
+  padding-top: 6rem !important;
+  padding-bottom: 5rem;
+}
+
+p {
+  margin: 0;
+}
+
+.back-link {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.back-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.img-product {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  border-radius: 0.6rem;
+}
+
+.qty-detail, .reservation-date, .order-details, .identity, .payment-code-copy, .payment-method-select {
+  border: 1px solid #80918E;
+  border-radius: 0.5rem;
+
+  box-sizing: border-box;
+}
+
+.invoice-vehicle-name, .booking-code, .payment-code {
+  font-family: var(--playfair-font);
+}
+
+.invoice-vehicle-name {
+  font-weight: 900;
+  /* width: 60%; */
+  line-height: 2rem;
+}
+
+.prepayment {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #B8BECD;
+}
+
+.location {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.booking-code {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.copy-btn, .copy-btn:focus, .payment-code-copy-btn {
+  font-weight: bold;
+  background: var(--one-color);
+  color: #FFFFFF;
+  padding: 0.8% 2%;
+  border-radius: 0.6rem;
+}
+
+.copy-btn {
+  width: 40%;
+}
+
+.payment-code-copy-btn {
+  background: var(--five-color);
+  color: var(--one-color);
+  padding: 0.8% 8%;
+}
+
+.qty-detail, .reservation-date, .order-details, .payment-method-select, .payment-code-copy {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+
+  font-weight: bold;
+}
+
+.order-title {
+  font-weight: 900;
+}
+
+.identity {
+  padding: 0 10%;
+}
+
+.identity-title {
+  font-weight: 900;
+}
+
+.payment-title {
+  font-size: 1.2rem;
+}
+
+.payment-code-copy {
+  padding: 2% 7%;
+}
+
+.payment-method-select {
+  padding: 0 2% !important;
+
+  color: #80918E;
+}
+
+.payment-action {
+  background: var(--five-color);
+  color: var(--one-color);
+  font-weight: 900;
+  padding: 3% 0;
+  border-radius: 0.6rem;
+  box-shadow: 0px 0px 20px var(--five-color);
+
+  width: 100%;
+}
+
+.vehicle-img, .invoice-head, .qty-detail, .reservation-date, .order-details, .identity, .payment-method, .payment-code-copy, .payment-title {
+  margin-bottom: 2rem;
+}
+
+.payment-title {
+  margin-bottom: 1rem;
+}
+/* Main end */
+
+@media (min-width: 768px) {
+  html {
+    font-size: 13px;
+  }
+
+  .vehicle-img, .invoice-head, .qty-detail, .reservation-date, .order-details, .identity, .payment-method, .payment-code-copy, .payment-title {
+    margin-bottom: 0;
+  }
+
+  .payment-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    column-gap: 1.5rem;
+    row-gap: 1rem;
+  }
+
+  .vehicle-img {
+    grid-column: 1 / 2;
+  }
+
+  .payment-method {
+    grid-column: 1 / 3;
+  }
+
+  .payment-action {
+    grid-column: 1 / 3;
+  }
+
+  .payment-title {
+    width: 50%;
+    /* margin-right: 10rem; */
+  }
+
+  .payment-code-copy, .payment-method-select {
+    height: 70%;
+  }
+
+  .payment-code-copy {
+    margin-right: 2rem;
+  }
+
+  .payment-action {
+    padding: 2% 0;
+  }
+}
+
+@media (min-width: 991px) {
+  html {
+    font-size: 16px;
+  }
+
+  /* Main start */
+  main {
+    padding-top: 8rem !important;
+  }
+
+  .back-icon {
+    font-size: 3rem;
+    margin-right: 3rem;
+  }
+
+  .back-link, .booking-code {
+    font-size: 2rem;
+  }
+
+  .invoice-vehicle-name {
+    font-size: 3rem;
+    line-height: 3.5rem !important;
+  }
+
+  .location {
+    font-size: 2rem;
+  }
+
+  .prepayment {
+    font-size: 1.8rem;
+  }
+
+  .copy-btn {
+    font-size: 1.2rem;
+    padding: 0 !important;
+    width: 30%;
+  }
+
+  .payment-code-copy {
+    padding: 2%;
+  }
+
+  .qty-detail, .reservation-date, .order-details, .identity, .payment-code-copy, .payment-method-select, .payment-action, .payment-code-copy-btn, .payment-code {
+    font-size: 1.2rem;
+  }
+
+  .payment-title {
+    font-size: 1.8rem;
+  }
+
+  .order-details {
+    padding: 5% 10%;
+  }
+  /* Main end */
+}
