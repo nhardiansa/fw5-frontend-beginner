@@ -9,48 +9,48 @@ export default class Profile extends Component {
   render() {
     return (
       <Layout isLogged={true} >
-        <main class="container">
+        <main className="container">
           {/* <!-- Header title --> */}
-          <h1 class="edit-title text-center text-lg-start mt-lg-5">Profile</h1>
+          <h1 className="edit-title text-center text-lg-start mt-lg-5">Profile</h1>
           {/* <!-- Tumbhnail profile start --> */}
           <div
-            class="contact text-center d-flex flex-column align-items-center mt-5"
+            className="contact text-center d-flex flex-column align-items-center mt-5"
           >
-            <div class="img-wrapper d-inline-block position-relative">
+            <div className="img-wrapper d-inline-block position-relative">
               <img
                 src={profilePicture}
                 alt="samantha-doe"
-                class="contact-img img-thumbnail rounded-circle"
+                className="contact-img img-thumbnail rounded-circle"
               />
               <button
-                class="edit-btn rounded-circle btn position-absolute"
+                className="edit-btn rounded-circle btn position-absolute"
               >
-                {/* <i class="fa-solid fa-pencil"></i> */}
+                {/* <i className="fa-solid fa-pencil"></i> */}
                 <FaPencilAlt />
               </button>
             </div>
-            <div class="contact-info mt-5">
-              <h2 class="">Samantha Doe</h2>
-              <p class="email mt-4">
+            <div className="contact-info mt-5">
+              <h2 className="">Samantha Doe</h2>
+              <p className="email mt-4">
                 samanthadoe@mail.com <br />
                 +62833467823 <br />
                 Has been active since 2013
               </p>
             </div>
-            <div class="gender d-flex justify-content-center">
-              <form class="d-flex w-100 justify-content-between">
-                <div class="male gender-option">
-                    <div class="radio-input  d-flex align-items-center">
+            <div className="gender d-flex justify-content-center">
+              <form className="d-flex w-100 justify-content-between">
+                <div className="male gender-option">
+                    <div className="radio-input  d-flex align-items-center">
                       <input type="radio" name="gender" id="male" />
-                      <div class="checkmark me-3"></div>
-                      <label for="male">Male</label>
+                      <div className="checkmark me-3"></div>
+                      <label htmlFor="male">Male</label>
                     </div>
                 </div>
-                <div class="female gender-option">
-                    <div class="radio-input d-flex align-items-center">
+                <div className="female gender-option">
+                    <div className="radio-input d-flex align-items-center">
                       <input type="radio" name="gender" id="female" />
-                      <div class="checkmark me-3"></div>
-                      <label for="female">Female</label>
+                      <div className="checkmark me-3"></div>
+                      <label htmlFor="female">Female</label>
                     </div>
                 </div>
               </form>
@@ -59,13 +59,13 @@ export default class Profile extends Component {
           {/* <!-- Tumbhnail profile end --> */}
 
           {/* <!-- Edit contact & identity form start --> */}
-          <div class="form-section mt-5 px-3">
+          <div className="form-section mt-5 px-3">
             <form>
-              <h2 class="text-center mb-3 text-md-start">Contacts</h2>
-              <div class="email mt-5">
-                <label class="input-lable" for="email">Email</label>
+              <h2 className="text-center mb-3 text-md-start">Contacts</h2>
+              <div className="email mt-5">
+                <label className="input-lable" htmlFor="email">Email</label>
                 <input
-                  class="text-input d-block"
+                  className="text-input d-block"
                   type="text"
                   name="email"
                   id="email"
@@ -73,10 +73,10 @@ export default class Profile extends Component {
                   placeholder="example@mail.com"
                 />
               </div>
-              <div class="address mt-5">
-                <label class="input-lable" for="address">Address</label>
+              <div className="address mt-5">
+                <label className="input-lable" htmlFor="address">Address</label>
                 {/* <!-- <input
-                  class="text-input d-block"
+                  className="text-input d-block"
                   type="text"
                   name="address"
                   id="address"
@@ -85,16 +85,16 @@ export default class Profile extends Component {
                 /> --> */}
                 <textarea
                   placeholder="example street no.1"
-                  class="text-input"
+                  className="text-input"
                   name="address"
                   id="address"
                 >Iskandar Street no. 67 Block A Near Bus Stop</textarea
                 >
               </div>
-              <div class="phone mt-5 mb-5">
-                <label class="input-lable" for="phone">Mobile number</label>
+              <div className="phone mt-5 mb-5">
+                <label className="input-lable" htmlFor="phone">Mobile number</label>
                 <input
-                  class="text-input d-block"
+                  className="text-input d-block"
                   type="text"
                   name="phone"
                   id="phone"
@@ -102,14 +102,14 @@ export default class Profile extends Component {
                   placeholder="(+62)1234567"
                 />
               </div>
-              <h2 class="text-center mt-5 mb-3 text-md-start">Identity</h2>
+              <h2 className="text-center mt-5 mb-3 text-md-start">Identity</h2>
               <div
-                class="identity-form d-flex flex-column flex-md-row justify-content-md-between"
+                className="identity-form d-flex flex-column flex-md-row justify-content-md-between"
               >
-                <div class="name mt-5 w-100 me-md-5">
-                  <label class="input-lable" for="name">Name</label>
+                <div className="name mt-5 w-100 me-md-5">
+                  <label className="input-lable" htmlFor="name">Name</label>
                   <input
-                    class="text-input d-block"
+                    className="text-input d-block"
                     type="text"
                     name="name"
                     id="name"
@@ -117,10 +117,10 @@ export default class Profile extends Component {
                     placeholder="Jhon Doe"
                   />
                 </div>
-                <div class="birthdate mt-5 mb-5 w-100 ms-md-5">
-                  <label class="input-lable" for="birthdate">DD/MM/YY</label>
+                <div className="birthdate mt-5 mb-5 w-100 ms-md-5">
+                  <label className="input-lable" htmlFor="birthdate">DD/MM/YY</label>
                   <input
-                    class="text-input d-block"
+                    className="text-input d-block"
                     type="text"
                     name="birthdate"
                     id="birthdate"
@@ -130,11 +130,11 @@ export default class Profile extends Component {
                 </div>
               </div>
               <div
-                class="button-groups d-flex justify-content-between flex-column flex-md-row mt-5"
+                className="button-groups d-flex justify-content-between flex-column flex-md-row mt-5"
               >
-                <button class="save btn">Save Change</button>
-                <a href="/" class="edit-password btn">Edit Password</a>
-                <button class="cancel btn">Cancel</button>
+                <button className="save btn">Save Change</button>
+                <a href="/" className="edit-password btn">Edit Password</a>
+                <button className="cancel btn">Cancel</button>
               </div>
             </form>
           </div>
