@@ -1,0 +1,222 @@
+:root {
+  --one-color: #FF7C52;
+  --two-color: #FFA780;
+  --three-color: #E69580;
+  --four-color: #DCA7A3;
+  --five-color: #FFE5D2;
+}
+
+html {
+  font-size: 12px;
+}
+
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+/* Main start */
+main {
+  padding-top: 6.125rem;
+  padding-bottom: 3.125rem;
+}
+
+main button:focus {
+  box-shadow: none !important;
+} 
+
+.back-btn {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  color: #000000;
+}
+
+.back-btn .back-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.detail-section img {
+  width: 100%;
+  border-radius: 0.625rem;
+}
+
+.detail-section {
+  padding-top: 2rem;
+}
+
+.image-slider img {
+  width: 35%;
+}
+
+.slide-control {
+  font-size: 1.125rem;
+
+  height: 50% !important;
+  /* width: 20% !important; */
+}
+
+.desc-price > h1, .desc-price > .location, .desc-price > .price {
+  font-family: Playfair Display;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 1.75rem;
+  line-height: 2.5rem;
+  color: #042521;
+}
+
+.desc-price .location {
+  font-weight: normal;
+}
+
+.availability, .prepayment, .vehicle-desc, .qty-number, .action-group {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+
+.vehicle-desc {
+  line-height: 2rem;
+}
+
+.availability {
+  color: #087E0D;
+}
+
+.prepayment {
+  color: #9B0A0A;
+}
+
+.qty-number {
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.qty-control{
+  /* background: rgba(203, 203, 212, 0.2); */
+  background: var(--five-color);
+  color: var(--one-color);
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.qty-control.plus {
+  background: var(--one-color);
+  color: #FFFFFF;
+}
+
+.action-group .btn {
+  background:var(--one-color);
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 4% 4.5%;
+  color: var(--five-color);
+  border-radius: 0.6rem;
+}
+
+.reservation {
+  background: var(--five-color) !important;
+  color: var(--one-color) !important;
+}
+/* Main end */
+
+@media (min-width: 768px) {
+
+  /* Main start */
+
+  .detail-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 3rem;
+  }
+
+  .banner {
+    grid-column: 1 / 3;
+  }
+
+  .image-slider, .counter, .action-group {
+    grid-column: 2 / 3;
+  }
+
+  .desc-price {
+    grid-row: 2 / 5;
+  }
+
+  .action-group .btn {
+    padding: 4% 5.5%;
+  }
+  /* Main end */
+}
+
+@media (min-width: 992px) {
+  html {
+    font-size: 16px;
+  }
+
+  /* Main start */
+  main {
+    padding-top: 9rem;
+  }
+
+  .back-btn {
+    font-size: 2.25rem;
+  }
+
+  .back-icon {
+    font-size: 2.6rem !important;
+  }
+
+  .detail-section {
+    margin-top: 6rem;
+    column-gap: 4.25rem;
+    row-gap: 3rem;
+  }
+
+  .banner {
+    grid-column: 1 / 2;
+  }
+
+  .image-slider {
+    grid-column: 1 / 2;
+  }
+
+  .desc-price {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  .action-group {
+    grid-column: 1 / 3;
+  }
+
+  .desc-price h1,
+  .desc-price .price {
+    font-size: 3rem;
+    line-height: 3.75rem;
+  }
+
+  .desc-price .location {
+    font-size: 2.25rem;
+    line-height: 3.75rem;
+  }
+
+  .availability, .prepayment, .vehicle-desc {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+  }
+
+  .counter .qty-control, .counter .qty-number {
+    font-size: 2rem;
+  }
+  
+  .action-group .btn {
+    padding: 2% 8%;
+    font-size: 1.5rem !important;
+  }
+  /* Main end */
+}
