@@ -10,7 +10,7 @@ import Profile from "./pages/Profile";
 import Payment from "./pages/Payment";
 import Reservation from "./pages/Reservation";
 import {VehicleType} from "./pages/VehicleType";
-import ViewMore from "./pages/ViewMore";
+import {ViewMore} from "./pages/ViewMore";
 import {VehicleDetail} from "./pages/VehicleDetail";
 
 export default class App extends Component {
@@ -37,6 +37,7 @@ export default class App extends Component {
         <Route path="/payment" element={<Payment />} />
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/vehicles" element={<VehicleType />} />
+        <Route path='/viewMore/:type' element={<ViewMore />} />
         <Route path='/vehicles/:id' element={<VehicleDetail />} />
       </Routes>
       </>
