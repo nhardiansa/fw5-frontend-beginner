@@ -3,7 +3,6 @@ import Layout from '../../components/Layout'
 import axios from 'axios'
 
 import VehicleImage from '../../components/VehicleImage/VehicleImage'
-import pict from '../../assets/img/popular/eric-muhr.png'
 import './style.css'
 
 export const VehicleType = () => {
@@ -24,7 +23,6 @@ export const VehicleType = () => {
     try {
       const {data} = await axios.get('http://localhost:5000' + uri)
       stateReducer(data.results.slice(0,4))
-      // console.log(data.results);
     } catch (error) {
       console.log(error)
     }
@@ -47,7 +45,7 @@ export const VehicleType = () => {
           >
             {
               popular.map((el, i) => {
-                const img = el.images || 'https://via.placeholder.com/261x333?text=Popular+in+town'
+                const img = el.image || 'https://via.placeholder.com/261x333?text=Popular+in+town'
                 return(
                   <VehicleImage
                     to={`/vehicles/${el.id}`}
@@ -81,7 +79,7 @@ export const VehicleType = () => {
           >
             {
               car.map((el, i) => {
-                const img = el.images || 'https://via.placeholder.com/261x333?text=Popular+in+town'
+                const img = el.image || 'https://via.placeholder.com/261x333?text=Popular+in+town'
                 return(
                   <VehicleImage
                     to={`/vehicles/${el.id}`}
@@ -115,7 +113,7 @@ export const VehicleType = () => {
           >
             {
               motorBike.map((el, i) => {
-                const img = el.images || 'https://via.placeholder.com/261?text=Popular+in+town'
+                const img = el.image || 'https://via.placeholder.com/261?text=Popular+in+town'
                 return(
                   <VehicleImage
                     to={`/vehicles/${el.id}`}
@@ -149,7 +147,7 @@ export const VehicleType = () => {
           >
             {
               bike.map((el, i) => {
-                const img = el.images || 'https://via.placeholder.com/261x333?text=Popular+in+town'
+                const img = el.image || 'https://via.placeholder.com/261x333?text=Popular+in+town'
                 return(
                   <VehicleImage
                     to={`/vehicles/${el.id}`}
