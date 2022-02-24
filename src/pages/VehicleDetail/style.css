@@ -17,7 +17,7 @@ a {
 
 /* Main start */
 main {
-  padding-top: 6.125rem;
+  padding-top: 6.125rem !important;
   padding-bottom: 3.125rem;
 }
 
@@ -46,6 +46,10 @@ main button:focus {
 
 .detail-section {
   padding-top: 2rem;
+}
+
+.banner {
+  height: 18rem !important;
 }
 
 .image-slider img {
@@ -101,7 +105,7 @@ main button:focus {
   /* background: rgba(203, 203, 212, 0.2); */
   background: var(--five-color);
   color: var(--one-color);
-  padding: 1rem 1.5rem;
+  padding: 1.5rem 1.5rem;
   border-radius: 0.5rem;
 }
 
@@ -137,18 +141,22 @@ main button:focus {
 
   .banner {
     grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    height: 28rem !important;
   }
 
-  .image-slider, .counter, .action-group {
+  .image-slider, .counter {
     grid-column: 2 / 3;
   }
 
   .desc-price {
-    grid-row: 2 / 5;
+    grid-column: 1 / 2;
+    grid-row: 3 / 5;
   }
 
   .action-group .btn {
-    padding: 4% 5.5%;
+    padding: 4% 0 ;
+    width: 100%;
   }
   /* Main end */
 }
@@ -160,7 +168,7 @@ main button:focus {
 
   /* Main start */
   main {
-    padding-top: 9rem;
+    /* padding-top: 10rem !important; */
   }
 
   .back-btn {

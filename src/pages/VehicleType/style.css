@@ -42,7 +42,7 @@ main .vehicle-list h2, .testimonial h2 {
 
 main .vehicle-list .popular-vehicles .image-wrapper {
   width: 75%;
-  height: 23rem;
+  height: 20rem;
   margin-bottom: 1rem;
   cursor: pointer;
 }
@@ -103,6 +103,10 @@ main .vehicle-list .image-desc p {
 
   main .vehicle-list .head-section {
     margin-bottom: 3rem !important;
+  }
+
+  main .vehicle-list .popular-vehicles .image-wrapper {
+    height: 23rem;
   }
 
   main .vehicle-list .image-desc {
