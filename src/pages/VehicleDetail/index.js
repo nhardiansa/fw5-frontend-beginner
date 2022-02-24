@@ -16,7 +16,7 @@ export const VehicleDetail = () => {
 
   useEffect(() => {
     getVehicleData(id)
-  }, [])
+  }, [id])
 
   const getVehicleData = async (id) => {
     try {
