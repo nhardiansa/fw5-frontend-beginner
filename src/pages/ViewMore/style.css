@@ -33,8 +33,9 @@ main {
   font-size: 1.2rem;
 }
 
-.view-more-item {
-  width: 70%;
+.view-more-item img {
+  /* height: 17rem; */
+  height: 100%;
 }
 
 .item-desc {
@@ -64,7 +65,11 @@ main {
   /* Main start */
   .view-more-item {
     min-width: 30% !important;
-    height: auto;
+    height: 100%;
+  }
+
+  .view-more-item img {
+    height: 20rem;
   }
   /* Main end */
 }
@@ -82,6 +87,10 @@ main {
   .view-more-item {
     min-width: 20% !important;
     height: auto;
+  }
+
+  .view-more-item img {
+    height: 23rem;
   }
   /* Main end */
 }
