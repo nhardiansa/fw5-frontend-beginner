@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 
 import sideImg from '../../assets/img/side-login-img.png';
@@ -7,31 +8,34 @@ import googleIcon from '../../assets/img/google-icon.svg';
 
 import './style.css';
 
-class Login extends Component {
-  state = {
-    email: '',
-    password: ''
-  }
+export const Login = () => {
+  const [loginData, setLoginData] = useState(
+    {
+      email: '',
+      password: '',
+    }
+  )
+  const navigate = useNavigate();
 
-  handleChange = (e) => {
-    this.setState({
+  const handleChange = (e) => {
+    setLoginData({
+      ...loginData,
       [e.target.name]: e.target.value
     })
+    // console.log(e.target.name);
   }
 
-  submitHandler = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault()
-    const { email, password } = this.state
+    const { email, password } = loginData
 
     if (!(email === 'admin@mail.com' && password === '1234')) {
       return alert('Invalid credentials');
     }
-
-    this.props.setLogin(true)
-    return console.log('Login success');
+    
+    navigate('/');
   }
 
-  render() {
     return (
       <main className='row g-0 p-0 '>
         {/* <div id="side-image d-none d-lg-block col-6">
@@ -44,9 +48,9 @@ class Login extends Component {
         <section className="login-section col-lg-6 d-flex flex-column flex-wrap">
           <div className="main">
             <h1 className="text-center text-lg-start mt-5 mb-5">Login</h1>
-            <form onSubmit={this.submitHandler} className="login-form d-flex flex-column mb-3">
-              <input className="mb-3" type="text" placeholder="Email" name='email' onChange={this.handleChange} />
-              <input className="mb-3" type="password" placeholder="Password" name='password' onChange={this.handleChange} />
+            <form onSubmit={submitHandler} className="login-form d-flex flex-column mb-3">
+              <input className="mb-3" type="text" placeholder="Email" name='email' onChange={handleChange} />
+              <input className="mb-3" type="password" placeholder="Password" name='password' onChange={handleChange} />
               <button type='submit' className="btn login mt-4" >Login</button>
             </form>
             <a className="forgot" href="/forgot-password.html">Forgot password?</a>
@@ -96,7 +100,6 @@ class Login extends Component {
         </section>
     </main>
     )
-  }
 }
 
-export default Login;
+// export default Login;
