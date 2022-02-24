@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import {FaChevronDown, FaStar} from 'react-icons/fa'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import VehicleImage from '../../components/VehicleImage/VehicleImage';
 import Layout from '../../components/Layout';
+import { capitalize } from '../../helpers/stringFormat';
 
 import testimonialImage from '../../assets/img/testimonial-user-pict/edward-newgate.png';
 import navigationIcon from '../../assets/img/circle-chevron-arrow.svg'
@@ -102,27 +104,27 @@ export const Home = () => {
           className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
         >
           <h2>Popular in town</h2>
-          <a className="d-md-block d-none" href="/vehicle-type.html"
+          <Link to='/viewMore/popular' className="d-md-block d-none" href="/vehicle-type.html"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-          ></a>
+          ></Link>
         </div>
         <div
-          className="popular-vehicles d-flex flex-column align-items-center flex-md-row row"
+          className="popular-vehicles row"
         >
           {popular.map((vehicle, idx) => (
             <VehicleImage
               to={`/vehicles/${vehicle.id}`}
               key={idx}
               src={vehicle.image || 'https://via.placeholder.com/300x200?text=Popular+Vehicle'}
-              name={vehicle.name}
-              location={vehicle.location}
-              className='col p-0 me-md-3'
+              name={capitalize(vehicle.name)}
+              location={capitalize(vehicle.location)}
+              className='p-0 pe-md-4 col-12 col-md-3'
             />
           ))}
         </div>
-        <a className="d-block d-md-none text-center mt-4" href="/"
+        <Link to='/viewMore/popular' className="d-block d-md-none text-center mt-4" href="/"
           >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-        ></a>
+        ></Link>
       </section>
 
       {/*=============== Testimonials =============== */}

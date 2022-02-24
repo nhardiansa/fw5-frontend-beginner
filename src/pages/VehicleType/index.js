@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import Layout from '../../components/Layout'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
+import {capitalize} from '../../helpers/stringFormat'
+import Layout from '../../components/Layout'
 import VehicleImage from '../../components/VehicleImage/VehicleImage'
+
 import './style.css'
 
 export const VehicleType = () => {
@@ -27,6 +30,7 @@ export const VehicleType = () => {
       console.log(error)
     }
   }
+
   return (
     <Layout isLogged={true}>
       <main className="container px-lg-4 px-5">
@@ -36,9 +40,9 @@ export const VehicleType = () => {
             className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
           >
             <h2>Popular in town</h2>
-            <a className="d-md-block d-none" href="/"
+            <Link to='/viewMore/popular' className="d-md-block d-none"
               >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-            ></a>
+            ></Link>
           </div>
           <div
             className="popular-vehicles row justify-content-center justify-content-md-start"
@@ -51,17 +55,17 @@ export const VehicleType = () => {
                     to={`/vehicles/${el.id}`}
                     key={i}
                     src={img}
-                    name={el.name}
-                    location={el.location}
-                    className='image-wrapper p-0 me-md-3 col-12 col-md'
+                    name={capitalize(el.name)}
+                    location={capitalize(el.location)}
+                    className='p-0 pe-md-4 col-12 col-md-3'
                   />
                 )
               })
             }
           </div>
-          <a className="d-block d-md-none text-center mt-4" href="/"
+          <Link to='/viewMore/popular' className="d-block d-md-none text-center mt-4" href="/"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-          ></a>
+          ></Link>
         </section>
 
         {/* <!-- Cars --> */}
@@ -70,32 +74,32 @@ export const VehicleType = () => {
             className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
           >
             <h2>Cars</h2>
-            <a className="d-md-block d-none" href="/"
+            <Link to='/viewMore/car' className="d-md-block d-none" href="/"
               >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-            ></a>
+            ></Link>
           </div>
           <div
             className="popular-vehicles row justify-content-center justify-content-md-start"
           >
             {
               car.map((el, i) => {
-                const img = el.image || 'https://via.placeholder.com/261x333?text=Popular+in+town'
+                const img = el.image || 'https://via.placeholder.com/261x333?text=Cars'
                 return(
                   <VehicleImage
                     to={`/vehicles/${el.id}`}
                     key={i}
                     src={img}
-                    name={el.name}
-                    location={el.location}
-                    className='image-wrapper p-0 me-md-3 col-12 col-md'
+                    name={capitalize(el.name)}
+                    location={capitalize(el.location)}
+                    className='p-0 pe-md-4 col-12 col-md-3'
                   />
                 )
               })
             }
           </div>
-          <a className="d-block d-md-none text-center mt-4" href="/"
+          <Link to='/viewMore/car' className="d-block d-md-none text-center mt-4" href="/"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-          ></a>
+          ></Link>
         </section>
 
         {/* <!-- Motorbike --> */}
@@ -104,32 +108,32 @@ export const VehicleType = () => {
             className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
           >
             <h2>Motorbike</h2>
-            <a className="d-md-block d-none" href="/"
+            <Link to='/viewMore/motorbike' className="d-md-block d-none" href="/"
               >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-            ></a>
+            ></Link>
           </div>
           <div
             className="popular-vehicles row justify-content-center justify-content-md-start"
           >
             {
               motorBike.map((el, i) => {
-                const img = el.image || 'https://via.placeholder.com/261?text=Popular+in+town'
+                const img = el.image || 'https://via.placeholder.com/261?text=Motorbike'
                 return(
                   <VehicleImage
                     to={`/vehicles/${el.id}`}
                     key={i}
                     src={img}
-                    name={el.name}
-                    location={el.location}
-                    className='image-wrapper p-0 me-md-3 col-12 col-md'
+                    name={capitalize(el.name)}
+                    location={capitalize(el.location)}
+                    className='p-0 pe-md-4 col-12 col-md-3'
                   />
                 )
               })
             }
           </div>
-          <a className="d-block d-md-none text-center mt-4" href="/"
+          <Link to='/viewMore/motorbike' className="d-block d-md-none text-center mt-4" href="/"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-          ></a>
+          ></Link>
         </section>
 
         {/* <!-- Bike --> */}
@@ -138,32 +142,32 @@ export const VehicleType = () => {
             className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
           >
             <h2>Bikes</h2>
-            <a className="d-md-block d-none" href="/"
+            <Link to='/viewMore/bike' className="d-md-block d-none" href="/"
               >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-            ></a>
+            ></Link>
           </div>
           <div
             className="popular-vehicles row justify-content-center justify-content-md-start"
           >
             {
               bike.map((el, i) => {
-                const img = el.image || 'https://via.placeholder.com/261x333?text=Popular+in+town'
+                const img = el.image || 'https://via.placeholder.com/261x333?text=Bike'
                 return(
                   <VehicleImage
                     to={`/vehicles/${el.id}`}
                     key={i}
                     src={img}
-                    name={el.name}
-                    location={el.location}
-                    className='image-wrapper p-0 me-md-3 col-12 col-md'
+                    name={capitalize(el.name)}
+                    location={capitalize(el.location)}
+                    className='p-0 pe-md-4 col-12 col-md-3'
                   />
                 )
               })
             }
           </div>
-          <a className="d-block d-md-none text-center mt-4" href="/"
+          <Link to='/viewMore/bike' className="d-block d-md-none text-center mt-4" href="/"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-          ></a>
+          ></Link>
         </section>
       </main>
     </Layout>
