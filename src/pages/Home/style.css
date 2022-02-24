@@ -17,7 +17,7 @@ html {
 }
 
 /* Navbar start */
-nav {
+/* nav {
   font-family: var(--nunito-font);
   z-index: 1;
 }
@@ -38,7 +38,7 @@ nav .navbar-brand img, footer .ts img {
 .register-btn {
   background: var(--one-color);
   color: #fff;
-}
+} */
 /* Navbar end */
 
 /* Jumbotron start */
@@ -185,7 +185,8 @@ nav .navbar-brand img, footer .ts img {
 
 /* Testimonial start */
 .testimonial {
-  margin-top: 8.13rem; 
+  margin-top: 8.13rem;
+  padding-bottom: 10rem;
 }
 
 .testimonial .testimonial-wrapper {
@@ -260,7 +261,7 @@ nav .navbar-brand img, footer .ts img {
 /* Testimonial end */
 
 /* Footer start */
-footer {
+/* footer {
   margin-top: 6rem;
   padding-top: 4.75rem;
   padding-bottom: 2rem;
@@ -320,7 +321,7 @@ footer .socmed {
 footer .socmed .icon {
   font-size: 1.375rem;
   margin-inline: 1rem;
-}
+} */
 /* Footer end */
 
 @media (min-width: 768px) { 
@@ -348,7 +349,7 @@ footer .socmed .icon {
     width: 75%;
   }
 
-  footer .wrapper {
+  /* footer .wrapper {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-gap: 4rem;
@@ -366,7 +367,7 @@ footer .socmed .icon {
 
   footer .wrapper .navigations .footer-nav {
     width: 33.33%;
-  }
+  } */
 }
 
 
@@ -376,7 +377,7 @@ footer .socmed .icon {
     font-size: 16px !important;
   }
   
-  nav a.nav-link {
+  /* nav a.nav-link {
     margin-inline: 1rem;
   }
 
@@ -392,7 +393,7 @@ footer .socmed .icon {
 
   nav .navbar-nav {
     align-items: center;
-  }
+  } */
 
   .jumbotron {
     padding-top: 10rem !important;
@@ -422,7 +423,7 @@ footer .socmed .icon {
     width: 28.125rem;
   }
 
-  footer .wrapper .ts .copywriting {
+  /* footer .wrapper .ts .copywriting {
     width: 19rem;
-  }
+  } */
 }
