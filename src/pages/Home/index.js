@@ -137,14 +137,14 @@ export const Home = () => {
                 alt="testimonial user pict"
               />
               <div className="navigation position-absolute">
-                <a className="link-light disabled" href="#">
+                <a className="link-light disabled" href="/">
                   <img
                     className="prev-image disabled"
                     src={navigationIcon}
                     alt="prev-user"
                   />
                 </a>
-                <a className="link-light" href="#">
+                <a className="link-light" href="/">
                   <img
                     className="next-image"
                     src={navigationIcon}
