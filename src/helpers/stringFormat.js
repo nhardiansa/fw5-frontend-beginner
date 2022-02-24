@@ -10,3 +10,7 @@ export const priceFormat = (price) => {
 export const queryFormat = (query) => {
   return query.replace(/\s/g, '+')
 }
+
+export const capitalize = (str) => {
+  return str.split(' ').map(el => el.charAt(0).toUpperCase() + el.slice(1)).join(' ')
+}
