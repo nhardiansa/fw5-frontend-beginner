@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 
 import logo from '../../assets/img/car-wheel.png'
 import profilePict from '../../assets/img/profile-picture/samantha-doe.png'
@@ -67,10 +68,10 @@ export default class Navbar extends Component {
 
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav d-flex ms-auto">
-              <a className="nav-link" aria-current="page" href="/">Home</a>
-              <a className="nav-link" href="/vehicle-type.html">Vehicle Type</a>
-              <a className="nav-link active" href="/">History</a>
-              <a className="nav-link" href="/">About</a>
+              <Link to='/' className="nav-link" aria-current="page" >Home</Link>
+              <Link to='/vehicles' className="nav-link" >Vehicle Type</Link>
+              <Link to='/histories' className="nav-link active" >History</Link>
+              <Link to='/' className="nav-link" >About</Link>
             </div>
             {
               this.state.isLogged && (
@@ -102,15 +103,16 @@ export default class Navbar extends Component {
             {
               !this.state.isLogged && (
                 <div className="auth d-flex flex-column flex-lg-row">
-                  <a onClick={this.clickHandler} className="login-btn fw-normal btn rounded-3 mb-3 mb-lg-0" href="/login.html">
+                  <Link to="/login"  className="login-btn fw-normal btn rounded-3 mb-3 mb-lg-0" href="/login.html">
                     Login
-                  </a>
-                  <a
+                  </Link>
+                  <Link
+                    to="/register"
                     className="register-btn fw-normal btn rounded-3 mb-3 mb-lg-0"
                     href="/signup.html"
                   >
                     Register
-                  </a>
+                  </Link>
                 </div>
               )
             }
