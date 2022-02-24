@@ -28,12 +28,14 @@ export const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     const { email, password } = loginData
+    const data = e.target.elements.email.value
+    console.log(data);
 
-    if (!(email === 'admin@mail.com' && password === '1234')) {
-      return alert('Invalid credentials');
-    }
+    // if (!(email === 'admin@mail.com' && password === '1234')) {
+    //   return alert('Invalid credentials');
+    // }
     
-    navigate('/');
+    // navigate('/');
   }
 
     return (
