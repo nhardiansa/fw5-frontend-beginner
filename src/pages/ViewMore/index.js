@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 import VehicleImage from '../../components/VehicleImage/VehicleImage'
 
@@ -11,8 +12,8 @@ import './style.css'
 
 export const ViewMore = () =>  {
   const {type} = useParams()
-  const [vehicles, setVehicle] = useState([])
-  // const [category, setCategory] = useState([])
+  const [vehicles, setVehicles] = useState([])
+  const [pageInfo, setPageInfo] = useState({})
 
   useEffect(() => {
     if (vehicles.length === 0) {
@@ -23,35 +24,36 @@ export const ViewMore = () =>  {
   const mapVehicleData = (type) => {
     switch (type) {
       case 'motorbike':
-        getVehicle('/vehicles/filter?limit=16&category_id=3', setVehicle)
+        getVehicle('/vehicles/filter?limit=16&category_id=3', setVehicles)
         break;
       case 'car':
-        getVehicle('/vehicles/filter?limit=16&category_id=2', setVehicle)
+        getVehicle('/vehicles/filter?limit=16&category_id=2', setVehicles)
         break;
       case 'bike':
-        getVehicle('/vehicles/filter?limit=16&category_id=4', setVehicle)
+        getVehicle('/vehicles/filter?limit=16&category_id=4', setVehicles)
         break;
       default:
-        getVehicle('/vehicles/popular', setVehicle)
+        getVehicle('/vehicles/popular?limit=16', setVehicles)
         break;
     }
   }
 
   const getVehicle = async (uri, stateReducer) => {
     try {
-      const data = await getData(uri)
-      stateReducer(data.results)
+      if (uri) {
+        const {data} = await axios.get('http://localhost:5000' + uri)
+        stateReducer(data.results)
+        setPageInfo(data.pageInfo)
+      } else {
+        const {data} = await axios.get(pageInfo.nextPage)
+        setPageInfo(data.pageInfo);
+        stateReducer([
+          ...vehicles,
+          ...data.results
+        ])
+      }
     } catch (error) {
       console.log(error)
-    }
-  }
-
-  const getCategory = async (uri, stateReducer) => {
-    try {
-      const categories = await getData(uri)
-      stateReducer(categories.results)
-    } catch (error) {
-      console.error(error);
     }
   }
   
@@ -93,7 +95,14 @@ export const ViewMore = () =>  {
                 })  
             }
           </div>
-          <p className={`no-items mt-5 justify-self-center align-self-center ${vehicles.length === 0 && 'h-100'} `}>There is no vehicle left</p>
+          {
+            pageInfo.nextPage &&
+            <button onClick={() => getVehicle(null, setVehicles)} className='btn btn-load-more align-self-center mt-5 px-4 py-3'> Load More </button>
+          }
+          {
+            pageInfo.nextPage === null &&
+            <p className={`no-items mt-5 align-self-center ${vehicles.length === 0 && 'h-100'} `}>There is no vehicle left</p>
+          }
         </div>
       </main>
     </Layout>
