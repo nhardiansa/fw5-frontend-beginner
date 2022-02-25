@@ -15,7 +15,7 @@ export const VehicleType = () => {
   const [bike, setBike] = useState([])
 
   useEffect(() => {
-    getVehicle('/vehicles/popular', setPopular)
+    getVehicle('/vehicles/popular?limit=4', setPopular)
     getVehicle('/vehicles/filter?limit=4&category_id=3', setMotorBike)
     getVehicle('/vehicles/filter?limit=4&category_id=2', setCar)
     getVehicle('/vehicles/filter?limit=4&category_id=4', setBike)
@@ -25,7 +25,7 @@ export const VehicleType = () => {
   const getVehicle = async (uri, stateReducer) => {
     try {
       const {data} = await axios.get('http://localhost:5000' + uri)
-      stateReducer(data.results.slice(0,4))
+      stateReducer(data.results)
     } catch (error) {
       console.log(error)
     }
