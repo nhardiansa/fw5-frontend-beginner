@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 
 import logo from '../../assets/img/car-wheel.png'
@@ -14,26 +14,26 @@ export const Navbar = () => {
       className="navbar navbar-expand-lg navbar-light bg-white position-fixed top-0 w-100 py-lg-4"
     >
       <div className="container d-flex align-items-center">
-        <a className="navbar-brand" href="/">
+        <Link to='/' className="navbar-brand">
           <img
             className="logo"
             src={logo}
             alt="vehicle-rent-logo"
           />
-        </a>
+        </Link>
         <div className="d-flex">
           {
             isLogged && (
               <div
                 className="profile d-flex d-lg-none justify-content-between align-items-center"
               >
-                <a href="/profile.html" className="profile-img">
+                <Link to='/profile' className="profile-img">
                   <img
                     src={profilePict}
                     alt="profile-img"
                     className="profile-pict rounded-circle"
                   />
-                </a>
+                </Link>
                 <div className="message-notif position-relative ms-4 me-2">
                   <img
                     src={msgIcon}
@@ -87,26 +87,26 @@ export const Navbar = () => {
                     1
                   </div>
                 </div>
-                <a href="/profile.html" className="profile-img">
+                <Link to='/profile' className="profile-img">
                   <img
                     src={profilePict}
                     alt="profile-img"
                     className="profile-pict rounded-circle"
                   />
-                </a>
+                </Link>
               </div>
             )
           }
           {
             !isLogged && (
               <div className="auth d-flex flex-column flex-lg-row">
-                <Link to="/login"  className="login-btn fw-normal btn rounded-3 mb-3 mb-lg-0" href="/login.html">
+                <Link to="/login"  className="login-btn fw-normal btn rounded-3 mb-3 mb-lg-0" >
                   Login
                 </Link>
                 <Link
                   to="/register"
                   className="register-btn fw-normal btn rounded-3 mb-3 mb-lg-0"
-                  href="/signup.html"
+                  
                 >
                   Register
                 </Link>
