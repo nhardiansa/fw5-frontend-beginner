@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 
 import sideImg from '../../assets/img/side-login-img.png';
@@ -47,8 +47,8 @@ export const Login = () => {
           alt="" 
           className='side-img img-fluid d-none d-lg-block col-6'
         />
-        <section className="login-section col-lg-6 d-flex flex-column flex-wrap">
-          <div className="main">
+        <section className="login-section col-lg-6 d-flex flex-column justify-content-center">
+          <div className="main d-flex flex-column justify-content-center flex-fill">
             <h1 className="text-center text-lg-start mt-5 mb-5">Login</h1>
             <form onSubmit={submitHandler} className="login-form d-flex flex-column mb-3">
               <input className="mb-3" type="text" placeholder="Email" name='email' onChange={handleChange} />
@@ -59,9 +59,9 @@ export const Login = () => {
             <div
               className="separator my-4 d-flex justify-content-center align-items-center"
             >
-              <hr className="line-separator rounded" />
-              <p className="text-center mx-3">or try another way</p>
-              <hr className="line-separator rounded" />
+              <hr className="line-separator rounded my-0" />
+              <p className="text-center mx-3 mx-md-5 lh-1">or try another way</p>
+              <hr className="line-separator rounded my-0" />
             </div>
             <div className="other-way d-flex flex-column">
               <a href="/" className="btn mb-4 google-login">
@@ -74,10 +74,10 @@ export const Login = () => {
                 />
                 Login with Google
               </a>
-              <a href="./signup.html" className="btn sign-up">Sign Up</a>
+              <Link to='/register' className="btn sign-up">Sign Up</Link>
             </div>
           </div>
-          <footer className='pb-1'>
+          <footer className='pb-1 flex-fill'>
             <img
               className="vehicle-rent-logo"
               src={carWheel}
