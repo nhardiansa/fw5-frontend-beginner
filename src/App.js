@@ -12,6 +12,7 @@ import Reservation from "./pages/Reservation";
 import {VehicleType} from "./pages/VehicleType";
 import {ViewMore} from "./pages/ViewMore";
 import {VehicleDetail} from "./pages/VehicleDetail";
+import Search from './pages/Search';
 
 export default class App extends Component {
   state = {
@@ -39,6 +40,7 @@ export default class App extends Component {
         <Route path="/vehicles" element={<VehicleType />} />
         <Route path='/viewMore/:type' element={<ViewMore />} />
         <Route path='/vehicles/:id' element={<VehicleDetail />} />
+        <Route path='/search' element={<Search />} />
       </Routes>
       </>
     );
