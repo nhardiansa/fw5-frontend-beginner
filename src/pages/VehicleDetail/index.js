@@ -47,14 +47,22 @@ export const VehicleDetail = () => {
       return str.split(' ').map(el => el.charAt(0).toUpperCase() + el.slice(1)).join(' ')
     }
 
+    const goBack = () => {
+      window.history.back()
+    }
+
     const availability = qty - booked
     return (
       <>
         <div className="back-section">
-          <Link to='/vehicles' href="/vehicle-type.html" className="back-btn d-flex align-items-center">
+          {/* <Link to='/vehicles' className="back-btn d-flex align-items-center">
             <FaChevronLeft className="back-icon" />
             Detail
-          </Link>
+          </Link> */}
+          <div onClick={goBack} className="back-btn d-flex align-items-center">
+            <FaChevronLeft className="back-icon" />
+            Detail
+          </div>
         </div>
         <div className="detail-section w-100">
           <div className="banner">
@@ -107,7 +115,7 @@ export const VehicleDetail = () => {
               <button className="qty-control btn minus">
                 <FaMinus />
               </button>
-              <span className="qty-number">2</span>
+              <span className="qty-number fs-1">2</span>
               <button className="qty-control btn plus">
                 <FaPlus />
               </button>
