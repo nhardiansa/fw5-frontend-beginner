@@ -36,8 +36,9 @@ nav form input {
 }
 
 nav form .search-btn {
-  border: 1px solid #ced4da;
-  background: #FFFFFF;
+  border: 1px solid #ced4da !important;
+  border-left: none !important;
+  background: #FFFFFF !important;
   color: #B8BECD;
   border-top-right-radius: 0.4rem;
   border-bottom-right-radius: 0.4rem;
@@ -113,6 +114,10 @@ nav .register-btn {
 
   nav .navbar-nav {
     align-items: center;
+  }
+
+  nav form {
+    width: 25% !important;
   }
 
   nav .auth > .btn {

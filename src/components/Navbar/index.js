@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import { HiSearch } from 'react-icons/hi'
 
 import logo from '../../assets/img/car-wheel.png'
 import profilePict from '../../assets/img/profile-picture/samantha-doe.png'
@@ -7,7 +8,15 @@ import msgIcon from '../../assets/img/msg-icon.svg'
 import './style.css';
 
 export const Navbar = () => {
-  const [isLogged, setIsLogged] = useState(false)
+  const navigate = useNavigate()
+  const [isLogged, setIsLogged] = useState(true)
+
+  const onSearchHandler = (e) => {
+    e.preventDefault()
+    const keyword = e.target.querySelector('input').value;
+    console.log(keyword);
+    navigate(`/search?name=${keyword}`)
+  }
 
   return (
     <nav
@@ -63,12 +72,21 @@ export const Navbar = () => {
           </button>
         </div>
 
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav d-flex ms-auto">
+        <div className="collapse navbar-collapse justify-content-lg-end" id="navbarNavAltMarkup">
+          <div className="navbar-nav d-flex me-lg-5 justify-content-end flex-fill">
             <Link to='/' className="nav-link" aria-current="page" >Home</Link>
             <Link to='/vehicles' className="nav-link" >Vehicle Type</Link>
             <Link to='/histories' className="nav-link active" >History</Link>
             <Link to='/' className="nav-link" >About</Link>
+            {
+              isLogged &&
+              <form onSubmit={onSearchHandler} className="input-group my-3 my-lg-0 ms-lg-5 me-lg-3">
+                <input type="text" className="form-control border-end-0" placeholder="Search vehicle" aria-label="Recipient's username" aria-describedby="button-addon2" />
+                <button type="submit" className="search-btn btn btn-outline-secondary" id="button-addon2">
+                  <HiSearch className='search-icon text-secondary' />
+                </button>
+              </form>
+            }
           </div>
           {
             isLogged && (
