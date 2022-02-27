@@ -77,6 +77,10 @@ nav .profile img.profile-pict {
   height: 2.5rem;
 }
 
+nav .profile-dropdown::after {
+  content: none;
+}
+
 nav .auth .btn {
   padding: 0.5rem;
 }

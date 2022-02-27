@@ -36,13 +36,27 @@ export const Navbar = () => {
               <div
                 className="profile d-flex d-lg-none justify-content-between align-items-center"
               >
-                <Link to='/profile' className="profile-img">
+                {/* <Link to='/profile' className="profile-img">
                   <img
                     src={profilePict}
                     alt="profile-img"
                     className="profile-pict rounded-circle"
                   />
-                </Link>
+                </Link> */}
+                <div className="dropdown">
+                  <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img
+                      src={profilePict}
+                      alt="profile-img"
+                      className="profile-pict rounded-circle"
+                    />
+                  </div>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><Link to='/profile' className="dropdown-item">Edit Profile</Link></li>
+                    <li><a className="dropdown-item" href="#">Help</a></li>
+                    <li><a className="dropdown-item" href="#">Log Out</a></li>
+                  </ul>
+                </div>
                 <div className="message-notif position-relative ms-4 me-2">
                   <img
                     src={msgIcon}
@@ -105,13 +119,30 @@ export const Navbar = () => {
                     1
                   </div>
                 </div>
-                <Link to='/profile' className="profile-img">
+                {/* <Link to='/profile' className="profile-img">
                   <img
                     src={profilePict}
                     alt="profile-img"
                     className="profile-pict rounded-circle"
                   />
-                </Link>
+                </Link> */}
+                <div className="dropdown">
+                  {/* <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown button
+                  </button> */}
+                  <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img
+                      src={profilePict}
+                      alt="profile-img"
+                      className="profile-pict rounded-circle"
+                    />
+                  </div>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><Link to='/profile' className="dropdown-item">Edit Profile</Link></li>
+                    <li><a className="dropdown-item" href="#">Help</a></li>
+                    <li><a className="dropdown-item" href="#">Log Out</a></li>
+                  </ul>
+                </div>
               </div>
             )
           }
