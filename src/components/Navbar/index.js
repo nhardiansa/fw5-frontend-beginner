@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { HiSearch } from 'react-icons/hi'
 
+import constants from '../../config/constants'
 import logo from '../../assets/img/car-wheel.png'
 import profilePict from '../../assets/img/profile-picture/samantha-doe.png'
 import msgIcon from '../../assets/img/msg-icon.svg'
@@ -9,13 +10,14 @@ import './style.css';
 
 export const Navbar = () => {
   const navigate = useNavigate()
+  const {itemLimit} = constants
   const [isLogged, setIsLogged] = useState(true)
 
   const onSearchHandler = (e) => {
     e.preventDefault()
     const keyword = e.target.querySelector('input').value;
     if (keyword.length > 0) {
-      navigate(`/search?name=${keyword}`)
+      navigate(`/search?name=${keyword}&limit=${itemLimit}`)
     }
   }
 
