@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
-import {FaChevronDown} from 'react-icons/fa'
+import {FaChevronDown, FaChevronRight} from 'react-icons/fa'
 import {HiSearch} from 'react-icons/hi'
 
-import Footer from '../../components/Footer/Footer'
-import Navbar from '../../components/Navbar'
-
 import vespa from '../../assets/img/motorbike/vespa.png'
-import './style.css'
 import VehicleImage from '../../components/VehicleImage/VehicleImage'
 import Layout from '../../components/Layout'
+import './style.css'
 
 export default class History extends Component {
   render() {
@@ -26,9 +23,9 @@ export default class History extends Component {
     ]
     return (
       <>
-        <Layout isLogged={true}>
+        <Layout>
           <main>
-            <div className="history-wrapper container d-lg-grid">
+            <div className="history-wrapper container mt-lg-5 d-lg-grid">
               <div className="search-filter">
                 <form className="d-flex">
                   <div className="search-field d-flex me-3">
@@ -40,7 +37,6 @@ export default class History extends Component {
                       aria-describedby="button-addon2"
                     />
                     <button className="search-btn btn" type="button" id="button-addon2">
-                      {/* <i className="fa-solid fa-magnifying-glass"></i> */}
                       <HiSearch className='search-icon' />
                     </button>
                   </div>
@@ -68,13 +64,13 @@ export default class History extends Component {
                     <a className="link-nav" href="/"
                       >Please finish your payment for vespa for Vespa Rental Jogja</a
                     >
-                    <i className="link-nav-icon fa-solid fa-chevron-right ms-5"></i>
+                    <FaChevronRight className='link-nav-icon ms-5' />
                   </li>
                   <li
                     className="link-list-item list-group-item d-flex align-items-center justify-content-between pb-3"
                   >
                     <a className="link-nav" href="/">Your payment has been confirmed!</a>
-                    <i className="link-nav-icon fa-solid fa-chevron-right ms-5"></i>
+                    <FaChevronRight className='link-nav-icon ms-5' />
                   </li>
                 </ul>
               </div>
@@ -122,7 +118,14 @@ export default class History extends Component {
               >
                 <h2 className="new-arrival-title mb-5">New Arrival</h2>
                 {newArrivals.map((item, index) => (
-                  <VehicleImage key={index} src={item.src} name={item.name} location={item.location} className='mb-5' />
+                  <VehicleImage
+                    to={`/vehicles/${index}`}
+                    key={index}
+                    src={item.src}
+                    name={item.name}
+                    location={item.location}
+                    className='mb-5'
+                  />
                 ))}
                 
                 <a

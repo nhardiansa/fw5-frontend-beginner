@@ -30,7 +30,7 @@ p {
 /* Main start */
 main {
   font-family: var(--nunito-font);
-  padding-top: 6rem !important;
+  padding-top: 6rem;
   padding-bottom: 5rem;
 
   display: block;
