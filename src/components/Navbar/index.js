@@ -14,8 +14,9 @@ export const Navbar = () => {
   const onSearchHandler = (e) => {
     e.preventDefault()
     const keyword = e.target.querySelector('input').value;
-    console.log(keyword);
-    navigate(`/search?name=${keyword}`)
+    if (keyword.length > 0) {
+      navigate(`/search?name=${keyword}`)
+    }
   }
 
   return (
