@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 import constants from '../../config/constants'
@@ -10,10 +10,11 @@ import imgPlaceholder from '../../assets/img/placeholder.png';
 
 import './style.css';
 
-export default function Search() {
+export default function Search({viewMore}) {
   const navigate = useNavigate()
   const {baseURL, itemLimit} = constants
 
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams()
   const [pageInfo, setPageInfo] = useState({})
   const [vehicles, setVehicles] = useState([])
@@ -22,30 +23,52 @@ export default function Search() {
   const [locations, setLocations] = useState([]);
   const [filterInput, setFilterInput] = useState({});
 
+  const [title, setTitle] = useState('');
   const [trigger, setTrigger] = useState(true);
 
   useEffect(() => {
     if (trigger) {
       const queries = Object.fromEntries([...searchParams]);
       
+      if (queries.popular !== '1') {
+        if (Object.prototype.hasOwnProperty.call(queries, 'popular')) {
+          delete queries.popular
+        }
+      }
       emptyQueriesHandler(queries)
       setFilterInput(queries);
       
       getTypes(setTypes)
-      getVehicles(queries)
+
+      if (queries.popular === '1') {
+        getVehicles(queries, true, false)
+      } else {
+        getVehicles(queries)
+      }
+
       getLocations(setLocations)
+
+      if (viewMore) {
+        pageName(location);
+      }
 
       setTrigger(false)
       console.log('useEffect');
     }
   }, [trigger])
 
-  const getVehicles = async (queries, replace=true) => {
+  useEffect(() => {
+    if (viewMore && types.length > 0) {
+      pageName(location);
+    }
+  },[types])
+
+  const getVehicles = async (queries, replace=true, filter=true) => {
     try {
       let url
 
       if (replace) {
-        url = generateEndpoint(queries)
+        url = generateEndpoint(queries, filter)
       } else {
         url = pageInfo.nextPage
       }
@@ -76,8 +99,8 @@ export default function Search() {
     }
   }
 
-  const generateEndpoint = (query) => {
-    let uri = baseURL + '/vehicles/filter?'
+  const generateEndpoint = (query, filter) => {
+    let uri = `${baseURL}/vehicles/${filter ? 'filter' : 'popular'}?limit=${8}&`
     const arr = []
     
     for (const key in query) {
@@ -91,10 +114,10 @@ export default function Search() {
     return uri + arr.join('&')
   }
 
-  const emptyQueriesHandler = (queries) => {
+  const emptyQueriesHandler = (queries, justNavigate=false) => {
     const keys = Object.keys(queries).length
     
-    if (keys < 1) {
+    if (keys < 1  || justNavigate) {
       navigate('/');
     }
   }
@@ -157,10 +180,38 @@ export default function Search() {
     setTrigger(true)
   }
 
+  const pageName = (location) => {
+    const {pathname, search} = location
+    const page = pathname.split('/')[2]
+    console.log(search);
+    
+    if (page === 'more') {
+      if (search.includes('popular=1')) {
+        console.log(pathname, search);
+        setTitle('Popular in town')
+      } else {
+        if (search.includes('category_id')) {
+          const category = search.split('&')[0].split('=')[1]
+          console.log(types);
+          const categoryName = types.find(type => type.id === Number(category))
+          
+          if (categoryName) {
+            setTitle(capitalize(categoryName.name) + 's')
+          }
+        }
+      }
+    }
+  }
+
   return (
     <Layout>
       <main className={`container ${vehicles.length < 1 ? 'vh-100' : ''}`}>
-        <h1 className='ps-lg-4 mt-lg-5 text-center text-lg-start fs-1'>Search results</h1>
+        {
+          title ?
+          <h1 className='ps-lg-4 mt-lg-5 text-center text-lg-start fs-1'>{title}</h1>
+          :
+          <h1 className='ps-lg-4 mt-lg-5 text-center text-lg-start fs-1'>Search results</h1>
+        }
         <div className="filter-bar container mt-4 mt-lg-5">
           <div className="row container mt-3 g-2">
             <div className="col-6 col-md">
@@ -198,7 +249,7 @@ export default function Search() {
                 <option value="3">Three</option>
               </select>
             </div>
-            <button onClick={getFilterData} className='filter-btn btn btn-primary col-12'>Filter</button>
+            <button onClick={getFilterData} className='filter-btn btn col-12'>Filter</button>
             
           </div>
         </div>
@@ -228,7 +279,7 @@ export default function Search() {
         {
           pageInfo.nextPage &&
           <div className="pagination d-flex justify-content-center mt-5">
-            <button onClick={() => getVehicles(null, false)} className='filter-btn btn btn-primary'>Load More</button>
+            <button onClick={() => getVehicles(null, false)} className='filter-btn btn'>Load More</button>
           </div>
         }
       </main>

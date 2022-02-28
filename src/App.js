@@ -38,7 +38,7 @@ export default class App extends Component {
         <Route path="/payment" element={<Payment />} />
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/vehicles" element={<VehicleType />} />
-        <Route path='/viewMore/:type' element={<ViewMore />} />
+        <Route path="/vehicles/more" element={<Search viewMore={true} />} />
         <Route path='/vehicles/:id' element={<VehicleDetail />} />
         <Route path='/search' element={<Search />} />
       </Routes>

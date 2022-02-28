@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
+import constants from '../../config/constants'
 import {capitalize} from '../../helpers/stringFormat'
 import Layout from '../../components/Layout'
 import VehicleImage from '../../components/VehicleImage/VehicleImage'
@@ -9,14 +10,15 @@ import VehicleImage from '../../components/VehicleImage/VehicleImage'
 import './style.css'
 
 export const VehicleType = () => {
+  const {baseURL} = constants
   const [popular, setPopular] = useState([])
-  const [motorBike, setMotorBike] = useState([])
+  const [motorbike, setMotorbike] = useState([])
   const [car, setCar] = useState([])
   const [bike, setBike] = useState([])
 
   useEffect(() => {
     getVehicle('/vehicles/popular?limit=4', setPopular)
-    getVehicle('/vehicles/filter?limit=4&category_id=3', setMotorBike)
+    getVehicle('/vehicles/filter?limit=4&category_id=3', setMotorbike)
     getVehicle('/vehicles/filter?limit=4&category_id=2', setCar)
     getVehicle('/vehicles/filter?limit=4&category_id=4', setBike)
     console.log('getVehicle');
@@ -24,7 +26,7 @@ export const VehicleType = () => {
 
   const getVehicle = async (uri, stateReducer) => {
     try {
-      const {data} = await axios.get('http://localhost:5000' + uri)
+      const {data} = await axios.get(`${baseURL}${uri}`)
       stateReducer(data.results)
     } catch (error) {
       console.log(error)
@@ -40,7 +42,7 @@ export const VehicleType = () => {
             className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
           >
             <h2>Popular in town</h2>
-            <Link to='/viewMore/popular' className="d-md-block d-none"
+            <Link to='more?popular=1' className="d-md-block d-none"
               >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
             ></Link>
           </div>
@@ -63,7 +65,7 @@ export const VehicleType = () => {
               })
             }
           </div>
-          <Link to='/viewMore/popular' className="d-block d-md-none text-center mt-4" href="/"
+          <Link to='more?popular=1' className="d-block d-md-none text-center mt-4" href="/"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
           ></Link>
         </section>
@@ -74,7 +76,7 @@ export const VehicleType = () => {
             className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
           >
             <h2>Cars</h2>
-            <Link to='/viewMore/car' className="d-md-block d-none" href="/"
+            <Link to='more?category_id=2' className="d-md-block d-none" href="/"
               >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
             ></Link>
           </div>
@@ -97,7 +99,7 @@ export const VehicleType = () => {
               })
             }
           </div>
-          <Link to='/viewMore/car' className="d-block d-md-none text-center mt-4" href="/"
+          <Link to='more?category_id=2' className="d-block d-md-none text-center mt-4" href="/"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
           ></Link>
         </section>
@@ -108,7 +110,7 @@ export const VehicleType = () => {
             className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
           >
             <h2>Motorbike</h2>
-            <Link to='/viewMore/motorbike' className="d-md-block d-none" href="/"
+            <Link to='more?category_id=3' className="d-md-block d-none" href="/"
               >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
             ></Link>
           </div>
@@ -116,7 +118,7 @@ export const VehicleType = () => {
             className="popular-vehicles row justify-content-center justify-content-md-start"
           >
             {
-              motorBike.map((el, i) => {
+              motorbike.map((el, i) => {
                 const img = el.image || 'https://via.placeholder.com/261?text=Motorbike'
                 return(
                   <VehicleImage
@@ -131,7 +133,7 @@ export const VehicleType = () => {
               })
             }
           </div>
-          <Link to='/viewMore/motorbike' className="d-block d-md-none text-center mt-4" href="/"
+          <Link to='more?category_id=3' className="d-block d-md-none text-center mt-4" href="/"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
           ></Link>
         </section>
@@ -142,7 +144,7 @@ export const VehicleType = () => {
             className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
           >
             <h2>Bikes</h2>
-            <Link to='/viewMore/bike' className="d-md-block d-none" href="/"
+            <Link to='more?category_id=4' className="d-md-block d-none" href="/"
               >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
             ></Link>
           </div>
@@ -165,7 +167,7 @@ export const VehicleType = () => {
               })
             }
           </div>
-          <Link to='/viewMore/bike' className="d-block d-md-none text-center mt-4" href="/"
+          <Link to='more?category_id=4' className="d-block d-md-none text-center mt-4" href="/"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
           ></Link>
         </section>
