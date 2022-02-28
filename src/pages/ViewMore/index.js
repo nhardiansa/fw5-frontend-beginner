@@ -55,9 +55,9 @@ export const ViewMore = () =>  {
       console.log(error)
     }
   }
-  
-  return (
-    <Layout isLogged={true}>
+
+  const renderVehicles = () => {
+    return (
       <main className={vehicles.length === 0 ? 'vh-100' : ''}>
         <div className={`view-more-wrapper container d-flex flex-column`}>
           {
@@ -104,6 +104,15 @@ export const ViewMore = () =>  {
           }
         </div>
       </main>
+    )
+  }
+  
+  return (
+    <Layout isLogged={true}>
+      {
+        vehicles.length > 0 &&
+        renderVehicles()
+      }
     </Layout>
   )
 }
