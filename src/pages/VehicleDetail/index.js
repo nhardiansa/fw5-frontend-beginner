@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import {  FaChevronLeft, FaHeart, FaMinus, FaPlus } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
@@ -12,6 +12,7 @@ import { priceFormat, queryFormat } from '../../helpers/stringFormat'
 
 export const VehicleDetail = () => {
   const {id} = useParams()
+  const navigate = useNavigate()
   const [vehicle, setVehicle] = useState({})
 
   useEffect(() => {
@@ -49,6 +50,10 @@ export const VehicleDetail = () => {
 
     const goBack = () => {
       window.history.back()
+    }
+
+    const goToReservation = () => {
+      navigate('/reservation')
     }
 
     const availability = qty - booked
@@ -125,9 +130,8 @@ export const VehicleDetail = () => {
             className="action-group mt-5 mt-md-0 d-flex flex-column flex-md-row justify-content-between"
           >
             <button className="btn chat mb-3 mb-md-0">Chat Admin</button>
-            <a href="/reservation.html" className="reservation btn mb-3 mb-md-0 mx-md-5"
-              >Reservation</a
-            >
+            <button onClick={goToReservation} className="reservation btn mb-3 mb-md-0 mx-md-5"
+              >Reservation</button>
             <button className="btn like d-flex justify-content-center align-items-center">
               <FaHeart className="heart-icon mb-1 me-2 me-lg-3" /> <span>Like</span>
             </button>

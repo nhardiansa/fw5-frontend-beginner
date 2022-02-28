@@ -19,7 +19,7 @@ export default class Reservation extends Component {
   render() {
     return (
       <Layout isLogged={true}>
-        <main className="container px-5 px-lg-0">
+        <main className="reservation-wrapper container px-5 px-lg-0">
           <div className="back-section">
             <a
               href="/vehicle-detail.html"

@@ -193,8 +193,8 @@ main button:focus {
   }
 
   /* Main start */
-  main {
-    padding-top: 9rem;
+  main.reservation-wrapper {
+    padding-top: 9rem !important;
   }
 
   .back-btn {
