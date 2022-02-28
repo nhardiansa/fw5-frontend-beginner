@@ -17,7 +17,7 @@ export const Navbar = () => {
     e.preventDefault()
     const keyword = e.target.querySelector('input').value;
     if (keyword.length > 0) {
-      navigate(`/search?name=${keyword}&limit=${itemLimit}`)
+      navigate(`/search?name=${keyword}`)
     }
   }
 
