@@ -88,8 +88,8 @@ export default class Profile extends Component {
                   className="text-input"
                   name="address"
                   id="address"
-                >Iskandar Street no. 67 Block A Near Bus Stop</textarea
-                >
+                  defaultValue='Iskandar Street no. 67 Block A Near Bus Stop'
+                ></textarea>
               </div>
               <div className="phone mt-5 mb-5">
                 <label className="input-lable" htmlFor="phone">Mobile number</label>

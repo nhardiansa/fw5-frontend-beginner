@@ -5,7 +5,6 @@ import axios from 'axios'
 import VehicleImage from '../../components/VehicleImage/VehicleImage'
 
 import Layout from '../../components/Layout'
-import { getData } from '../../helpers/http'
 import { capitalize } from '../../helpers/stringFormat'
 
 import './style.css'

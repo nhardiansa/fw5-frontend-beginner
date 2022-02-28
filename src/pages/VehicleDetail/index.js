@@ -139,7 +139,7 @@ export const VehicleDetail = () => {
 
   return (
     <Layout>
-      <main className="container px-5 px-lg-0">
+      <main className="container mt-lg-4 px-5 px-lg-0">
         {
           Object.keys(vehicle).length && detailDisplay(vehicle)
         }
