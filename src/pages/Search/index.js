@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 
 import constants from '../../config/constants'
@@ -11,16 +11,34 @@ import imgPlaceholder from '../../assets/img/placeholder.png';
 import './style.css';
 
 export default function Search() {
-  const {baseURL} = constants
+  const navigate = useNavigate()
+  const {baseURL, itemLimit} = constants
+
   const [searchParams, setSearchParams] = useSearchParams()
   const [pageInfo, setPageInfo] = useState({})
   const [vehicles, setVehicles] = useState([])
 
+  const [types, setTypes] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [filterInput, setFilterInput] = useState({});
+
+  const [trigger, setTrigger] = useState(true);
+
   useEffect(() => {
-    const queries = Object.fromEntries([...searchParams]);
-    console.log(queries);
-    getVehicles(queries)
-  }, [searchParams])
+    if (trigger) {
+      const queries = Object.fromEntries([...searchParams]);
+      
+      emptyQueriesHandler(queries)
+      setFilterInput(queries);
+      
+      getTypes(setTypes)
+      getVehicles(queries)
+      getLocations(setLocations)
+
+      setTrigger(false)
+      console.log('useEffect');
+    }
+  }, [trigger])
 
   const getVehicles = async (queries, replace=true) => {
     try {
@@ -35,6 +53,7 @@ export default function Search() {
       const {data} = await axios.get(url)
       setPageInfo(data.pageInfo)
 
+      // decide if we need to replace or append
       if (replace) {
         setVehicles(data.results)
       } else {
@@ -43,6 +62,15 @@ export default function Search() {
           ...data.results
         ])
       }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const getTypes = async (cb=null) => {
+    try {
+      const {data} = await axios.get(`${baseURL}/categories`)
+      cb && cb(data.results)
     } catch (error) {
       console.error(error);
     }
@@ -63,6 +91,72 @@ export default function Search() {
     return uri + arr.join('&')
   }
 
+  const emptyQueriesHandler = (queries) => {
+    const keys = Object.keys(queries).length
+    
+    if (keys < 1) {
+      navigate('/');
+    }
+  }
+
+  const selectHandler = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    const selectedElement = e.target.querySelector(`option[value="${value}"]`)
+
+    if (selectedElement === null) {
+      // console.log(selectedElement, name);
+      setFilterInput({
+        ...filterInput,
+        [name]: ''
+      })
+      return 0;
+    }
+
+    if (name === 'category_id') {
+      setFilterInput({
+        ...filterInput,
+        category_id: value
+      })
+    }
+
+    if (name === 'prepayment') {
+      setFilterInput({
+        ...filterInput,
+        prepayment: value
+      })
+    }
+
+    if (name === 'location') {
+      setFilterInput({
+        ...filterInput,
+        location: value
+      })
+    }
+  }
+
+  const getLocations = async (cb=null) => {
+    try {
+      const {data} = await axios.get(`${baseURL}/vehicles/location`)
+      cb && cb(data.results)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const getFilterData = (e) => {
+    // console.log(filterInput);
+    const tempInput = filterInput
+    Object.keys(tempInput).forEach(key => {
+      if (tempInput[key] === '') {
+        delete tempInput[key]
+      }
+    })
+    console.log(tempInput);
+    setSearchParams(tempInput)
+    setTrigger(true)
+  }
+
   return (
     <Layout>
       <main className={`container ${vehicles.length < 1 ? 'vh-100' : ''}`}>
@@ -70,27 +164,30 @@ export default function Search() {
         <div className="filter-bar container mt-4 mt-lg-5">
           <div className="row container mt-3 g-2">
             <div className="col-6 col-md">
-              <select className="filter-input form-select" aria-label="Default select example">
+              <select onChange={selectHandler} name='location' className="filter-input form-select" aria-label="Default select example">
                 <option defaultValue>Location</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {
+                  locations.map((data, idx) => (
+                    <option key={idx} value={data.location}>{data.location}</option>
+                  ))
+                }
               </select>
             </div>
             <div className="col-6 col-md">
-              <select className="filter-input form-select" aria-label="Default select example">
+              <select onChange={selectHandler} name='category_id' className="filter-input form-select" aria-label="Default select example">
                 <option defaultValue>Type</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {
+                  types.map(type => (
+                    <option  key={type.id} value={type.id}>{type.name}</option>
+                  ))
+                }
               </select>
             </div>
             <div className="col-6 col-md">
-              <select className="filter-input form-select" aria-label="Default select example">
+              <select onChange={selectHandler} name='prepayment' className="filter-input form-select" aria-label="Default select example">
                 <option defaultValue>Payment</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="0">Only cash</option>
+                <option value="1">Can prepayment</option>
               </select>
             </div>
             <div className="col-6 col-md">
@@ -101,6 +198,8 @@ export default function Search() {
                 <option value="3">Three</option>
               </select>
             </div>
+            <button onClick={getFilterData} className='filter-btn btn btn-primary col-12'>Filter</button>
+            
           </div>
         </div>
         <div className="results container row m-0 mt-4 mt-md-5">
@@ -129,7 +228,7 @@ export default function Search() {
         {
           pageInfo.nextPage &&
           <div className="pagination d-flex justify-content-center mt-5">
-            <button onClick={() => getVehicles(null, false)} className='btn btn-primary'>Load More</button>
+            <button onClick={() => getVehicles(null, false)} className='filter-btn btn btn-primary'>Load More</button>
           </div>
         }
       </main>
