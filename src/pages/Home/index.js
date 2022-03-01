@@ -218,7 +218,7 @@ export const Home = () => {
           className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
         >
           <h2>Popular in town</h2>
-          <Link to='/viewMore/popular' className="d-md-block d-none" href="/vehicle-type.html"
+          <Link to='/vehicles/more?popular=1' className="d-md-block d-none" href="/vehicle-type.html"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
           ></Link>
         </div>
@@ -236,7 +236,7 @@ export const Home = () => {
             />
           ))}
         </div>
-        <Link to='/viewMore/popular' className="d-block d-md-none text-center mt-4" href="/"
+        <Link to='/vehicles/more?popular=1' className="d-block d-md-none text-center mt-4" href="/"
           >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
         ></Link>
       </section>
