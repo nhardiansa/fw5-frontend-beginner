@@ -128,7 +128,6 @@ export default function Search({viewMore}) {
     const selectedElement = e.target.querySelector(`option[value="${value}"]`)
 
     if (selectedElement === null) {
-      // console.log(selectedElement, name);
       setFilterInput({
         ...filterInput,
         [name]: ''
@@ -168,14 +167,12 @@ export default function Search({viewMore}) {
   }
 
   const getFilterData = (e) => {
-    // console.log(filterInput);
     const tempInput = filterInput
     Object.keys(tempInput).forEach(key => {
       if (tempInput[key] === '') {
         delete tempInput[key]
       }
     })
-    console.log(tempInput);
     setSearchParams(tempInput)
     setTrigger(true)
   }
@@ -183,16 +180,13 @@ export default function Search({viewMore}) {
   const pageName = (location) => {
     const {pathname, search} = location
     const page = pathname.split('/')[2]
-    console.log(search);
     
     if (page === 'more') {
       if (search.includes('popular=1')) {
-        console.log(pathname, search);
         setTitle('Popular in town')
       } else {
         if (search.includes('category_id')) {
           const category = search.split('&')[0].split('=')[1]
-          console.log(types);
           const categoryName = types.find(type => type.id === Number(category))
           
           if (categoryName) {
