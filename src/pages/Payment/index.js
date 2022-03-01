@@ -3,21 +3,25 @@ import Layout from '../../components/Layout'
 
 import vehiclePict from '../../assets/img/bike/image-banner.png'
 import './style.css'
+import { FaChevronLeft } from 'react-icons/fa'
 
 export default class Payment extends Component {
+  onClick = () => {
+    window.history.back()
+  }
   render() {
     return (
       <Layout isLogged={true}>
         <main className="container">
           <div className="payment-wrapper text-center text-md-start">
             <div className="back-btn mb-5">
-              <a
-                href="/reservation.html"
+              <div
+                onClick={this.onClick}
                 className="back-link link-dark d-flex align-items-center"
               >
-                <i className="back-icon fas fa-chevron-left"></i>
+                <FaChevronLeft className="back-icon" />
                 Payment
-              </a>
+              </div>
             </div>
             <div className="vehicle-img">
               <img

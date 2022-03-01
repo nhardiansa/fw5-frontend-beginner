@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {FaChevronDown, FaMinus, FaPlus} from 'react-icons/fa'
+import {FaChevronDown, FaChevronLeft, FaMinus, FaPlus} from 'react-icons/fa'
 
 import Layout from '../../components/Layout'
 
@@ -17,18 +17,22 @@ export default class Reservation extends Component {
     e.target.type = 'text'
   }
 
+  goBack = () => {
+    window.history.back()
+  }
+
   render() {
     return (
       <Layout isLogged={true}>
         <main className="reservation-wrapper container px-5 px-lg-0">
           <div className="back-section">
-            <a
-              href="/vehicle-detail.html"
+            <div
+              onClick={this.goBack}
               className="back-btn d-flex align-items-center"
             >
-              <i className="back-icon fa-solid fa-chevron-left"></i>
+              <FaChevronLeft className="back-icon" />
               Reservartion
-            </a>
+            </div>
           </div>
           <div className="detail-section w-100">
             <div className="banner">
