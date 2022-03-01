@@ -5,6 +5,7 @@ import Layout from '../../components/Layout'
 
 import vehicle from '../../assets/img/bike/image-banner.png'
 import './style.css'
+import { Link } from 'react-router-dom'
 
 export default class Reservation extends Component {
 
@@ -89,8 +90,8 @@ export default class Reservation extends Component {
               </div>
             </div>
             <div className="action-group mt-5 mt-md-0">
-              <a href="/payment.html" className="btn pay w-100"
-                >Pay now : Rp. 178.000</a
+              <Link to='/payment' className="btn pay w-100"
+                >Pay now : Rp. 178.000</Link
               >
             </div>
           </div>
