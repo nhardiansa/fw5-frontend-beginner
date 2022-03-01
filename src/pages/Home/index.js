@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {FaChevronDown, FaStar} from 'react-icons/fa'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import VehicleImage from '../../components/VehicleImage/VehicleImage';
 import Layout from '../../components/Layout';
 import { capitalize } from '../../helpers/stringFormat';
+import constants from '../../config/constants';
 
 import testimonialImage from '../../assets/img/testimonial-user-pict/edward-newgate.png';
 import navigationIcon from '../../assets/img/circle-chevron-arrow.svg'
@@ -14,21 +15,119 @@ import './style.css'
 
 
 export const Home = () => {
+
+  const {baseURL} = constants
+  const navigate = useNavigate()
+
   const [popular, setPopular] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [locations, setLocations] = useState([]);
+
+  const [filterInput, setFilterInput] = useState({});
 
   useEffect(() => {
     if (popular.length === 0) {
-      getVehicles('/vehicles/popular', setPopular);
+      getVehicles('/vehicles/popular?limit=4', setPopular);
     }
   }, [popular]);
+
+  useEffect(() => {
+    if (types.length === 0) {
+      getTypes();
+    }
+
+    if (locations.length === 0) {
+      getLocations();
+    }
+  }, [types]);
 
   const getVehicles = async (uri, stateReducer) => {
     try {
       const {data} = await axios.get('http://localhost:5000' + uri)
-      stateReducer(data.results.slice(0,4))
+      stateReducer(data.results)
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const getTypes = async () => {
+    try {
+      const {data} = await axios.get(`${baseURL}/categories`)
+      setTypes(data.results)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const getLocations = async () => {
+    try {
+      const {data} = await axios.get(`${baseURL}/vehicles/location`)
+      setLocations(data.results)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const selectHandler = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    const selectedElement = e.target.querySelector(`option[value="${value}"]`)
+
+    if (selectedElement === null) {
+      setFilterInput({
+        ...filterInput,
+        [name]: ''
+      })
+      return 0;
+    }
+
+    if (name === 'category_id') {
+      setFilterInput({
+        ...filterInput,
+        category_id: value
+      })
+    }
+
+    if (name === 'prepayment') {
+      setFilterInput({
+        ...filterInput,
+        prepayment: value
+      })
+    }
+
+    if (name === 'location') {
+      setFilterInput({
+        ...filterInput,
+        location: value
+      })
+    }
+  }
+
+  const goToFilterPage = (e) => {
+    e.preventDefault();
+    const tempInput = filterInput
+    Object.keys(tempInput).forEach(key => {
+      if (tempInput[key] === '') {
+        delete tempInput[key]
+      }
+    })
+    const searchParams =  generateSearchParams(tempInput);
+
+    if (searchParams.length > 0) {
+      navigate(`/search?${searchParams}`)
+    }
+  }
+
+  const generateSearchParams = (queries) => {
+    const arr = []
+
+    Object.keys(queries).forEach(key => {
+      if (queries[key] !== '') {
+        arr.push(`${key}=${queries[key]}`)
+      }
+    })
+
+    return arr.join('&')
   }
 
   return (
@@ -41,17 +140,24 @@ export const Home = () => {
           <h1>Explore and Travel</h1>
           <p>Vehicle Finder</p>
           <div className="aesthetic-line rounded"></div>
-          <form className="vehicle-finder-form mt-5" action="#">
+          <form onSubmit={goToFilterPage} className="vehicle-finder-form mt-5" action="#">
             <div className="row select-group">
               <div className="my-2 col-6 position-relative">
                 <select
                   className="filter-input form-select"
                   aria-label="Default select example"
+                  name='location'
+                  onChange={selectHandler}
                 >
                   <option defaultValue>Location</option>
-                  <option defaultValue="1">One</option>
-                  <option defaultValue="2">Two</option>
-                  <option defaultValue="3">Three</option>
+                  {
+                    locations.length > 0 ?
+                    locations.map((data, idx) => (
+                      <option key={idx} value={data.location}>{data.location}</option>
+                    ))
+                    :
+                    <option defaultValue>Location not found</option>
+                  }
                 </select>
                 <FaChevronDown />
               </div>
@@ -60,11 +166,18 @@ export const Home = () => {
                 <select
                   className="filter-input form-select"
                   aria-label="Default select example"
+                  name='category_id'
+                  onChange={selectHandler}
                 >
                   <option defaultValue>Type</option>
-                  <option defaultValue="1">One</option>
-                  <option defaultValue="2">Two</option>
-                  <option defaultValue="3">Three</option>
+                  {
+                    types.length > 0 ?
+                    types.map((category, idx) => (
+                      <option key={idx} value={category.id}>{category.name}</option>
+                    ))
+                    :
+                    <option defaultValue>Types not found</option>
+                  }
                 </select>
                 <FaChevronDown />
               </div>
@@ -72,11 +185,12 @@ export const Home = () => {
                 <select
                   className="filter-input form-select"
                   aria-label="Default select example"
+                  name='prepayment'
+                  onChange={selectHandler}
                 >
                   <option defaultValue>Payment</option>
-                  <option defaultValue="1">One</option>
-                  <option defaultValue="2">Two</option>
-                  <option defaultValue="3">Three</option>
+                  <option value={0}>Cash only</option>
+                  <option value={1}>Has prepayment</option>
                 </select>
                 <FaChevronDown />
               </div>
@@ -93,7 +207,7 @@ export const Home = () => {
                 <FaChevronDown />
               </div>
             </div>
-            <button className="btn mt-4 search-btn">Explore</button>
+            <button type='submit' className="btn mt-4 search-btn">Explore</button>
           </form>
         </div>
       </section>
