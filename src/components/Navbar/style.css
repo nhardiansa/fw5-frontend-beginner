@@ -1,5 +1,6 @@
 :root {
   --one-color: #FF7C52;
+  --one-color-dark: #ff7040;
   --two-color: #FFA780;
   --three-color: #E69580;
   --four-color: #DCA7A3;
@@ -75,6 +76,7 @@ nav .profile .message-notif .count {
 nav .profile img.profile-pict {
   width: 2.5rem;
   height: 2.5rem;
+  cursor: pointer;
 }
 
 nav .profile-dropdown::after {
@@ -92,9 +94,19 @@ nav .login-btn {
   color: var(--one-color);
 }
 
+nav .login-btn:hover {
+  background: rgb(241, 241, 241);
+  color: var(--one-color-dark);
+}
+
 nav .register-btn {
   background: var(--one-color);
   color: #fff;
+}
+
+nav .register-btn:hover {
+  background: var(--one-color-dark);
+  color: rgb(241, 241, 241);
 }
 /* Navbar end */
 
