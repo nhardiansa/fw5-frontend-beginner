@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {FaChevronLeft} from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 import Footer from '../../components/Footer/Footer'
 import './style.css'
@@ -15,10 +16,10 @@ export default class ForgotPassword extends Component {
           className="forgot-wrapper container text-center d-flex flex-column align-items-center"
         >
           <div className="back-nav-section mb-5 align-self-start">
-            <a className='d-flex align-items-center' href="/login.html">
+            <Link className='d-flex align-items-center' to="/login">
               <FaChevronLeft />
               <span className="text-link">Back</span>
-            </a>
+            </Link>
           </div>
           <h1>Do’nt worry, we got your back!</h1>
           <p className="my-5">
