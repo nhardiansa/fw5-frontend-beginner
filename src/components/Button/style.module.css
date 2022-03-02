@@ -1,0 +1,31 @@
+:root {
+  --one-color: #FF7C52;
+  --one-color-dark: #da5531;
+  --two-color: #FFA780;
+  --three-color: #E69580;
+  --four-color: #DCA7A3;
+  --five-color: #FFE5D2;
+
+  --nunito-font: "Nunito", sans-serif;
+  --playfair-font: "Playfair Display", serif;
+  --rubik-font: "Rubik", sans-serif;
+  --mulish-font: "Mulish", sans-serif;
+  --poppins-font: "Poppins", sans-serif;
+}
+
+.primaryBtn {
+  font-family: var(--nunito-font);
+  border-radius: 10px;
+  background: var(--one-color);
+  color: #fff;
+  /* box-shadow: ; */
+}
+
+.primaryBtn:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 79, 10, 0.25);
+}
+
+.primaryBtn:hover {
+  background: var(--one-color-dark);
+  color: #fff;
+}
