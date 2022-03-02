@@ -8,7 +8,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import History from './pages/History';
 import Profile from './pages/Profile';
 import Payment from './pages/Payment';
-import Reservation from './pages/Reservation';
+import { Reservation } from './pages/Reservation';
 import { VehicleType } from './pages/VehicleType';
 import { VehicleDetail } from './pages/VehicleDetail';
 import Search from './pages/Search';
