@@ -50,7 +50,7 @@ export default class Reservation extends Component {
                   <p className="text-center text-md-start text-danger fw-bold fs-5 mt-lg-4">No prepayment</p>
                 </div>
                 <div className="counter d-flex justify-content-between align-items-center px-0 mt-4">
-                  <Button className="py-3 minus px-md-4 fs-2" template='secondaryBtn'>
+                  <Button className="py-3 minus px-md-4 fs-2" variant='secondaryBtn'>
                     <FaMinus />
                   </Button>
                     <span className="fs-1 fw-bold">2</span>
