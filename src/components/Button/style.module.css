@@ -18,7 +18,6 @@
   border-radius: 10px;
   background: var(--one-color);
   color: #fff;
-  /* box-shadow: ; */
 }
 
 .primaryBtn:focus {
@@ -28,4 +27,12 @@
 .primaryBtn:hover {
   background: var(--one-color-dark);
   color: #fff;
+}
+
+.secondaryBtn {
+  font-family: var(--nunito-font);
+  border-radius: 10px;
+
+  background: var(--five-color);
+  color: var(--one-color);
 }
