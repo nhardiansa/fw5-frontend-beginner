@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {FaPencilAlt} from 'react-icons/fa'
 
+import Button from '../../components/Button'
 import profilePicture from '../../assets/img/profile-picture/samantha-doe.png'
 import Layout from '../../components/Layout'
 import './style.css'
@@ -22,12 +23,12 @@ export default class Profile extends Component {
                 alt="samantha-doe"
                 className="contact-img img-thumbnail rounded-circle"
               />
-              <button
+              <Button
                 className="edit-btn rounded-circle btn position-absolute"
               >
                 {/* <i className="fa-solid fa-pencil"></i> */}
                 <FaPencilAlt />
-              </button>
+              </Button>
             </div>
             <div className="contact-info mt-5">
               <h2 className="">Samantha Doe</h2>
@@ -132,9 +133,9 @@ export default class Profile extends Component {
               <div
                 className="button-groups d-flex justify-content-between flex-column flex-md-row mt-5"
               >
-                <button className="save btn">Save Change</button>
-                <a href="/" className="edit-password btn">Edit Password</a>
-                <button className="cancel btn">Cancel</button>
+                <Button className="save btn">Save Change</Button>
+                <Button className="edit-password btn">Edit Password</Button>
+                <Button className="cancel btn">Cancel</Button>
               </div>
             </form>
           </div>

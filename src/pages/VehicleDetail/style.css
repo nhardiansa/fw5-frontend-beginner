@@ -4,6 +4,7 @@
   --three-color: #E69580;
   --four-color: #DCA7A3;
   --five-color: #FFE5D2;
+  --five-color-dark: #ffd2b1;
 }
 
 html {
@@ -114,6 +115,11 @@ main button:focus {
   color: #FFFFFF;
 }
 
+.qty-control.minus:hover {
+  background: var(--five-color-dark);
+  color: var(--one-color);;
+}
+
 .action-group .btn {
   background:var(--one-color);
   font-weight: 700;
@@ -167,9 +173,9 @@ main button:focus {
   }
 
   /* Main start */
-  main {
-    /* padding-top: 10rem !important; */
-  }
+  /* main {
+    padding-top: 10rem !important;
+  } */
 
   .back-btn {
     font-size: 2.25rem;

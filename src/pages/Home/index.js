@@ -12,6 +12,7 @@ import testimonialImage from '../../assets/img/testimonial-user-pict/edward-newg
 import navigationIcon from '../../assets/img/circle-chevron-arrow.svg'
 
 import './style.css'
+import Button from '../../components/Button';
 
 
 export const Home = () => {
@@ -207,7 +208,7 @@ export const Home = () => {
                 <FaChevronDown />
               </div>
             </div>
-            <button type='submit' className="btn mt-4 search-btn">Explore</button>
+            <Button type='submit' className='mt-4 px-4 py-2'>Explore</Button>
           </form>
         </div>
       </section>

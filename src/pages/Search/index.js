@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
+import Button from '../../components/Button'
 import constants from '../../config/constants'
 import Layout from '../../components/Layout'
 import VehicleImage from '../../components/VehicleImage/VehicleImage';
@@ -243,7 +244,7 @@ export default function Search({viewMore}) {
                 <option value="3">Three</option>
               </select>
             </div>
-            <button onClick={getFilterData} className='filter-btn btn col-12'>Filter</button>
+            <Button onClick={getFilterData} className='filter-btn btn col-12'>Filter</Button>
             
           </div>
         </div>

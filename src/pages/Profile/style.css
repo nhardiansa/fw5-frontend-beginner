@@ -1,9 +1,11 @@
 :root {
   --one-color: #FF7C52;
+  --one-color-dark: #da5531;
   --two-color: #FFA780;
   --three-color: #E69580;
   --four-color: #DCA7A3;
   --five-color: #FFE5D2;
+  --five-color-dark: #ffd6b8;
 }
 
 html {
@@ -65,7 +67,6 @@ main .edit-btn {
 
   position: absolute;
 
-  background: var(--one-color);
   color: var(--five-color);
 }
 
@@ -160,18 +161,23 @@ main .form-section .button-groups button, main .form-section .button-groups a {
   line-height: 2rem;
 }
 
-main .form-section .button-groups button.save {
-  background: var(--one-color);
-  color: #ffff;
-}
-
-main .form-section .button-groups > a.edit-password {
+main .form-section .button-groups > .edit-password {
   background: var(--five-color);
   color: var(--one-color);
 }
 
+main .form-section .button-groups > .edit-password:hover {
+  background: var(--five-color-dark);
+  color: var(--one-color-dark);
+}
+
 main .form-section .button-groups button.cancel {
-  background:  rgba(203, 203, 212, 0.27);;
+  background:  rgba(203, 203, 212, 0.27);
+  color: #0000008c;
+}
+
+main .form-section .button-groups button.cancel:hover {
+  background:  rgba(140, 140, 153, 0.27);
 }
   /* Main end */
   

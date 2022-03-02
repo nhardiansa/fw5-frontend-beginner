@@ -104,19 +104,6 @@ nav .navbar-brand img, footer .ts img {
 .jumbotron select.filter-input:focus ~ .down-icon {
   transform: rotate(180deg);
 }
-
-.jumbotron .hero-content button.search-btn {
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 1.125rem;
-  color: #fff;
-  background: var(--one-color);
-  border-radius: 8px;
-  border: none;
-
-  padding: 0.6rem 2rem;
-}
 /* Jumbotron end */
 
 /* Popular start */

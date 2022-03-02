@@ -5,6 +5,7 @@ import {  FaChevronLeft, FaHeart, FaMinus, FaPlus } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
+import Button from '../../components/Button'
 
 import pict from '../../assets/img/bike/image-banner.png'
 import './style.css'
@@ -117,24 +118,24 @@ export const VehicleDetail = () => {
           </div>
           <div className="counter mt-5 mt-md-0 d-lg-flex justify-content-start">
             <div className="d-flex justify-content-around align-items-center w-100">
-              <button className="qty-control btn minus">
+              <Button className="qty-control btn minus">
                 <FaMinus />
-              </button>
+              </Button>
               <span className="qty-number fs-1">2</span>
-              <button className="qty-control btn plus">
+              <Button className="qty-control btn plus">
                 <FaPlus />
-              </button>
+              </Button>
             </div>
           </div>
           <div
             className="action-group mt-5 mt-md-0 d-flex flex-column flex-md-row justify-content-between"
           >
-            <button className="btn chat mb-3 mb-md-0">Chat Admin</button>
-            <button onClick={goToReservation} className="reservation btn mb-3 mb-md-0 mx-md-5"
-              >Reservation</button>
-            <button className="btn like d-flex justify-content-center align-items-center">
+            <Button className="mb-3 mb-md-0">Chat Admin</Button>
+            <Button onClick={goToReservation} className="reservation btn mb-3 mb-md-0 mx-md-5"
+              >Reservation</Button>
+            <Button className="btn like d-flex justify-content-center align-items-center">
               <FaHeart className="heart-icon mb-1 me-2 me-lg-3" /> <span>Like</span>
-            </button>
+            </Button>
           </div>
         </div>
       </>
@@ -143,7 +144,7 @@ export const VehicleDetail = () => {
 
   return (
     <Layout>
-      <main className="container mt-lg-4 px-5 px-lg-0">
+      <main className="detail container mt-lg-4 px-5 px-lg-0">
         {
           Object.keys(vehicle).length && detailDisplay(vehicle)
         }

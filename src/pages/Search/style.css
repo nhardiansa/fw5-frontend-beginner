@@ -4,6 +4,5 @@
 }
 
 .filter-btn {
-  background: var(--one-color);
-  color: #ffff;
+  border-radius: 0.3rem;
 }
