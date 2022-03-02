@@ -13,3 +13,7 @@
   --mulish-font: "Mulish", sans-serif;
   --poppins-font: "Poppins", sans-serif;
 }
+
+.fw-black {
+  font-weight: 900;
+}

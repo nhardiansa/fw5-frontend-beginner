@@ -6,6 +6,8 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import './global.css';
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

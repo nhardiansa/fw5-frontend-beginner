@@ -53,7 +53,7 @@ export default class Reservation extends Component {
                   <Button className="py-3 minus px-md-4 fs-2" variant='secondaryBtn'>
                     <FaMinus />
                   </Button>
-                    <span className="fs-1 fw-bold">2</span>
+                    <span className="fs-1 fw-black">2</span>
                   <Button className="plus py-3 px-md-4 fs-2">
                     <FaPlus />
                   </Button>
