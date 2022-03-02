@@ -1,65 +1,65 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-import VehicleImage from '../../components/VehicleImage/VehicleImage'
+import VehicleImage from '../../components/VehicleImage/VehicleImage';
 
-import Layout from '../../components/Layout'
-import { capitalize } from '../../helpers/stringFormat'
+import Layout from '../../components/Layout';
+import { capitalize } from '../../helpers/stringFormat';
 
-import './style.css'
+import './style.css';
 
-export const ViewMore = () =>  {
-  const {type} = useParams()
-  const [vehicles, setVehicles] = useState([])
-  const [pageInfo, setPageInfo] = useState({})
+export const ViewMore = () => {
+  const { type } = useParams();
+  const [vehicles, setVehicles] = useState([]);
+  const [pageInfo, setPageInfo] = useState({});
 
   useEffect(() => {
     if (vehicles.length === 0) {
-      mapVehicleData(type)
+      mapVehicleData(type);
     }
-  }, [])
+  }, []);
 
   const mapVehicleData = (type) => {
     switch (type) {
       case 'motorbike':
-        getVehicle('/vehicles/filter?limit=16&category_id=3', setVehicles)
+        getVehicle('/vehicles/filter?limit=16&category_id=3', setVehicles);
         break;
       case 'car':
-        getVehicle('/vehicles/filter?limit=16&category_id=2', setVehicles)
+        getVehicle('/vehicles/filter?limit=16&category_id=2', setVehicles);
         break;
       case 'bike':
-        getVehicle('/vehicles/filter?limit=16&category_id=4', setVehicles)
+        getVehicle('/vehicles/filter?limit=16&category_id=4', setVehicles);
         break;
       default:
-        getVehicle('/vehicles/popular?limit=16', setVehicles)
+        getVehicle('/vehicles/popular?limit=16', setVehicles);
         break;
     }
-  }
+  };
 
   const getVehicle = async (uri, stateReducer) => {
     try {
       if (uri) {
-        const {data} = await axios.get('http://localhost:5000' + uri)
-        stateReducer(data.results)
-        setPageInfo(data.pageInfo)
+        const { data } = await axios.get('http://localhost:5000' + uri);
+        stateReducer(data.results);
+        setPageInfo(data.pageInfo);
       } else {
-        const {data} = await axios.get(pageInfo.nextPage)
+        const { data } = await axios.get(pageInfo.nextPage);
         setPageInfo(data.pageInfo);
         stateReducer([
           ...vehicles,
           ...data.results
-        ])
+        ]);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const renderVehicles = () => {
     return (
       <main className={vehicles.length === 0 ? 'vh-100' : ''}>
-        <div className={`view-more-wrapper container d-flex flex-column`}>
+        <div className={'view-more-wrapper container d-flex flex-column'}>
           {
             type === 'popular' &&
             <h1 className="view-more-title text-center text-md-start">Popular in town</h1>
@@ -69,7 +69,7 @@ export const ViewMore = () =>  {
             <h1 className="view-more-title text-center text-md-start">{capitalize(type) + 's'}</h1>
           }
           {
-            vehicles.length > 0 && 
+            vehicles.length > 0 &&
             <p className="click-suggestion mt-4 text-center fw-bold">
               Click item to see details and reservation
             </p>
@@ -80,7 +80,7 @@ export const ViewMore = () =>  {
             {
               vehicles.length > 0 &&
                 vehicles.map((el, i) => {
-                  const img = el.image || 'https://via.placeholder.com/261x333?text=Popular+in+town'
+                  const img = el.image || 'https://via.placeholder.com/261x333?text=Popular+in+town';
                   return (
                     <VehicleImage
                       to={`/vehicles/${el.id}`}
@@ -90,8 +90,8 @@ export const ViewMore = () =>  {
                       location={capitalize(el.location)}
                       className='view-more-item p-0 pe-md-3 col-12 col-md-4 col-lg-3'
                     />
-                  )
-                })  
+                  );
+                })
             }
           </div>
           {
@@ -104,9 +104,9 @@ export const ViewMore = () =>  {
           }
         </div>
       </main>
-    )
-  }
-  
+    );
+  };
+
   return (
     <Layout isLogged={true}>
       {
@@ -114,5 +114,5 @@ export const ViewMore = () =>  {
         renderVehicles()
       }
     </Layout>
-  )
-}
+  );
+};

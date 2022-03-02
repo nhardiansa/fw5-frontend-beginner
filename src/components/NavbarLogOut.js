@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import '../assets/css/NavbarLogOut.css';
 import carWeel from '../assets/img/car-wheel.png';
 
 export default class NavbarLogOut extends Component {
   clickHandler = () => {
-    this.props.setLogin(false)
-  }
+    this.props.setLogin(false);
+  };
 
-
-  render() {
+  render () {
     return (
       <nav
       className="navbar navbar-expand-lg navbar-light bg-light position-fixed top-0 w-100 py-lg-4"
@@ -53,6 +52,6 @@ export default class NavbarLogOut extends Component {
         </div>
       </div>
     </nav>
-    )
+    );
   }
 }

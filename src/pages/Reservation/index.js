@@ -1,28 +1,26 @@
-import React, { Component } from 'react'
-import {FaChevronDown, FaChevronLeft, FaMinus, FaPlus} from 'react-icons/fa'
+import { Component } from 'react';
+import { FaChevronLeft, FaMinus, FaPlus } from 'react-icons/fa';
 
-import Layout from '../../components/Layout'
-import Button from '../../components/Button'
+import Layout from '../../components/Layout';
+import Button from '../../components/Button';
 
-import vehicle from '../../assets/img/bike/image-banner.png'
-import './style.css'
-import { Link } from 'react-router-dom'
+import vehicle from '../../assets/img/bike/image-banner.png';
+import './style.css';
 
 export default class Reservation extends Component {
-
   focusHandler = (e) => {
     // e.target.type = 'date'
-  }
+  };
 
   blurHandler = (e) => {
     // e.target.type = 'text'
-  }
+  };
 
   goBack = () => {
-    window.history.back()
-  }
+    window.history.back();
+  };
 
-  render() {
+  render () {
     return (
       <Layout isLogged={true}>
         <main className="reservation-wrapper container px-4 px-lg-0">
@@ -91,6 +89,6 @@ export default class Reservation extends Component {
           </div>
         </main>
       </Layout>
-    )
+    );
   }
 }

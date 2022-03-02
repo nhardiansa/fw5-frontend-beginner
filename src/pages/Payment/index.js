@@ -1,15 +1,16 @@
-import React, { Component } from 'react'
-import Layout from '../../components/Layout'
+import { Component } from 'react';
+import Layout from '../../components/Layout';
 
-import vehiclePict from '../../assets/img/bike/image-banner.png'
-import './style.css'
-import { FaChevronLeft } from 'react-icons/fa'
+import vehiclePict from '../../assets/img/bike/image-banner.png';
+import './style.css';
+import { FaChevronLeft } from 'react-icons/fa';
 
 export default class Payment extends Component {
   onClick = () => {
-    window.history.back()
-  }
-  render() {
+    window.history.back();
+  };
+
+  render () {
     return (
       <Layout isLogged={true}>
         <main className="container">
@@ -91,6 +92,6 @@ export default class Payment extends Component {
           </div>
         </main>
       </Layout>
-    )
+    );
   }
 }

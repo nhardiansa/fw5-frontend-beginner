@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import {FaChevronDown, FaStar} from 'react-icons/fa'
+import { useEffect, useState } from 'react';
+import { FaChevronDown, FaStar } from 'react-icons/fa';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -9,16 +9,14 @@ import { capitalize } from '../../helpers/stringFormat';
 import constants from '../../config/constants';
 
 import testimonialImage from '../../assets/img/testimonial-user-pict/edward-newgate.png';
-import navigationIcon from '../../assets/img/circle-chevron-arrow.svg'
+import navigationIcon from '../../assets/img/circle-chevron-arrow.svg';
 
-import './style.css'
+import './style.css';
 import Button from '../../components/Button';
 
-
 export const Home = () => {
-
-  const {baseURL} = constants
-  const navigate = useNavigate()
+  const { baseURL } = constants;
+  const navigate = useNavigate();
 
   const [popular, setPopular] = useState([]);
   const [types, setTypes] = useState([]);
@@ -44,41 +42,41 @@ export const Home = () => {
 
   const getVehicles = async (uri, stateReducer) => {
     try {
-      const {data} = await axios.get('http://localhost:5000' + uri)
-      stateReducer(data.results)
+      const { data } = await axios.get('http://localhost:5000' + uri);
+      stateReducer(data.results);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const getTypes = async () => {
     try {
-      const {data} = await axios.get(`${baseURL}/categories`)
-      setTypes(data.results)
+      const { data } = await axios.get(`${baseURL}/categories`);
+      setTypes(data.results);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const getLocations = async () => {
     try {
-      const {data} = await axios.get(`${baseURL}/vehicles/location`)
-      setLocations(data.results)
+      const { data } = await axios.get(`${baseURL}/vehicles/location`);
+      setLocations(data.results);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const selectHandler = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-    const selectedElement = e.target.querySelector(`option[value="${value}"]`)
+    const name = e.target.name;
+    const value = e.target.value;
+    const selectedElement = e.target.querySelector(`option[value="${value}"]`);
 
     if (selectedElement === null) {
       setFilterInput({
         ...filterInput,
         [name]: ''
-      })
+      });
       return 0;
     }
 
@@ -86,56 +84,56 @@ export const Home = () => {
       setFilterInput({
         ...filterInput,
         category_id: value
-      })
+      });
     }
 
     if (name === 'prepayment') {
       setFilterInput({
         ...filterInput,
         prepayment: value
-      })
+      });
     }
 
     if (name === 'location') {
       setFilterInput({
         ...filterInput,
         location: value
-      })
+      });
     }
-  }
+  };
 
   const goToFilterPage = (e) => {
     e.preventDefault();
-    const tempInput = filterInput
+    const tempInput = filterInput;
     Object.keys(tempInput).forEach(key => {
       if (tempInput[key] === '') {
-        delete tempInput[key]
+        delete tempInput[key];
       }
-    })
-    const searchParams =  generateSearchParams(tempInput);
+    });
+    const searchParams = generateSearchParams(tempInput);
 
     if (searchParams.length > 0) {
-      navigate(`/search?${searchParams}`)
+      navigate(`/search?${searchParams}`);
     }
-  }
+  };
 
   const generateSearchParams = (queries) => {
-    const arr = []
+    const arr = [];
 
     Object.keys(queries).forEach(key => {
       if (queries[key] !== '') {
-        arr.push(`${key}=${queries[key]}`)
+        arr.push(`${key}=${queries[key]}`);
       }
-    })
+    });
 
-    return arr.join('&')
-  }
+    return arr.join('&');
+  };
 
   return (
     <>
       <Layout>
 
-      {/*=============== Jumbotron =============== */}
+      {/* =============== Jumbotron =============== */}
       <section className="jumbotron container-fluid pt-5">
         <div className="hero-content container">
           <h1>Explore and Travel</h1>
@@ -152,12 +150,11 @@ export const Home = () => {
                 >
                   <option defaultValue>Location</option>
                   {
-                    locations.length > 0 ?
-                    locations.map((data, idx) => (
+                    locations.length > 0
+                      ? locations.map((data, idx) => (
                       <option key={idx} value={data.location}>{data.location}</option>
-                    ))
-                    :
-                    <option defaultValue>Location not found</option>
+                      ))
+                      : <option defaultValue>Location not found</option>
                   }
                 </select>
                 <FaChevronDown />
@@ -172,12 +169,11 @@ export const Home = () => {
                 >
                   <option defaultValue>Type</option>
                   {
-                    types.length > 0 ?
-                    types.map((category, idx) => (
+                    types.length > 0
+                      ? types.map((category, idx) => (
                       <option key={idx} value={category.id}>{category.name}</option>
-                    ))
-                    :
-                    <option defaultValue>Types not found</option>
+                      ))
+                      : <option defaultValue>Types not found</option>
                   }
                 </select>
                 <FaChevronDown />
@@ -213,7 +209,7 @@ export const Home = () => {
         </div>
       </section>
 
-      {/*=============== Popular =============== */}
+      {/* =============== Popular =============== */}
       <section className="popular container px-lg-4 px-5">
         <div
           className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
@@ -242,7 +238,7 @@ export const Home = () => {
         ></Link>
       </section>
 
-      {/*=============== Testimonials =============== */}
+      {/* =============== Testimonials =============== */}
       <section className="testimonial container px-lg-4 px-5">
         <h2 className="text-center text-md-start">Testimonials</h2>
         <div className="testimonial-wrapper row flex-row-reverse">
@@ -298,5 +294,5 @@ export const Home = () => {
 
       </Layout>
     </>
-  )
-}
+  );
+};

@@ -12,39 +12,39 @@ export const Login = () => {
   const [loginData, setLoginData] = useState(
     {
       email: '',
-      password: '',
+      password: ''
     }
-  )
+  );
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setLoginData({
       ...loginData,
       [e.target.name]: e.target.value
-    })
+    });
     // console.log(e.target.name);
-  }
+  };
 
   const submitHandler = (e) => {
-    e.preventDefault()
-    const { email, password } = loginData
-    const data = e.target.elements.email.value
+    e.preventDefault();
+    const { email, password } = loginData;
+    const data = e.target.elements.email.value;
     console.log(data);
 
     if (!(email === 'admin@mail.com' && password === '1234')) {
       return alert('Invalid credentials');
     }
-    
-    navigate('/');
-  }
 
-    return (
+    navigate('/');
+  };
+
+  return (
       <main className='row g-0 p-0 '>
         {/* <div id="side-image d-none d-lg-block col-6">
         </div> */}
-        <img 
-          src={sideImg} 
-          alt="" 
+        <img
+          src={sideImg}
+          alt=""
           className='side-img img-fluid d-none d-lg-block col-6'
         />
         <section className="login-section col-lg-6 d-flex flex-column justify-content-center">
@@ -101,7 +101,7 @@ export const Login = () => {
           </footer>
         </section>
     </main>
-    )
-}
+  );
+};
 
 // export default Login;

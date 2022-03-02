@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import {FaChevronLeft} from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Component } from 'react';
+import { FaChevronLeft } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
-import Footer from '../../components/Footer/Footer'
-import './style.css'
+import Footer from '../../components/Footer/Footer';
+import './style.css';
 
 export default class ForgotPassword extends Component {
-  render() {
+  render () {
     return (
       <>
-      {/*=============== Header =============== */}
+      {/* =============== Header =============== */}
       <header>
       <div className="filter">
         <div
@@ -40,9 +40,9 @@ export default class ForgotPassword extends Component {
       </div>
     </header>
 
-    {/*=============== Footer =============== */}
+    {/* =============== Footer =============== */}
     <Footer />
     </>
-    )
+    );
   }
 }

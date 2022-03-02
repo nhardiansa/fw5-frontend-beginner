@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import {FaPencilAlt} from 'react-icons/fa'
+import { Component } from 'react';
+import { FaPencilAlt } from 'react-icons/fa';
 
-import Button from '../../components/Button'
-import profilePicture from '../../assets/img/profile-picture/samantha-doe.png'
-import Layout from '../../components/Layout'
-import './style.css'
+import Button from '../../components/Button';
+import profilePicture from '../../assets/img/profile-picture/samantha-doe.png';
+import Layout from '../../components/Layout';
+import './style.css';
 
 export default class Profile extends Component {
-  render() {
+  render () {
     return (
       <Layout isLogged={true} >
         <main className="container">
@@ -142,6 +142,6 @@ export default class Profile extends Component {
           {/* <!-- Edit contact & identity form end --> */}
         </main>
       </Layout>
-    )
+    );
   }
 }

@@ -1,34 +1,33 @@
-import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
-import {  FaChevronLeft, FaHeart, FaMinus, FaPlus } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { FaChevronLeft, FaHeart, FaMinus, FaPlus } from 'react-icons/fa';
 
-import Layout from '../../components/Layout'
-import Button from '../../components/Button'
+import Layout from '../../components/Layout';
+import Button from '../../components/Button';
 
-import pict from '../../assets/img/bike/image-banner.png'
-import './style.css'
-import { priceFormat, queryFormat } from '../../helpers/stringFormat'
+import pict from '../../assets/img/bike/image-banner.png';
+import './style.css';
+import { priceFormat, queryFormat } from '../../helpers/stringFormat';
 
 export const VehicleDetail = () => {
-  const {id} = useParams()
-  const navigate = useNavigate()
-  const [vehicle, setVehicle] = useState({})
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [vehicle, setVehicle] = useState({});
 
   useEffect(() => {
-    getVehicleData(id)
-  }, [id])
+    getVehicleData(id);
+  }, [id]);
 
   const getVehicleData = async (id) => {
     try {
-      const {data} = await axios.get(`http://localhost:5000/vehicles/${id}`)
-      setVehicle(data.results)
+      const { data } = await axios.get(`http://localhost:5000/vehicles/${id}`);
+      setVehicle(data.results);
     } catch (error) {
       console.error(error);
-      setVehicle({})
+      setVehicle({});
     }
-  }
+  };
 
   const detailDisplay = (data) => {
     const {
@@ -38,26 +37,26 @@ export const VehicleDetail = () => {
       booked,
       capacity,
       prepayment,
-      category_name,
+      category_name: categoryName,
       price,
       image
-    } = data
+    } = data;
 
-    const vehicleImg = image || `https://via.placeholder.com/261x333?text=${queryFormat(name)}`
+    const vehicleImg = image || `https://via.placeholder.com/261x333?text=${queryFormat(name)}`;
 
     const capitalize = (str) => {
-      return str.split(' ').map(el => el.charAt(0).toUpperCase() + el.slice(1)).join(' ')
-    }
+      return str.split(' ').map(el => el.charAt(0).toUpperCase() + el.slice(1)).join(' ');
+    };
 
     const goBack = () => {
-      window.history.back()
-    }
+      window.history.back();
+    };
 
     const goToReservation = () => {
-      navigate('/reservation')
-    }
+      navigate('/reservation');
+    };
 
-    const availability = qty - booked
+    const availability = qty - booked;
     return (
       <>
         <div className="back-section">
@@ -100,7 +99,7 @@ export const VehicleDetail = () => {
               availability < 1 && <p className="availability text-danger">Full Booked</p>
             }
             {
-              (availability < 3 && availability > 0) && <p className="availability text-warning"> {availability} {capitalize(category_name)} left </p>
+              (availability < 3 && availability > 0) && <p className="availability text-warning"> {availability} {capitalize(categoryName)} left </p>
             }
             {
               Number(prepayment) > 0 && <p className="prepayment text-success">Has prepayment</p>
@@ -108,10 +107,10 @@ export const VehicleDetail = () => {
             {
               Number(prepayment) < 1 && <p className="prepayment text-danger">No prepayment</p>
             }
-            
+
             <p className="vehicle-desc">
               Capacity : {capacity} person <br />
-              Type : {capitalize(category_name)} <br />
+              Type : {capitalize(categoryName)} <br />
               Reservation before 2 PM
             </p>
             <p className="price mb-0 text-lg-end">Rp. {priceFormat(price)}/day</p>
@@ -139,8 +138,8 @@ export const VehicleDetail = () => {
           </div>
         </div>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <Layout>
@@ -150,5 +149,5 @@ export const VehicleDetail = () => {
         }
       </main>
     </Layout>
-  )
-}
+  );
+};

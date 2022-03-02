@@ -1,26 +1,26 @@
-import React, { Component } from 'react'
-import {FaChevronDown, FaChevronRight} from 'react-icons/fa'
-import {HiSearch} from 'react-icons/hi'
+import { Component } from 'react';
+import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
+import { HiSearch } from 'react-icons/hi';
 
-import vespa from '../../assets/img/motorbike/vespa.png'
-import VehicleImage from '../../components/VehicleImage/VehicleImage'
-import Layout from '../../components/Layout'
-import './style.css'
+import vespa from '../../assets/img/motorbike/vespa.png';
+import VehicleImage from '../../components/VehicleImage/VehicleImage';
+import Layout from '../../components/Layout';
+import './style.css';
 
 export default class History extends Component {
-  render() {
+  render () {
     const newArrivals = [
       {
         src: vespa,
         name: 'Lamborghini',
-        location: 'Yogyakarta',
+        location: 'Yogyakarta'
       },
       {
         src: vespa,
         name: 'White Jeep',
-        location: 'Kalimantan',
+        location: 'Kalimantan'
       }
-    ]
+    ];
     return (
       <>
         <Layout>
@@ -127,12 +127,12 @@ export default class History extends Component {
                     className='mb-5'
                   />
                 ))}
-                
+
                 <a
                   href="/vehicle-type.html"
                   className="view-more-link d-flex flex-column align-items-center"
                 >
-                  View more 
+                  View more
                   <FaChevronDown className='view-more-icon mt-3' />
                 </a>
               </div>
@@ -140,9 +140,8 @@ export default class History extends Component {
           </main>
         </Layout>
 
-
         {/* <Footer /> */}
       </>
-    )
+    );
   }
 }

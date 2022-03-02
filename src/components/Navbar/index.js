@@ -1,25 +1,24 @@
-import React, { useState } from 'react'
-import {Link, useNavigate} from 'react-router-dom'
-import { HiSearch } from 'react-icons/hi'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { HiSearch } from 'react-icons/hi';
 
-import constants from '../../config/constants'
-import logo from '../../assets/img/car-wheel.png'
-import profilePict from '../../assets/img/profile-picture/samantha-doe.png'
-import msgIcon from '../../assets/img/msg-icon.svg'
+import logo from '../../assets/img/car-wheel.png';
+import profilePict from '../../assets/img/profile-picture/samantha-doe.png';
+import msgIcon from '../../assets/img/msg-icon.svg';
 import './style.css';
 
 export const Navbar = () => {
-  const navigate = useNavigate()
-  const {itemLimit} = constants
-  const [isLogged, setIsLogged] = useState(true)
+  const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
+  const [isLogged, setIsLogged] = useState(true);
 
   const onSearchHandler = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const keyword = e.target.querySelector('input').value;
     if (keyword.length > 0) {
-      navigate(`/search?name=${keyword}`)
+      navigate(`/search?name=${keyword}`);
     }
-  }
+  };
 
   return (
     <nav
@@ -75,7 +74,7 @@ export const Navbar = () => {
               </div>
             )
           }
-          
+
           <button
             className="navbar-toggler"
             type="button"
@@ -152,13 +151,13 @@ export const Navbar = () => {
           {
             !isLogged && (
               <div className="auth d-flex flex-column flex-lg-row">
-                <Link to="/login"  className="login-btn fw-normal btn rounded-3 mb-3 mb-lg-0" >
+                <Link to="/login" className="login-btn fw-normal btn rounded-3 mb-3 mb-lg-0" >
                   Login
                 </Link>
                 <Link
                   to="/register"
                   className="register-btn fw-normal btn rounded-3 mb-3 mb-lg-0"
-                  
+
                 >
                   Register
                 </Link>
@@ -168,5 +167,5 @@ export const Navbar = () => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};

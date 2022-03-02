@@ -1,21 +1,21 @@
-import React, { Component } from 'react'
+import { Component } from 'react';
 import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 
 import sideImg from '../../assets/img/side-login-img.png';
-import googleIcon from '../../assets/img/google-icon.svg'
-import logo from '../../assets/img/car-wheel.png'
+import googleIcon from '../../assets/img/google-icon.svg';
+import logo from '../../assets/img/car-wheel.png';
 
-import './style.css'
+import './style.css';
 import { Link } from 'react-router-dom';
 
 export default class Register extends Component {
-  render() {
+  render () {
     return (
       <main className='row g-0 p-0'>
         {/* <div id="side-image" className=""></div> */}
-        <img 
-          src={sideImg} 
-          alt="side" 
+        <img
+          src={sideImg}
+          alt="side"
           className='side-img img-fluid d-none d-lg-block col-6'
         />
         <section className="login-section col-lg-6 col-12 d-flex flex-column justify-content-center">
@@ -71,6 +71,6 @@ export default class Register extends Component {
           </footer>
         </section>
       </main>
-    )
+    );
   }
 }
