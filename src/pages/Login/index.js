@@ -31,11 +31,11 @@ export const Login = () => {
     const data = e.target.elements.email.value
     console.log(data);
 
-    // if (!(email === 'admin@mail.com' && password === '1234')) {
-    //   return alert('Invalid credentials');
-    // }
+    if (!(email === 'admin@mail.com' && password === '1234')) {
+      return alert('Invalid credentials');
+    }
     
-    // navigate('/');
+    navigate('/');
   }
 
     return (
@@ -55,7 +55,7 @@ export const Login = () => {
               <input className="mb-3" type="password" placeholder="Password" name='password' onChange={handleChange} />
               <button type='submit' className="btn login mt-4" >Login</button>
             </form>
-            <a className="forgot" href="/forgot-password.html">Forgot password?</a>
+            <Link className="forgot" to="/forgotPassword">Forgot password?</Link>
             <div
               className="separator my-4 d-flex justify-content-center align-items-center"
             >
