@@ -1,5 +1,4 @@
-import { Component } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import { Login } from './pages/Login';
 import { Home } from './pages/Home';
@@ -13,36 +12,32 @@ import { VehicleType } from './pages/VehicleType';
 import { VehicleDetail } from './pages/VehicleDetail';
 import Search from './pages/Search';
 
-export default class App extends Component {
-  state = {
-    isLogged: false
-  };
+import { PrivateRoute, PublicRoute } from './components/Routes';
 
-  setLoginHandler = (value) => {
-    this.setState({
-      isLogged: value
-    });
-  };
-
-  render () {
-    return (
+export default function App () {
+  return (
       <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login setLogin={this.setLoginHandler} />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/histories" element={<History />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/reservation" element={<Reservation />} />
-        <Route path="/vehicles" element={<VehicleType />} />
-        <Route path="/vehicles/more" element={<Search viewMore={true} />} />
-        <Route path='/vehicles/:id' element={<VehicleDetail />} />
-        <Route path='/search' element={<Search />} />
-        <Route path='/payment' element={<Payment />} />
-      </Routes>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<PublicRoute restricted={true} page={<Login />} />} />
+          <Route path="/register" element={<PublicRoute restricted={true} page={<Register />} />} />
+          <Route path="/forgotPassword" element={<PublicRoute restricted={true} page={<ForgotPassword />} />} />
+          <Route path="/forgotPassword" element={<PublicRoute restricted={true} page={<ForgotPassword />} />} />
+
+          <Route path="/" element={<Home />} />
+          <Route path="/vehicles" element={<VehicleType />} />
+          <Route path="/vehicles/more" element={<Search viewMore={true} />} />
+          <Route path='/vehicles/:id' element={<VehicleDetail />} />
+          <Route path='/search' element={<Search />} />
+
+          <Route path="/profile" element={<PrivateRoute restricted={true} page={<Profile />} />} />
+
+          <Route path="/histories" element={<History />} />
+          <Route path="/reservation" element={<Reservation />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path='*' element={<Home />} />
+        </Routes>
+      </BrowserRouter>
       </>
-    );
-  }
+  );
 }

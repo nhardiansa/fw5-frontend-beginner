@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HiSearch } from 'react-icons/hi';
 
@@ -6,11 +6,26 @@ import logo from '../../assets/img/car-wheel.png';
 import profilePict from '../../assets/img/profile-picture/samantha-doe.png';
 import msgIcon from '../../assets/img/msg-icon.svg';
 import './style.css';
+import { connect } from 'react-redux';
 
-export const Navbar = () => {
+const mapStateToProps = (state) => ({ auth: state.auth });
+
+export const Navbar = ({ auth }) => {
   const navigate = useNavigate();
-  // eslint-disable-next-line no-unused-vars
-  const [isLogged, setIsLogged] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    const storage = window.localStorage;
+    const user = storage.getItem('user');
+
+    console.log(auth);
+
+    if (user) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+  }, []);
 
   const onSearchHandler = (e) => {
     e.preventDefault();
@@ -19,6 +34,10 @@ export const Navbar = () => {
       navigate(`/search?name=${keyword}`);
     }
   };
+
+  // const onLogoutHandler = () => {
+
+  // };
 
   return (
     <nav
@@ -169,3 +188,5 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+export default connect(mapStateToProps)(Navbar);

@@ -20,7 +20,7 @@ export default class Register extends Component {
         />
         <section className="login-section col-lg-6 col-12 d-flex flex-column justify-content-center">
           <div className="main d-flex flex-column justify-content-center flex-fill">
-            <h1 className="text-center text-lg-start mt-5 mb-5">Sign Up</h1>
+            <h1 className="text-center text-lg-start mt-5 mb-5 fw-bold">Sign Up</h1>
             <form action="#" className="login-form d-flex flex-column mb-3">
               <input className="mb-3" type="text" placeholder="Name" />
               <input className="mb-3" type="text" placeholder="Email" />
