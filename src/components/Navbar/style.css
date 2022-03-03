@@ -19,7 +19,7 @@ a {
 /* Navbar start */
 nav {
   font-family: Nunito, sans-serif;
-  z-index: 1;
+  z-index: 5;
 }
 
 nav .navbar-toggler {

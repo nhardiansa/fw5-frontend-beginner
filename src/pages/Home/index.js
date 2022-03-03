@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { FaChevronDown, FaStar } from 'react-icons/fa';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
 
 import VehicleImage from '../../components/VehicleImage/VehicleImage';
 import Layout from '../../components/Layout';
@@ -24,6 +25,8 @@ export const Home = () => {
 
   const [filterInput, setFilterInput] = useState({});
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (popular.length === 0) {
       getVehicles('/vehicles/popular?limit=4', setPopular);
@@ -44,8 +47,11 @@ export const Home = () => {
     try {
       const { data } = await axios.get('http://localhost:5000' + uri);
       stateReducer(data.results);
+      setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      console.error(error);
+      alert(JSON.stringify(error.message));
     }
   };
 
@@ -219,20 +225,31 @@ export const Home = () => {
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
           ></Link>
         </div>
-        <div
-          className="popular-vehicles row"
-        >
-          {popular.map((vehicle, idx) => (
-            <VehicleImage
-              to={`/vehicles/${vehicle.id}`}
-              key={idx}
-              src={vehicle.image || 'https://via.placeholder.com/300x200?text=Popular+Vehicle'}
-              name={capitalize(vehicle.name)}
-              location={capitalize(vehicle.location)}
-              className='p-0 pe-md-4 col-12 col-md-3'
-            />
-          ))}
-        </div>
+        {
+          isLoading &&
+          <Skeleton
+            count={4}
+            height={250}
+            containerClassName='popular-vehicles row h-100'
+            wrapper={({ children }) => (<div className='mb-3 m-md-0 pe-md-4 col-12 col-md-3'>{children}</div>)}
+          />
+        }
+        { !isLoading &&
+          <div className="popular-vehicles row">
+            {
+              popular.map((vehicle, idx) => (
+                <VehicleImage
+                  to={`/vehicles/${vehicle.id}`}
+                  key={idx}
+                  src={vehicle.image || 'https://via.placeholder.com/300x200?text=Popular+Vehicle'}
+                  name={capitalize(vehicle.name)}
+                  location={capitalize(vehicle.location)}
+                  className='p-0 pe-md-4 col-12 col-md-3'
+                />
+              ))
+            }
+          </div>
+        }
         <Link to='/vehicles/more?popular=1' className="d-block d-md-none text-center mt-4" href="/"
           >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
         ></Link>
