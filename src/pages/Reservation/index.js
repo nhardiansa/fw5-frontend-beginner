@@ -33,11 +33,11 @@ export const Reservation = () => {
 
   return (
     <Layout isLogged={true}>
-      <main className="reservation-wrapper container px-4 px-lg-0">
+      <main className="reservation-wrapper container px-4 px-lg-0 mt-5 mt-md-3">
         <div className="back-section">
           <div
             onClick={goBack}
-            className="back-btn d-flex fs-2 align-items-center"
+            className="back-btn d-flex fs-2 fw-bold align-items-center"
           >
             <FaChevronLeft className="back-icon" />
             Reservartion
