@@ -17,16 +17,16 @@ a {
 }
 
 /* Main start */
-main {
+main.detail {
   padding-top: 6.125rem !important;
   padding-bottom: 3.125rem;
 }
 
-main button:focus {
+main.detail button:focus {
   box-shadow: none !important;
 } 
 
-.back-btn {
+.detail .back-btn {
   font-family: Nunito;
   font-style: normal;
   font-weight: bold;
@@ -35,25 +35,21 @@ main button:focus {
   color: #000000;
 }
 
-.back-btn .back-icon {
+.detail .back-btn .back-icon {
   font-size: 1.5rem;
   margin-right: 1rem;
 }
 
-.detail-section img {
-  width: 100%;
+.detail .detail-section img {
+  object-fit: cover;
   border-radius: 0.625rem;
 }
 
-.detail-section {
+.detail .detail-section {
   padding-top: 2rem;
 }
 
-.banner {
-  height: 18rem !important;
-}
-
-.image-slider img {
+.detail .image-slider img {
   width: 35%;
 }
 
@@ -142,7 +138,7 @@ main button:focus {
   .detail-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    row-gap: 3rem;
+    row-gap: 1.5rem;
   }
 
   .banner {
@@ -158,6 +154,10 @@ main button:focus {
   .desc-price {
     grid-column: 1 / 2;
     grid-row: 3 / 5;
+  }
+
+  .action-group {
+    grid-column: 1 / 3;
   }
 
   .action-group .btn {
@@ -186,7 +186,6 @@ main button:focus {
   }
 
   .detail-section {
-    margin-top: 6rem;
     column-gap: 4.25rem;
     row-gap: 3rem;
   }
@@ -197,6 +196,7 @@ main button:focus {
 
   .image-slider {
     grid-column: 1 / 2;
+    min-height: 10rem;
   }
 
   .desc-price {
@@ -231,6 +231,10 @@ main button:focus {
   .action-group .btn {
     padding: 2% 8%;
     font-size: 1.5rem !important;
+  }
+
+  .detail .qty-control {
+    padding-inline: 2rem;
   }
   /* Main end */
 }

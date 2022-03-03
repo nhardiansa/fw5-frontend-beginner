@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { FaChevronLeft, FaHeart, FaMinus, FaPlus } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaHeart, FaMinus, FaPlus } from 'react-icons/fa';
 
 import Layout from '../../components/Layout';
 import Button from '../../components/Button';
 
-import pict from '../../assets/img/bike/image-banner.png';
 import './style.css';
 import { priceFormat, queryFormat } from '../../helpers/stringFormat';
 
@@ -64,25 +63,27 @@ export const VehicleDetail = () => {
             <FaChevronLeft className="back-icon" />
             Detail
           </Link> */}
-          <div onClick={goBack} className="back-btn d-flex align-items-center">
-            <FaChevronLeft className="back-icon" />
+          <div onClick={goBack} className="back-btn d-flex align-items-center fs-2">
+            <FaChevronLeft className="back-icon fs-1" />
             Detail
           </div>
         </div>
         <div className="detail-section w-100">
           <div className="banner">
-            <img src={vehicleImg} alt="bike" />
+            <img src={vehicleImg} className='w-100 h-100' alt="bike" />
           </div>
           <div
             className="image-slider mt-4 mt-md-0 d-flex justify-content-between align-items-center"
           >
-            <button className="btn rounded-circle slide-control slide-next">
-              <i className="fa-solid fa-chevron-left"></i>
+            <button className="btn rounded-circle slide-control p-0 slide-next">
+              <FaChevronLeft className='fs-2' />
             </button>
-            <img src={pict} alt="bike" />
-            <img src={pict} alt="bike" />
-            <button className="btn rounded-circle slide-control slide-prev">
-              <i className="fa-solid fa-chevron-right"></i>
+            <div className="w-100 h-75 d-flex justify-content-evenly">
+              <img src={vehicleImg} className='img-fluid h-100' alt="bike" />
+              <img src={vehicleImg} className='img-fluid h-100' alt="bike" />
+            </div>
+            <button className="btn rounded-circle slide-control p-0 slide-prev">
+              <FaChevronRight className='fs-2' />
             </button>
           </div>
           <div
@@ -116,13 +117,13 @@ export const VehicleDetail = () => {
             <p className="price mb-0 text-lg-end">Rp. {priceFormat(price)}/day</p>
           </div>
           <div className="counter mt-5 mt-md-0 d-lg-flex justify-content-start">
-            <div className="d-flex justify-content-around align-items-center w-100">
-              <Button className="qty-control btn minus">
-                <FaMinus />
+            <div className="d-flex justify-content-around align-items-center w-100 h-100">
+              <Button className="qty-control minus">
+                <FaMinus className='fs-2' />
               </Button>
               <span className="qty-number fs-1">2</span>
-              <Button className="qty-control btn plus">
-                <FaPlus />
+              <Button className="qty-control plus">
+                <FaPlus className='fs-2' />
               </Button>
             </div>
           </div>
@@ -143,7 +144,7 @@ export const VehicleDetail = () => {
 
   return (
     <Layout>
-      <main className="detail container mt-lg-4 px-5 px-lg-0">
+      <main className="detail container mt-lg-4 px-4 px-md-5 px-lg-0">
         {
           Object.keys(vehicle).length && detailDisplay(vehicle)
         }
