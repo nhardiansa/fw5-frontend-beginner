@@ -7,16 +7,16 @@ import Skeleton from 'react-loading-skeleton';
 import VehicleImage from '../../components/VehicleImage/VehicleImage';
 import Layout from '../../components/Layout';
 import { capitalize } from '../../helpers/stringFormat';
-import constants from '../../config/constants';
 
 import testimonialImage from '../../assets/img/testimonial-user-pict/edward-newgate.png';
 import navigationIcon from '../../assets/img/circle-chevron-arrow.svg';
 
 import './style.css';
 import Button from '../../components/Button';
+import { useSelector } from 'react-redux';
 
 export const Home = () => {
-  const { baseURL } = constants;
+  const { selectData } = useSelector(state => state);
   const navigate = useNavigate();
 
   const [popular, setPopular] = useState([]);
@@ -35,13 +35,13 @@ export const Home = () => {
 
   useEffect(() => {
     if (types.length === 0) {
-      getTypes();
+      setTypes(selectData.types);
     }
 
     if (locations.length === 0) {
-      getLocations();
+      setLocations(selectData.locations);
     }
-  }, [types]);
+  }, [selectData]);
 
   const getVehicles = async (uri, stateReducer) => {
     try {
@@ -49,27 +49,8 @@ export const Home = () => {
       stateReducer(data.results);
       setIsLoading(false);
     } catch (error) {
-      // console.log(error);
       console.error(error);
       alert(JSON.stringify(error.message));
-    }
-  };
-
-  const getTypes = async () => {
-    try {
-      const { data } = await axios.get(`${baseURL}/categories`);
-      setTypes(data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getLocations = async () => {
-    try {
-      const { data } = await axios.get(`${baseURL}/vehicles/location`);
-      setLocations(data.results);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -146,71 +127,82 @@ export const Home = () => {
           <p>Vehicle Finder</p>
           <div className="aesthetic-line rounded"></div>
           <form onSubmit={goToFilterPage} className="vehicle-finder-form mt-5" action="#">
-            <div className="row select-group">
-              <div className="my-2 col-6 position-relative">
-                <select
-                  className="filter-input form-select"
-                  aria-label="Default select example"
-                  name='location'
-                  onChange={selectHandler}
-                >
-                  <option defaultValue>Location</option>
-                  {
-                    locations.length > 0
-                      ? locations.map((data, idx) => (
-                      <option key={idx} value={data.location}>{data.location}</option>
-                      ))
-                      : <option defaultValue>Location not found</option>
-                  }
-                </select>
-                <FaChevronDown />
-              </div>
+            {
+              !selectData.isLoading &&
+              <>
+                <div className="row select-group">
+                  <div className="my-2 col-6 position-relative">
+                    <select
+                      className="filter-input form-select"
+                      aria-label="Default select example"
+                      name='location'
+                      onChange={selectHandler}
+                    >
+                      <option defaultValue>Location</option>
+                      {
+                        locations.length > 0
+                          ? locations.map((data, idx) => (
+                          <option key={idx} value={data.location}>{data.location}</option>
+                          ))
+                          : <option defaultValue>Location not found</option>
+                      }
+                    </select>
+                    <FaChevronDown />
+                  </div>
 
-              <div className="my-2 col-6 position-relative">
-                <select
-                  className="filter-input form-select"
-                  aria-label="Default select example"
-                  name='category_id'
-                  onChange={selectHandler}
-                >
-                  <option defaultValue>Type</option>
-                  {
-                    types.length > 0
-                      ? types.map((category, idx) => (
-                      <option key={idx} value={category.id}>{category.name}</option>
-                      ))
-                      : <option defaultValue>Types not found</option>
-                  }
-                </select>
-                <FaChevronDown />
+                  <div className="my-2 col-6 position-relative">
+                    <select
+                      className="filter-input form-select"
+                      aria-label="Default select example"
+                      name='category_id'
+                      onChange={selectHandler}
+                    >
+                      <option defaultValue>Type</option>
+                      {
+                        types.length > 0
+                          ? types.map((category, idx) => (
+                          <option key={idx} value={category.id}>{category.name}</option>
+                          ))
+                          : <option defaultValue>Types not found</option>
+                      }
+                    </select>
+                    <FaChevronDown />
+                  </div>
+                  <div className="my-2 col-6 position-relative">
+                    <select
+                      className="filter-input form-select"
+                      aria-label="Default select example"
+                      name='prepayment'
+                      onChange={selectHandler}
+                    >
+                      <option defaultValue>Payment</option>
+                      <option value={0}>Cash only</option>
+                      <option value={1}>Has prepayment</option>
+                    </select>
+                    <FaChevronDown />
+                  </div>
+                  <div className="my-2 col-6 position-relative">
+                    <select
+                      className="filter-input form-select"
+                      aria-label="Default select example"
+                    >
+                      <option defaultValue>Date</option>
+                      <option defaultValue="1">One</option>
+                      <option defaultValue="2">Two</option>
+                      <option defaultValue="3">Three</option>
+                    </select>
+                    <FaChevronDown />
+                  </div>
+                </div>
+                <Button type='submit' className='mt-4 px-4 py-2'>Explore</Button>
+              </>
+            }
+            {
+              selectData.isLoading &&
+              <div className="spinner-border text-light" role="status">
+                <span className="visually-hidden">Loading...</span>
               </div>
-              <div className="my-2 col-6 position-relative">
-                <select
-                  className="filter-input form-select"
-                  aria-label="Default select example"
-                  name='prepayment'
-                  onChange={selectHandler}
-                >
-                  <option defaultValue>Payment</option>
-                  <option value={0}>Cash only</option>
-                  <option value={1}>Has prepayment</option>
-                </select>
-                <FaChevronDown />
-              </div>
-              <div className="my-2 col-6 position-relative">
-                <select
-                  className="filter-input form-select"
-                  aria-label="Default select example"
-                >
-                  <option defaultValue>Date</option>
-                  <option defaultValue="1">One</option>
-                  <option defaultValue="2">Two</option>
-                  <option defaultValue="3">Three</option>
-                </select>
-                <FaChevronDown />
-              </div>
-            </div>
-            <Button type='submit' className='mt-4 px-4 py-2'>Explore</Button>
+            }
           </form>
         </div>
       </section>

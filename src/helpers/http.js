@@ -1,8 +1,11 @@
 import axios from 'axios';
+import constants from '../config/constants';
+
+const { baseURL } = constants;
 
 export const getData = async (uri) => {
   try {
-    const { data } = await axios.get('http://localhost:5000' + uri);
+    const { data } = await axios.get(baseURL + uri);
     if (data.success) {
       return data;
     }
@@ -15,5 +18,27 @@ export const getData = async (uri) => {
       results: []
     };
     return data;
+  }
+};
+
+export const fetchSelectData = async ({ locations, types }) => {
+  try {
+    const location = axios.get(baseURL + locations);
+    const type = axios.get(baseURL + types);
+
+    const [locationData, typeData] = await Promise.all([location, type]);
+
+    const data = {
+      locations: locationData.data.results,
+      types: typeData.data.results
+    };
+
+    return data;
+  } catch (error) {
+    console.error(error.response);
+    if (error.response.data) {
+      return error.response.data.message;
+    }
+    return error.message;
   }
 };
