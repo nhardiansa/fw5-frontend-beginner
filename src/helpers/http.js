@@ -42,3 +42,9 @@ export const fetchSelectData = async ({ locations, types }) => {
     return error.message;
   }
 };
+
+export const axiosInstance = () => {
+  return axios.create({
+    baseURL
+  });
+};
