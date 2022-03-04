@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { login } from './redux/actions/auth';
+import { getUserData } from './redux/actions/user';
 
 import { Login } from './pages/Login';
 import { Home } from './pages/Home';
@@ -25,9 +26,10 @@ export default function App () {
 
   useEffect(() => {
     console.log(auth, 'app');
-    const user = getUserData();
+    const user = JSON.parse(localStorage.getItem('user')) || null;
     if (user) {
       dispatch(login(user));
+      dispatch(getUserData(user));
     }
   }, []);
 
@@ -38,10 +40,6 @@ export default function App () {
     }
   }, []);
 
-  const getUserData = () => {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
-  };
   return (
       <>
       <BrowserRouter>
@@ -68,9 +66,3 @@ export default function App () {
       </>
   );
 }
-
-// const mapStateToProps = (state) => ({ auth: state.auth });
-
-// const mapDispatchToProps = { login };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(App);

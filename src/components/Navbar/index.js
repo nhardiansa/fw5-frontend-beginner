@@ -10,7 +10,7 @@ import { logout } from '../../redux/actions/auth';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { auth } = useSelector(state => state);
+  const { auth, user } = useSelector(state => state);
   const dispatch = useDispatch();
 
   const onSearchHandler = (e) => {
@@ -44,32 +44,43 @@ const Navbar = () => {
               <div
                 className="profile d-flex d-lg-none justify-content-between align-items-center"
               >
-                <div className="dropdown">
-                  <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img
-                      src={profilePict}
-                      alt="profile-img"
-                      className="profile-pict rounded-circle"
-                    />
+                {
+                  !user.isLoading &&
+                  <>
+                    <div className="dropdown">
+                      <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img
+                          src={user.profile.image || profilePict}
+                          alt="profile-img"
+                          className="profile-pict rounded-circle"
+                        />
+                      </div>
+                      <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><Link to='/profile' className="dropdown-item">Edit Profile</Link></li>
+                        <li><a className="dropdown-item" href="#">Help</a></li>
+                        <li><div onClick={onLogoutHandler} className="dropdown-item" href="#">Log Out</div></li>
+                      </ul>
+                    </div>
+                    <div className="message-notif position-relative ms-4 me-2">
+                      <img
+                        src={msgIcon}
+                        alt="message"
+                        className="message"
+                      />
+                      <div
+                        className="count position-absolute rounded-circle d-flex justify-content-center align-items-center"
+                      >
+                        1
+                      </div>
+                    </div>
+                  </>
+                }
+                {
+                  user.isLoading &&
+                  <div className="spinner-border text-custom-primary" style={{ width: '2rem', height: '2rem' }} role="status">
+                    <span className="visually-hidden">Loading...</span>
                   </div>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><Link to='/profile' className="dropdown-item">Edit Profile</Link></li>
-                    <li><a className="dropdown-item" href="#">Help</a></li>
-                    <li><div onClick={onLogoutHandler} className="dropdown-item" href="#">Log Out</div></li>
-                  </ul>
-                </div>
-                <div className="message-notif position-relative ms-4 me-2">
-                  <img
-                    src={msgIcon}
-                    alt="message"
-                    className="message"
-                  />
-                  <div
-                    className="count position-absolute rounded-circle d-flex justify-content-center align-items-center"
-                  >
-                    1
-                  </div>
-                </div>
+                }
               </div>
             )
           }
@@ -105,35 +116,44 @@ const Navbar = () => {
           </div>
           {
             auth.user && (
-              <div
-                className="profile d-none d-lg-flex justify-content-between align-items-center"
-              >
-                <div className="message-notif position-relative">
-                  <img
-                    src={msgIcon}
-                    alt="message"
-                    className="message"
-                  />
-                  <div
-                    className="count position-absolute rounded-circle d-flex justify-content-center align-items-center"
-                  >
-                    1
+              <div className="profile d-none d-lg-flex justify-content-between align-items-center" >
+                {
+                  user.isLoading &&
+                  <div className="spinner-border text-custom-primary" style={{ width: '2rem', height: '2rem' }} role="status">
+                    <span className="visually-hidden">Loading...</span>
                   </div>
-                </div>
-                <div className="dropdown">
-                  <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                }
+                {
+                  !user.isLoading &&
+                  <>
+                  <div className="message-notif position-relative">
                     <img
-                      src={profilePict}
-                      alt="profile-img"
-                      className="profile-pict rounded-circle"
+                      src={msgIcon}
+                      alt="message"
+                      className="message"
                     />
+                    <div
+                      className="count position-absolute rounded-circle d-flex justify-content-center align-items-center"
+                    >
+                      1
+                    </div>
                   </div>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><Link to='/profile' className="dropdown-item">Edit Profile</Link></li>
-                    <li><a className="dropdown-item" href="#">Help</a></li>
-                    <li><div onClick={onLogoutHandler} className="dropdown-item" href="#">Log Out</div></li>
-                  </ul>
-                </div>
+                  <div className="dropdown">
+                    <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img
+                        src={user.profile.image || profilePict}
+                        alt="profile-img"
+                        className="profile-pict rounded-circle"
+                      />
+                    </div>
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><Link to='/profile' className="dropdown-item">Edit Profile</Link></li>
+                      <li><a className="dropdown-item" href="#">Help</a></li>
+                      <li><div onClick={onLogoutHandler} className="dropdown-item" href="#">Log Out</div></li>
+                    </ul>
+                  </div>
+                  </>
+                }
               </div>
             )
           }

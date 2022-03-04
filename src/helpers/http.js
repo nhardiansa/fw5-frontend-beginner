@@ -43,8 +43,15 @@ export const fetchSelectData = async ({ locations, types }) => {
   }
 };
 
-export const axiosInstance = () => {
+export const axiosInstance = (token = false) => {
+  const headers = {};
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
   return axios.create({
-    baseURL
+    baseURL,
+    headers
   });
 };
