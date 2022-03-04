@@ -1,31 +1,17 @@
-import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HiSearch } from 'react-icons/hi';
+import { useDispatch, useSelector } from 'react-redux';
 
 import logo from '../../assets/img/car-wheel.png';
 import profilePict from '../../assets/img/profile-picture/samantha-doe.png';
 import msgIcon from '../../assets/img/msg-icon.svg';
 import './style.css';
-import { connect } from 'react-redux';
+import { logout } from '../../redux/actions/auth';
 
-const mapStateToProps = (state) => ({ auth: state.auth });
-
-export const Navbar = ({ auth }) => {
+const Navbar = () => {
   const navigate = useNavigate();
-  const [isLogged, setIsLogged] = useState(false);
-
-  useEffect(() => {
-    const storage = window.localStorage;
-    const user = storage.getItem('user');
-
-    console.log(auth);
-
-    if (user) {
-      setIsLogged(true);
-    } else {
-      setIsLogged(false);
-    }
-  }, []);
+  const { auth } = useSelector(state => state);
+  const dispatch = useDispatch();
 
   const onSearchHandler = (e) => {
     e.preventDefault();
@@ -35,9 +21,12 @@ export const Navbar = ({ auth }) => {
     }
   };
 
-  // const onLogoutHandler = () => {
-
-  // };
+  const onLogoutHandler = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+    localStorage.removeItem('user');
+    // setIsLogged(false);
+  };
 
   return (
     <nav
@@ -53,17 +42,10 @@ export const Navbar = ({ auth }) => {
         </Link>
         <div className="d-flex">
           {
-            isLogged && (
+            auth.user && (
               <div
                 className="profile d-flex d-lg-none justify-content-between align-items-center"
               >
-                {/* <Link to='/profile' className="profile-img">
-                  <img
-                    src={profilePict}
-                    alt="profile-img"
-                    className="profile-pict rounded-circle"
-                  />
-                </Link> */}
                 <div className="dropdown">
                   <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img
@@ -75,7 +57,7 @@ export const Navbar = ({ auth }) => {
                   <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><Link to='/profile' className="dropdown-item">Edit Profile</Link></li>
                     <li><a className="dropdown-item" href="#">Help</a></li>
-                    <li><a className="dropdown-item" href="#">Log Out</a></li>
+                    <li><div onClick={onLogoutHandler} className="dropdown-item" href="#">Log Out</div></li>
                   </ul>
                 </div>
                 <div className="message-notif position-relative ms-4 me-2">
@@ -114,7 +96,7 @@ export const Navbar = ({ auth }) => {
             <Link to='/histories' className="nav-link active" >History</Link>
             <Link to='/' className="nav-link" >About</Link>
             {
-              isLogged &&
+              auth.user &&
               <form onSubmit={onSearchHandler} className="input-group my-3 my-lg-0 ms-lg-5 me-lg-3">
                 <input type="text" className="form-control border-end-0" placeholder="Search vehicle" aria-label="Recipient's username" aria-describedby="button-addon2" />
                 <button type="submit" className="search-btn btn btn-outline-secondary" id="button-addon2">
@@ -124,7 +106,7 @@ export const Navbar = ({ auth }) => {
             }
           </div>
           {
-            isLogged && (
+            auth.user && (
               <div
                 className="profile d-none d-lg-flex justify-content-between align-items-center"
               >
@@ -140,17 +122,7 @@ export const Navbar = ({ auth }) => {
                     1
                   </div>
                 </div>
-                {/* <Link to='/profile' className="profile-img">
-                  <img
-                    src={profilePict}
-                    alt="profile-img"
-                    className="profile-pict rounded-circle"
-                  />
-                </Link> */}
                 <div className="dropdown">
-                  {/* <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown button
-                  </button> */}
                   <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img
                       src={profilePict}
@@ -161,14 +133,14 @@ export const Navbar = ({ auth }) => {
                   <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><Link to='/profile' className="dropdown-item">Edit Profile</Link></li>
                     <li><a className="dropdown-item" href="#">Help</a></li>
-                    <li><a className="dropdown-item" href="#">Log Out</a></li>
+                    <li><div onClick={onLogoutHandler} className="dropdown-item" href="#">Log Out</div></li>
                   </ul>
                 </div>
               </div>
             )
           }
           {
-            !isLogged && (
+            !auth.user && (
               <div className="auth d-flex flex-column flex-lg-row">
                 <Link to="/login" className="login-btn fw-normal btn rounded-3 mb-3 mb-lg-0" >
                   Login
@@ -189,4 +161,4 @@ export const Navbar = ({ auth }) => {
   );
 };
 
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;
