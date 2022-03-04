@@ -15,6 +15,7 @@ const auth = (state = initialState, action) => {
 
     case LOGOUT: {
       state.user = null;
+      window.localStorage.removeItem('user');
       return { ...state };
     }
 

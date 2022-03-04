@@ -24,8 +24,6 @@ const Navbar = () => {
   const onLogoutHandler = (e) => {
     e.preventDefault();
     dispatch(logout());
-    localStorage.removeItem('user');
-    // setIsLogged(false);
   };
 
   return (
