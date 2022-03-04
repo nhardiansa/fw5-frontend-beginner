@@ -1,4 +1,8 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { login } from './redux/actions/auth';
 
 import { Login } from './pages/Login';
 import { Home } from './pages/Home';
@@ -13,8 +17,26 @@ import { VehicleDetail } from './pages/VehicleDetail';
 import Search from './pages/Search';
 
 import { PrivateRoute, PublicRoute } from './components/Routes';
+import { getSelectData } from './redux/actions/selectData';
 
 export default function App () {
+  const { auth } = useSelector(state => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(auth, 'app');
+    const user = getUserData();
+    if (user) {
+      dispatch(login(user));
+    }
+
+    dispatch(getSelectData());
+  }, []);
+
+  const getUserData = () => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  };
   return (
       <>
       <BrowserRouter>
@@ -41,3 +63,9 @@ export default function App () {
       </>
   );
 }
+
+// const mapStateToProps = (state) => ({ auth: state.auth });
+
+// const mapDispatchToProps = { login };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
