@@ -17,3 +17,7 @@
 .fw-black {
   font-weight: 900;
 }
+
+.text-custom-primary {
+  color: var(--one-color);
+}
