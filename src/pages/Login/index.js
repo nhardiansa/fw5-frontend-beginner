@@ -1,25 +1,19 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
-import axios from 'axios';
-import qs from 'qs';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { login } from '../../redux/actions/auth';
+import { onLogin } from '../../redux/actions/auth';
 
 import sideImg from '../../assets/img/side-login-img.png';
 import carWheel from '../../assets/img/car-wheel.png';
 import googleIcon from '../../assets/img/google-icon.svg';
-import constants from '../../config/constants';
 
 import './style.css';
 
 export const Login = () => {
+  const { auth } = useSelector(state => state);
   const dispatch = useDispatch();
-
-  const storage = window.localStorage;
-  const { baseURL } = constants;
-  const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({ email: '', password: '' });
 
@@ -34,29 +28,9 @@ export const Login = () => {
     try {
       e.preventDefault();
       const { email, password } = loginData;
-      const data = await loginUser(email, password);
-
-      if (!data.success) {
-        return alert(data.message);
-      }
-
-      const user = data.results;
-      storage.setItem('user', JSON.stringify(user));
-      dispatch(login(user));
-
-      navigate('/');
+      dispatch(onLogin(email, password));
     } catch (err) {
       console.error(err);
-    }
-  };
-
-  const loginUser = async (email, password) => {
-    try {
-      const { data } = await axios.post(`${baseURL}/auth/login`, qs.stringify({ email, password }));
-      return data;
-    } catch (error) {
-      console.error(error);
-      return error.response.data;
     }
   };
 
@@ -73,9 +47,24 @@ export const Login = () => {
           <div className="main d-flex flex-column justify-content-center flex-fill">
             <h1 className="text-center text-lg-start mt-5 mb-5 fw-bold">Login</h1>
             <form onSubmit={submitHandler} className="login-form d-flex flex-column mb-3">
+              {
+                auth.error &&
+                <div className="alert alert-danger fs-6" role="alert">
+                  <strong>Failed to login</strong> {auth.error}
+                </div>
+              }
               <input className="mb-3" type="text" placeholder="Email" name='email' onChange={handleChange} />
               <input className="mb-3" type="password" placeholder="Password" name='password' onChange={handleChange} />
-              <button type='submit' className="btn login mt-4" >Login</button>
+              {
+                !auth.isLoading &&
+                <button type='submit' className="btn login mt-4" >Login</button>
+              }
+              {
+                auth.isLoading &&
+                <div className="spinner-border align-self-center text-custom-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              }
             </form>
             <Link className="forgot" to="/forgotPassword">Forgot password?</Link>
             <div
