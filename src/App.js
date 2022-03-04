@@ -20,7 +20,7 @@ import { PrivateRoute, PublicRoute } from './components/Routes';
 import { getSelectData } from './redux/actions/selectData';
 
 export default function App () {
-  const { auth } = useSelector(state => state);
+  const { auth, selectData } = useSelector(state => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,8 +29,13 @@ export default function App () {
     if (user) {
       dispatch(login(user));
     }
+  }, []);
 
-    dispatch(getSelectData());
+  useEffect(() => {
+    const { locations, types } = selectData;
+    if (!locations.length || !types.length) {
+      dispatch(getSelectData());
+    }
   }, []);
 
   const getUserData = () => {
