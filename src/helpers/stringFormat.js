@@ -18,7 +18,7 @@ export const capitalize = (str) => {
 export const dateFormatter = (date, input = false) => {
   if (input) {
     // console.log(date.split('-').reverse().join('/'), 'frontend');
-    return date.split('-').reverse().join('/');
+    return date.split('-').reverse().join('-');
   }
   let result = new Date(date).toLocaleString('id-ID').split(' ')[0];
   result = result.split(/\D+/g).reverse().map(el => el.length === 1 ? `0${el}` : el).join('-');
