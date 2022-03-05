@@ -13,12 +13,12 @@ html {
 }
 
 /* Main start */
-main {
-  padding-top: 7.5rem;
+main.profile {
+  padding-top: 7.5rem !important;
   padding-bottom: 3rem;
 }
 
-main .edit-title {
+main.profile .edit-title {
   font-family: Nunito;
   font-style: normal;
   color: #000000;
@@ -27,11 +27,11 @@ main .edit-title {
   line-height: 1.5rem;
 }
 
-main .contact img {
+main.profile .contact img {
   width: 50%;
 }
 
-main .contact .contact-info h2 {
+main.profile .contact .contact-info h2 {
   font-family: Playfair Display, serif;
   font-style: normal;
   font-weight: bold;
@@ -40,7 +40,7 @@ main .contact .contact-info h2 {
   color: #000000;
 }
 
-main .contact .contact-info p {
+main.profile .contact .contact-info p {
   font-family: Nunito, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -51,12 +51,13 @@ main .contact .contact-info p {
   margin: 0;
 }
 
-main .img-wrapper .contact-img {
+main.profile .img-wrapper .contact-img {
   width: 9rem;
+  height: 9rem;
   object-fit: cover;
 }
 
-main .edit-btn {
+main.profile .edit-btn {
   width: 3rem;
   height: 3rem;
   padding-top: 0.5rem;
@@ -70,7 +71,7 @@ main .edit-btn {
   color: var(--five-color);
 }
 
-main .gender {
+main.profile .gender {
   font-family: Nunito;
   font-style: normal;
   font-size: 1.5rem;
@@ -114,27 +115,27 @@ main .gender {
   font-weight: bold;
 }
 
-main .gender {
+main.profile .gender {
   width: 75%;
 }
 
-main .form-section {
+main.profile .form-section {
   font-family: Nunito, sans-serif;
   font-style: normal;
   font-size: 1.5rem;
   line-height: 2rem;
 }
 
-main .form-section h2 {
+main.profile .form-section h2 {
   font-weight: 900;
   color: #4F5665;
 }
 
-main .form-section .input-lable {
+main.profile .form-section .input-lable {
   color: #9F9F9F;
 }
 
-main .form-section .text-input {
+main.profile .form-section .text-input {
   border: none;
   border-bottom: 1px solid #000000;
   padding-top: 1rem;
@@ -142,16 +143,16 @@ main .form-section .text-input {
   width: 100%;
 }
 
-main .form-section textarea.text-input {
+main.profile .form-section textarea.text-input {
   padding-top: 1rem;
   padding-bottom: 0 !important;
 }
 
-main .form-section .text-input:focus {
+main.profile .form-section .text-input:focus {
   outline: none;
 }
 
-main .form-section .button-groups button, main .form-section .button-groups a {
+main.profile .form-section .button-groups button, main.profile .form-section .button-groups a {
   font-weight: 900;
   padding: 0.875rem !important;
   margin-bottom: 1rem;
@@ -161,33 +162,33 @@ main .form-section .button-groups button, main .form-section .button-groups a {
   line-height: 2rem;
 }
 
-main .form-section .button-groups > .edit-password {
+main.profile .form-section .button-groups > .edit-password {
   background: var(--five-color);
   color: var(--one-color);
 }
 
-main .form-section .button-groups > .edit-password:hover {
+main.profile .form-section .button-groups > .edit-password:hover {
   background: var(--five-color-dark);
   color: var(--one-color-dark);
 }
 
-main .form-section .button-groups button.cancel {
+main.profile .form-section .button-groups button.cancel {
   background:  rgba(203, 203, 212, 0.27);
   color: #0000008c;
 }
 
-main .form-section .button-groups button.cancel:hover {
+main.profile .form-section .button-groups button.cancel:hover {
   background:  rgba(140, 140, 153, 0.27);
 }
   /* Main end */
   
 @media (min-width: 768px) { 
   /* Main start */
-  main .form-section .button-groups button, main .form-section .button-groups a {
+  main.profile .form-section .button-groups button, main.profile .form-section .button-groups a {
     padding: 2rem 4.5rem !important;
   }
 
-  main .gender {
+  main.profile .gender {
     width: 40%;
   }
   /* Main end */
@@ -199,7 +200,7 @@ main .form-section .button-groups button.cancel:hover {
   }
 
   /* Main start */
-  main .gender {
+  main.profile .gender {
     width: 30%;
   }
   /* Main end */
