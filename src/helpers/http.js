@@ -43,15 +43,33 @@ export const fetchSelectData = async ({ locations, types }) => {
   }
 };
 
-export const axiosInstance = (token = false) => {
+export const axiosInstance = (useToken = false) => {
   const headers = {};
 
-  if (token) {
+  if (useToken) {
+    const { token } = JSON.parse(localStorage.getItem('user'));
     headers.Authorization = `Bearer ${token}`;
   }
 
   return axios.create({
     baseURL,
     headers
+  });
+};
+
+export const axiosInstanceMultipart = (useToken = false) => {
+  const headers = {};
+
+  if (useToken) {
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return axios.create({
+    baseURL,
+    headers: {
+      ...headers,
+      'Content-Type': 'multipart/form-data'
+    }
   });
 };
