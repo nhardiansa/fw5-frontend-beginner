@@ -7,6 +7,7 @@ import profilePict from '../../assets/img/profile-picture/samantha-doe.png';
 import msgIcon from '../../assets/img/msg-icon.svg';
 import './style.css';
 import { logout } from '../../redux/actions/auth';
+import { logoutUser } from '../../redux/actions/user';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Navbar = () => {
 
   const onLogoutHandler = (e) => {
     e.preventDefault();
+    dispatch(logoutUser());
     dispatch(logout());
   };
 
@@ -45,8 +47,8 @@ const Navbar = () => {
                 className="profile d-flex d-lg-none justify-content-between align-items-center"
               >
                 {
-                  !user.isLoading &&
-                  <>
+                  !user.isLoading
+                    ? <>
                     <div className="dropdown">
                       <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img
@@ -74,10 +76,7 @@ const Navbar = () => {
                       </div>
                     </div>
                   </>
-                }
-                {
-                  user.isLoading &&
-                  <div className="spinner-border text-custom-primary" style={{ width: '2rem', height: '2rem' }} role="status">
+                    : <div className="spinner-border text-custom-primary" style={{ width: '2rem', height: '2rem' }} role="status">
                     <span className="visually-hidden">Loading...</span>
                   </div>
                 }
@@ -118,14 +117,11 @@ const Navbar = () => {
             auth.user && (
               <div className="profile d-none d-lg-flex justify-content-between align-items-center" >
                 {
-                  user.isLoading &&
-                  <div className="spinner-border text-custom-primary" style={{ width: '2rem', height: '2rem' }} role="status">
+                  user.isLoading
+                    ? <div className="spinner-border text-custom-primary" style={{ width: '2rem', height: '2rem' }} role="status">
                     <span className="visually-hidden">Loading...</span>
                   </div>
-                }
-                {
-                  !user.isLoading &&
-                  <>
+                    : <>
                   <div className="message-notif position-relative">
                     <img
                       src={msgIcon}
