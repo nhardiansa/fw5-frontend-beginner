@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import { HiSearch } from 'react-icons/hi';
 
@@ -7,21 +6,20 @@ import VehicleImage from '../../components/VehicleImage/VehicleImage';
 import Layout from '../../components/Layout';
 import './style.css';
 
-export default class History extends Component {
-  render () {
-    const newArrivals = [
-      {
-        src: vespa,
-        name: 'Lamborghini',
-        location: 'Yogyakarta'
-      },
-      {
-        src: vespa,
-        name: 'White Jeep',
-        location: 'Kalimantan'
-      }
-    ];
-    return (
+export default function History () {
+  const newArrivals = [
+    {
+      src: vespa,
+      name: 'Lamborghini',
+      location: 'Yogyakarta'
+    },
+    {
+      src: vespa,
+      name: 'White Jeep',
+      location: 'Kalimantan'
+    }
+  ];
+  return (
       <>
         <Layout>
           <main>
@@ -142,6 +140,5 @@ export default class History extends Component {
 
         {/* <Footer /> */}
       </>
-    );
-  }
+  );
 }

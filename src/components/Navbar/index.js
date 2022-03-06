@@ -2,17 +2,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import { HiSearch } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 
+import Spinner from '../../components/Spinner';
 import logo from '../../assets/img/car-wheel.png';
 import profilePict from '../../assets/img/profile-picture/samantha-doe.png';
 import msgIcon from '../../assets/img/msg-icon.svg';
 import './style.css';
 import { logout } from '../../redux/actions/auth';
-import { logoutUser } from '../../redux/actions/user';
+import { getUserData, logoutUser } from '../../redux/actions/user';
+import { useEffect } from 'react';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { auth, user } = useSelector(state => state);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const userToken = JSON.parse(localStorage.getItem('user'));
+    if (userToken && !user.profile) {
+      dispatch(getUserData(userToken));
+    }
+  }, []);
 
   const onSearchHandler = (e) => {
     e.preventDefault();
@@ -26,28 +35,21 @@ const Navbar = () => {
     e.preventDefault();
     dispatch(logoutUser());
     dispatch(logout());
+    navigate('/login');
   };
 
-  return (
-    <nav
-      className="navbar navbar-expand-lg navbar-light bg-white position-fixed top-0 w-100 py-lg-4"
-    >
-      <div className="container d-flex align-items-center">
-        <Link to='/' className="navbar-brand">
-          <img
-            className="logo"
-            src={logo}
-            alt="vehicle-rent-logo"
-          />
-        </Link>
+  const renderNavbar = () => {
+    return (
+      <>
         <div className="d-flex">
           {
-            auth.user && (
+            auth.user
+              ? (
               <div
                 className="profile d-flex d-lg-none justify-content-between align-items-center"
               >
                 {
-                  !user.isLoading
+                  user.profile
                     ? <>
                     <div className="dropdown">
                       <div className="profile-dropdown dropdown-toggle" aria-labelledby="dropdownMenuButton1" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,12 +78,11 @@ const Navbar = () => {
                       </div>
                     </div>
                   </>
-                    : <div className="spinner-border text-custom-primary" style={{ width: '2rem', height: '2rem' }} role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
+                    : <Spinner variant='primary' style={{ width: '2rem', height: '2rem' }} />
                 }
               </div>
-            )
+                )
+              : <Spinner variant='primary' style={{ width: '2rem', height: '2rem' }} />
           }
 
           <button
@@ -104,17 +105,19 @@ const Navbar = () => {
             <Link to='/histories' className="nav-link active" >History</Link>
             <Link to='/' className="nav-link" >About</Link>
             {
-              auth.user &&
-              <form onSubmit={onSearchHandler} className="input-group my-3 my-lg-0 ms-lg-5 me-lg-3">
+              auth.user
+                ? <form onSubmit={onSearchHandler} className="input-group my-3 my-lg-0 ms-lg-5 me-lg-3">
                 <input type="text" className="form-control border-end-0" placeholder="Search vehicle" aria-label="Recipient's username" aria-describedby="button-addon2" />
                 <button type="submit" className="search-btn btn btn-outline-secondary" id="button-addon2">
                   <HiSearch className='search-icon text-secondary' />
                 </button>
               </form>
+                : <Spinner variant='primary' style={{ width: '2rem', height: '2rem' }} />
             }
           </div>
           {
-            auth.user && (
+            (auth.user && user.profile)
+              ? (
               <div className="profile d-none d-lg-flex justify-content-between align-items-center" >
                 {
                   user.isLoading
@@ -151,7 +154,8 @@ const Navbar = () => {
                   </>
                 }
               </div>
-            )
+                )
+              : <Spinner variant='primary' style={{ width: '2rem', height: '2rem' }} />
           }
           {
             !auth.user && (
@@ -170,6 +174,28 @@ const Navbar = () => {
             )
           }
         </div>
+      </>
+    );
+  };
+
+  return (
+    <nav
+      className="navbar navbar-expand-lg navbar-light bg-white position-fixed top-0 w-100 py-lg-4"
+    >
+      <div className="container d-flex align-items-center">
+        <Link to='/' className="navbar-brand">
+          <img
+            className="logo"
+            src={logo}
+            alt="vehicle-rent-logo"
+          />
+        </Link>
+        {/* {
+          auth.user && user.profile
+            ? renderNavbar()
+            : <Spinner />
+        } */}
+        {renderNavbar()}
       </div>
     </nav>
   );
