@@ -11,14 +11,14 @@ import { Link } from 'react-router-dom';
 export default class Register extends Component {
   render () {
     return (
-      <main className='row g-0 p-0'>
+      <main className='register row g-0 p-0'>
         {/* <div id="side-image" className=""></div> */}
         <img
           src={sideImg}
           alt="side"
-          className='side-img img-fluid d-none d-lg-block col-6'
+          className='side-img img-fluid d-none d-lg-block col-6 w-100 h-100'
         />
-        <section className="login-section col-lg-6 col-12 d-flex flex-column justify-content-center">
+        <section className="login-section w-100 col-lg-6 col-12 d-flex flex-column justify-content-center">
           <div className="main d-flex flex-column justify-content-center flex-fill">
             <h1 className="text-center text-lg-start mt-5 mb-5 fw-bold">Sign Up</h1>
             <form action="#" className="login-form d-flex flex-column mb-3">

@@ -7,14 +7,14 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { priceFormat, queryFormat } from '../../helpers/stringFormat';
 import Spinner from '../../components/Spinner';
-import { clearVehicleDetails, clearVehiclePayment, getVehicleDetails } from '../../redux/actions/vehicle';
+import { clearVehicleDetails, clearVehiclePayment, finishPayment, getVehicleDetails, returnVehicle } from '../../redux/actions/vehicle';
 import { useNavigate } from 'react-router-dom';
 
 export default function Payment () {
   const navigate = useNavigate();
   const { vehicleReducer, user } = useSelector(state => state);
   const dispatch = useDispatch();
-  const { paymentData, vehicleDetails } = vehicleReducer;
+  const { paymentData, vehicleDetails, paymentFinishSuccess, returningVehicleSuccess } = vehicleReducer;
   const { profile } = user;
 
   useEffect(() => {
@@ -27,7 +27,9 @@ export default function Payment () {
     }
 
     return () => {
-      clearData();
+      if (paymentFinishSuccess && returningVehicleSuccess) {
+        clearData();
+      }
     };
   }, [paymentData]);
 
@@ -40,12 +42,24 @@ export default function Payment () {
     window.history.back();
   };
 
+  const finishPaymentHanlder = () => {
+    console.log('finish payment');
+    dispatch(finishPayment(Number(paymentData.id)));
+  };
+
+  const returnVehicleHandler = () => {
+    console.log('return vehicle');
+    dispatch(returnVehicle(Number(paymentData.id)));
+  };
+
   const pageDisplay = (paymentData, vehicleData, userData) => {
     const {
       payment_code: paymentCode,
       qty: vehicleQty,
       start_rent: startRent,
-      total_paid: totalToPay
+      total_paid: totalToPay,
+      payment: paymentStatus,
+      returned: returnedStatus
     } = paymentData;
     const {
       image: vehicleImage,
@@ -83,9 +97,9 @@ export default function Payment () {
         <div
           className="invoice-head d-flex flex-column justify-content-between align-items-center align-items-md-start"
         >
-          <h1 className="invoice-vehicle-name fs-1 lh-base">
+          <h1 className="invoice-vehicle-name fs-1 lh-base text-capitalize">
             {vehicleName} <br />
-            <span className="location fs-2">{vehicleLocation}</span>
+            <span className="location fs-2 text-capitalize">{vehicleLocation}</span>
           </h1>
           <p className="prepayment my-3 fw-bold">No prepayment</p>
           <p className="booking-code my-2">{paymentCode}</p>
@@ -133,10 +147,19 @@ export default function Payment () {
             <option value="3">Three</option>
           </select>
         </div>
-        <Button className="payment-action py-3 py-md-4 fs-5 mt-2 mt-md-4 w-100" variant='secondaryBtn'>
-          Finish payment :
-          <span className="payment-time-limit text-danger">59:30</span>
-        </Button>
+        {
+          !Number(paymentStatus) &&
+          <Button onClick={finishPaymentHanlder} className="payment-action py-3 py-md-4 fs-5 mt-2 mt-md-4 w-100" variant='secondaryBtn'>
+            Finish payment :
+            <span className="payment-time-limit text-danger">59:30</span>
+          </Button>
+        }
+        {
+          Number(paymentStatus) && !Number(returnedStatus) &&
+          <Button onClick={returnVehicleHandler} className="payment-action py-3 py-md-4 fs-5 mt-2 mt-md-4 w-100" variant='secondaryBtn'>
+            Return vehicle
+          </Button>
+        }
       </div>
     );
   };

@@ -5,8 +5,54 @@ import vespa from '../../assets/img/motorbike/vespa.png';
 import VehicleImage from '../../components/VehicleImage/VehicleImage';
 import Layout from '../../components/Layout';
 import './style.css';
+import HistoryItem from '../../components/HistoryItem';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteVehiclePayment, getVehiclePaymentDetails, getVehiclePaymentList } from '../../redux/actions/vehicle';
+import Spinner from '../../components/Spinner';
+import { imagePlaceholder } from '../../helpers/media';
+import { dateFormatter } from '../../helpers/stringFormat';
+import { useNavigate } from 'react-router-dom';
 
 export default function History () {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { vehicleReducer } = useSelector(state => state);
+  const { paymentList, paymentData, paymentDeleteSuccess } = vehicleReducer;
+
+  const [changePage, setChangePage] = useState(true);
+
+  const detailHandler = (e) => {
+    e.preventDefault();
+    console.log(e.target.id);
+    dispatch(getVehiclePaymentDetails(Number(e.target.id)));
+  };
+
+  const deleteHandler = (e) => {
+    e.preventDefault();
+    console.log(e.target.id);
+    const doIt = window.confirm('Are you sure you want to delete this payment?');
+    if (doIt) {
+      dispatch(deleteVehiclePayment(Number(e.target.id)));
+    }
+  };
+
+  useEffect(() => {
+    if (paymentDeleteSuccess !== null || changePage) {
+      if (paymentDeleteSuccess !== null) {
+        alert('Delete Success');
+      }
+      dispatch(getVehiclePaymentList());
+    }
+  }, [paymentDeleteSuccess]);
+
+  useEffect(() => {
+    if (paymentData && !changePage) {
+      navigate('/payment');
+    }
+    setChangePage(false);
+  }, [paymentData]);
+
   const newArrivals = [
     {
       src: vespa,
@@ -19,10 +65,40 @@ export default function History () {
       location: 'Kalimantan'
     }
   ];
+
+  const displayPage = (data) => {
+    return (
+      <div className="a-week-ago mt-5 mt-lg-0">
+        <h2 className="a-week-ago-title mb-4">A week ago</h2>
+        {
+          data.map((item) => {
+            const image = item.image || imagePlaceholder(item.name);
+            return (
+            <HistoryItem
+              key={item.id}
+              image={image}
+              name={item.name}
+              startRent={dateFormatter(item.start_rent)}
+              endRent={dateFormatter(item.end_rent)}
+              prepayment={item.prepayment}
+              payment={Number(item.payment)}
+              returned={Number(item.returned)}
+              detailClicked={detailHandler}
+              deleteClicked={deleteHandler}
+              classNameContainer='mb-4'
+              historyId={item.id}
+            />
+            );
+          })
+        }
+      </div>
+    );
+  };
+
   return (
       <>
         <Layout>
-          <main>
+          <main className='histories container px-2'>
             <div className="history-wrapper container mt-lg-5 d-lg-grid">
               <div className="search-filter">
                 <form className="d-flex">
@@ -72,45 +148,13 @@ export default function History () {
                   </li>
                 </ul>
               </div>
-              <div className="a-week-ago mt-5 mt-lg-0">
-                <h2 className="a-week-ago-title mb-4">A week ago</h2>
-                <div
-                  className="history-item mb-4 d-flex align-items-center justify-content-between"
-                >
-                  <div className="desc-wrapper d-flex align-items-center">
-                    <img
-                      src={vespa}
-                      alt="vespa"
-                      className="vehicle-image me-4 me-md-5"
-                    />
-                    <div className="history-item-desc">
-                      <h3 className="vehicle-name">Vespa Matic</h3>
-                      <p className="booking-date">Jan 18 to 21 2021</p>
-                      <p className="prepayment">Prepayment : Rp. 245.000</p>
-                      <p className="return-status">Has been returned</p>
-                    </div>
-                  </div>
-                  <button className="delete-history-btn btn d-none ms-5">Delete</button>
+              {
+                (paymentList)
+                  ? displayPage(paymentList)
+                  : <div className='w-100'>
+                  <Spinner className='' />
                 </div>
-                <div
-                  className="history-item mb-4 d-flex align-items-center justify-content-between"
-                >
-                  <div className="desc-wrapper d-flex align-items-center w-100">
-                    <img
-                      src={vespa}
-                      alt="vespa"
-                      className="vehicle-image me-4 me-md-5"
-                    />
-                    <div className="history-item-desc">
-                      <h3 className="vehicle-name">Vespa Matic</h3>
-                      <p className="booking-date">Jan 18 to 21 2021</p>
-                      <p className="prepayment">Prepayment : Rp. 245.000</p>
-                      <p className="return-status">Has been returned</p>
-                    </div>
-                  </div>
-                  <button className="delete-history-btn btn d-none ms-5">Delete</button>
-                </div>
-              </div>
+              }
               <div
                 className="new-arrival d-none d-lg-flex flex-column align-items-center"
               >

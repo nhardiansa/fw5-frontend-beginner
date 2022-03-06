@@ -46,3 +46,20 @@
   color: var(--one-color-dark);
   background-color: var(--five-color-dark);
 }
+
+.dangerBtn {
+  font-family: var(--nunito-font);
+  border-radius: 10px;
+
+  background: rgb(231 65 65);
+  color: #fff;
+}
+
+.dangerBtn:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 33, 33, 0.25);
+}
+
+.dangerBtn:hover {
+  background: rgb(255 33 33);
+  color: #fff;
+}

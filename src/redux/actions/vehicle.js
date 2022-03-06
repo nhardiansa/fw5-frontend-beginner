@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { axiosInstance } from '../../helpers/http';
-import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, GET_VEHICLE_DETAILS, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
+import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, DELETE_VEHICLE_PAYMENT, FINISH_PAYMENT, GET_VEHICLE_DETAILS, GET_VEHICLE_PAYMENT_DETAILS, GET_VEHICLE_PAYMENT_LIST, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, RETURN_VEHICLE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
 
 export const bookVehicle = (vehicleData) => {
   const {
@@ -93,5 +93,42 @@ export const makeVehiclePayment = (paymentData) => {
 export const clearVehiclePayment = () => {
   return {
     type: CLEAR_VEHICLE_PAYMENT
+  };
+};
+
+export const getVehiclePaymentList = () => {
+  return {
+    type: GET_VEHICLE_PAYMENT_LIST,
+    payload: axiosInstance(true).get('/histories?created=desc')
+  };
+};
+
+export const getVehiclePaymentDetails = (id) => {
+  return {
+    type: GET_VEHICLE_PAYMENT_DETAILS,
+    payload: axiosInstance(true).get(`/histories/${id}`)
+  };
+};
+
+export const deleteVehiclePayment = (id) => {
+  return {
+    type: DELETE_VEHICLE_PAYMENT,
+    payload: axiosInstance(true).delete(`/histories/${id}`)
+  };
+};
+
+export const finishPayment = (id) => {
+  const data = qs.stringify({ payment: 1 });
+  return {
+    type: FINISH_PAYMENT,
+    payload: axiosInstance(true).patch(`/histories/${id}`, data)
+  };
+};
+
+export const returnVehicle = (id) => {
+  const data = qs.stringify({ returned: 1 });
+  return {
+    type: RETURN_VEHICLE,
+    payload: axiosInstance(true).patch(`/histories/${id}`, data)
   };
 };

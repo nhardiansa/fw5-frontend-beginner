@@ -1,0 +1,31 @@
+.image {
+  width: 13rem;
+  height: 10rem;
+  object-fit: cover;
+  border-radius: 1.5rem;
+}
+
+.historyItem {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.detailWrapper {
+  transition: 0.3s ease-in-out;
+  transform: translateX(0);
+}
+
+.detailWrapperClicked {
+  transform: translateX(-11rem);
+}
+
+.button {
+  right: 0;
+  transform: translateX(10rem);
+  transition: 0.3s ease-in-out;
+}
+
+.clicked {
+  transform: translateX(-2rem);
+}
+

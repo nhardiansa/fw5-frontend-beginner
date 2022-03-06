@@ -11,15 +11,15 @@ html {
 }
 
 /* Main start */
-main {
+main.vehicle-type {
   padding: 3.125rem 0 !important;
 }
 
-main .vehicle-list {
+main.vehicle-type .vehicle-list {
   margin-top: 3rem;
 }
 
-main .vehicle-list a {
+main.vehicle-type .vehicle-list a {
   color: #FB8F1D;
   text-decoration: none;
 
@@ -30,31 +30,31 @@ main .vehicle-list a {
   font-size: 1.065rem;
 }
 
-main .vehicle-list a .icon {
+main.vehicle-type .vehicle-list a .icon {
   font-size: 0.9rem;
 }
 
-main .vehicle-list h2, .testimonial h2 {
+main.vehicle-type .vehicle-list h2, .testimonial h2 {
   font-family: Playfair Display, sans-serif;
   font-style: normal;
   font-weight: bold;
 }
 
-main .vehicle-list .popular-vehicles .image-wrapper {
+main.vehicle-type .vehicle-list .popular-vehicles .image-wrapper {
   width: 75%;
   height: 20rem;
   margin-bottom: 1rem;
   cursor: pointer;
 }
 
-main .vehicle-list .popular-vehicles img {
+main.vehicle-type .vehicle-list .popular-vehicles img {
   border-radius: 0.5rem 0.5rem 0.5rem 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-main .vehicle-list .image-desc{
+main.vehicle-type .vehicle-list .image-desc{
   background: #FFFFFF;
   border-radius: 0 0.5rem 0 0;
   padding: 1rem 0 0 1rem;
@@ -63,17 +63,17 @@ main .vehicle-list .image-desc{
   left: -1px;
 }
 
-main .vehicle-list .image-desc h3, main .vehicle-list .image-desc p {
+main.vehicle-type .vehicle-list .image-desc h3, main.vehicle-type .vehicle-list .image-desc p {
   font-family: Nunito, serif;
   color: #042521;
   font-style: normal;
 }
 
-main .vehicle-list .image-desc h3 {
+main.vehicle-type .vehicle-list .image-desc h3 {
   font-weight: bold;
   font-size: 0.95rem;
 }
-main .vehicle-list .image-desc p {
+main.vehicle-type .vehicle-list .image-desc p {
   font-size: 0.85rem;
 }
 /* Main end */
@@ -81,11 +81,11 @@ main .vehicle-list .image-desc p {
 @media (min-width: 768px) {
 
   /* Main start */
-  main {
+  main.vehicle-type {
     padding: 5.125rem 0 !important;
   }
 
-  main .vehicle-list .image-desc {
+  main.vehicle-type .vehicle-list .image-desc {
     width: 75%;
   }
   /* Main end */
@@ -97,19 +97,19 @@ main .vehicle-list .image-desc p {
   }
 
   /* Main start */
-  main {
+  main.vehicle-type {
     padding: 8.125rem 0 !important;
   }
 
-  main .vehicle-list .head-section {
+  main.vehicle-type .vehicle-list .head-section {
     margin-bottom: 3rem !important;
   }
 
-  main .vehicle-list .popular-vehicles .image-wrapper {
+  main.vehicle-type .vehicle-list .popular-vehicles .image-wrapper {
     height: 23rem;
   }
 
-  main .vehicle-list .image-desc {
+  main.vehicle-type .vehicle-list .image-desc {
     width: 50%;
   }
   /* Main end */

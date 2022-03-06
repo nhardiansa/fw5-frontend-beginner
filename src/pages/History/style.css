@@ -28,19 +28,19 @@ p {
 }
 
 /* Main start */
-main {
+main.histories {
   font-family: var(--nunito-font);
-  padding-top: 6rem;
+  padding-top: 6rem !important;
   padding-bottom: 5rem;
 
   display: block;
 }
 
-.search-filter {
+.histories .search-filter {
   font-family: var(--poppins-font);
 }
 
-.search-input, .search-btn, .select-field {
+.histories .search-input, .search-btn, .select-field {
   border: 0.5px solid #C4C4C4;
   background: rgba(218, 218, 218, 0.27);
 
@@ -48,55 +48,56 @@ main {
   border-radius: 0.5rem;
 }
 
-.search-input:focus, .search-btn:focus, .select-field:focus {
+.histories .search-input:focus, .search-btn:focus, .select-field:focus {
   outline: none;
   box-shadow: none;
   background: rgba(218, 218, 218, 0.27);
   border-color: #C4C4C4;
 }
 
-.search-field {
+.histories .search-field {
   width: 80%;
 }
-.search-input {
+
+.histories  .search-input {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-right: none;
 }
 
-.search-btn {
+.histories .search-btn {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-left: none ;
   color: #393939;
 }
 
-.search-icon {
+.histories  .search-icon {
   color: #393939;
   font-size: 1.5rem;
 }
 
-.select-field, .search-input::placeholder, .search-input {
+.histories  .select-field, .search-input::placeholder, .histories .search-input {
   color: #B8BECD;
 }
 
-.dropdown-icon {
+.histories .dropdown-icon {
   top: 35%;
   right: 10%;
 }
 
-.today-title, .a-week-ago-title {
+.histories .today-title, .histories .a-week-ago-title {
   color: #C4C4C4;
   font-weight: 600;
 
   font-size: 1.2rem;
 }
 
-.link-list {
+.histories .link-list {
   border-radius: 0;
 }
 
-.link-list-item {
+.histories .link-list-item {
   border: none;
   border-bottom: 0.5px solid #C4C4C4;
   padding-left: 0;
@@ -104,40 +105,41 @@ main {
   margin-bottom: 1.5rem;
 }
 
-.link-nav {
+.histories .link-nav {
   font-size: 1.2rem;
   color: #393939;
   font-weight: 600;
 }
 
-.link-nav-icon {
+.histories .link-nav-icon {
   color: #999999;
   font-size: 1.5rem;
 }
 
-.history-item {
+.histories .history-item {
   cursor: pointer;
   transition: 0.3s ease-in-out;
   position: relative;
   width: 100%;
 }
 
-.history-item.clicked {
+.histories .history-item.clicked {
   width: 140%;
   transition: 0.3s ease-in-out;
   
   transform: translateX(-28%);
 }
 
-.desc-wrapper {
+.histories .desc-wrapper {
   padding-block: 1rem;
 }
-.desc-wrapper:hover {
+
+.histories  .desc-wrapper:hover {
   border-radius: 1rem;
   /* background: #F5F5F5; */
 }
 
-.vehicle-image {
+.histories .vehicle-image {
   width: 13rem;
   height: 10.5rem;
   object-fit: cover;
@@ -145,31 +147,31 @@ main {
   border-radius: 1.5rem;
 }
 
-.vehicle-name, .booking-date, .prepayment, .return-status {
+.histories .vehicle-name, .histories .booking-date, .histories .prepayment, .histories .return-status {
   font-size: 1.2rem;
   font-weight: bold;
   color: #393939;
 }
 
-.booking-date {
+.histories .booking-date {
   line-height: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.prepayment {
+.histories .prepayment {
   margin-top: 1.5rem;
 }
 
-.booking-date {
+.histories .booking-date {
   font-weight: normal;
 }
 
-.return-status {
+.histories .return-status {
   font-weight: normal;
   color: green;
 }
 
-.delete-history-btn {
+.histories .delete-history-btn {
   background: var(--one-color);
   box-shadow: 0px 0px 10px var(--one-color);
   color: #FFFFFF;
@@ -180,7 +182,7 @@ main {
   /* transition: 0.3s ease-in-out; */
 }
 
-.new-arrival {
+.histories .new-arrival {
   border: 1px solid #DADADA;
   border-radius: 0.5rem;
   padding-top: 3.5rem;
@@ -188,17 +190,17 @@ main {
   padding-inline: 1rem;
 }
 
-.new-arrival-title {
+.histories .new-arrival-title {
   font-family: var(--playfair-font);
   font-weight: 900;
 }
 
-.new-arrival-img {
+.histories .new-arrival-img {
   width: 100%;
   border-radius: 0.8rem;
 }
 
-.new-arrival-item-desc {
+.histories .new-arrival-item-desc {
   background: #FFFFFF;
   bottom: 0;
   left: -1px;
@@ -208,27 +210,26 @@ main {
   padding: 1rem 1rem 0 2px;
 }
 
-.view-more-link {
+.histories .view-more-link {
   font-size: 1.13rem;
   line-height: 0.5rem;
   color: #B8BECD;
 }
 
-.view-more-icon {
+.histories .view-more-icon {
   font-size: 3rem;
   color: #4A4C53;
 }
-
 
 /* Main end */
 
 @media (min-width: 768px) {
   /* Main start */
-  .vehicle-image {
+  .histories .vehicle-image {
     width: 15rem;
   }
 
-  .history-item.clicked {
+  .histories .history-item.clicked {
     width: 100%;
     transition: 0.3s ease-in-out;
     
@@ -242,28 +243,33 @@ main {
   }
 
   /* Main start */
-  main {
+  main.histories {
     padding-top: 8rem !important;
     /* padding-bottom: 7rem; */
   }
 
-  .history-item.clicked {
+  .histories .history-item.clicked {
     width: 120%;
     transform: translateX(-12%);
   }
 
-  .history-wrapper {
+  .histories .history-wrapper {
     display: grid;
     column-gap: 5rem;
   }
 
-  .search-filter, .today-list-nav, .a-week-ago {
+  .histories .search-filter, .histories .today-list-nav, .histories .a-week-ago {
     grid-column: 1 / 8;
   }
 
-  .new-arrival {
+  .histories .new-arrival {
     grid-column: 8 / 12;
     grid-row: 1 / 4;
+  }
+
+  .a-week-ago {
+    max-height: 75vh;
+    overflow-y: auto;
   }
   /* Main end */
 }

@@ -35,15 +35,15 @@ export const Login = () => {
   };
 
   return (
-      <main className='row g-0 p-0 '>
+      <main className='login row g-0 p-0 '>
         {/* <div id="side-image d-none d-lg-block col-6">
         </div> */}
         <img
           src={sideImg}
           alt=""
-          className='side-img img-fluid d-none d-lg-block col-6'
+          className='side-img img-fluid d-none d-lg-block col-6 w-100 h-100'
         />
-        <section className="login-section col-lg-6 d-flex flex-column justify-content-center">
+        <section className="login-section col-lg-6 d-flex flex-column justify-content-center w-100">
           <div className="main d-flex flex-column justify-content-center flex-fill">
             <h1 className="text-center text-lg-start mt-5 mb-5 fw-bold">Login</h1>
             <form onSubmit={submitHandler} className="login-form d-flex flex-column mb-3">

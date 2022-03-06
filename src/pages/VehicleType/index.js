@@ -35,7 +35,7 @@ export const VehicleType = () => {
 
   return (
     <Layout isLogged={true}>
-      <main className="container px-lg-4 px-5">
+      <main className="vehicle-type container px-lg-4 px-5">
         {/* <!-- Popular in town --> */}
         <section className="popular vehicle-list">
           <div
