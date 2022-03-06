@@ -8,15 +8,34 @@ import Button from '../../components/Button';
 
 import './style.css';
 import { priceFormat, queryFormat } from '../../helpers/stringFormat';
+import { useDispatch, useSelector } from 'react-redux';
+import { bookVehicle, bookVehicleDecreaseQty, bookVehicleIncreaseQty, clearBookedVehicle, makeVehicleReservation, saveVehicleDetails } from '../../redux/actions/vehicle';
 
 export const VehicleDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { vehicleReducer } = useSelector(state => state);
+  const { bookedVehicle } = vehicleReducer;
+
   const [vehicle, setVehicle] = useState({});
 
   useEffect(() => {
     getVehicleData(id);
   }, [id]);
+
+  useEffect(() => {
+    if (vehicle.id) {
+      dispatch(bookVehicle(vehicle));
+    }
+  }, [vehicle]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearBookedVehicle());
+    };
+  }, []);
 
   const getVehicleData = async (id) => {
     try {
@@ -28,7 +47,25 @@ export const VehicleDetail = () => {
     }
   };
 
-  const detailDisplay = (data) => {
+  const increaseQtyHandler = () => {
+    dispatch(bookVehicleIncreaseQty());
+  };
+
+  const decreaseQtyHandler = () => {
+    if (bookedVehicle.qty > 1) {
+      dispatch(bookVehicleDecreaseQty());
+    }
+  };
+
+  const goToReservation = () => {
+    if (bookedVehicle.qty > 0) {
+      dispatch(saveVehicleDetails(vehicle));
+      dispatch(makeVehicleReservation(bookedVehicle));
+      navigate('/reservation');
+    }
+  };
+
+  const pageDisplay = (data) => {
     const {
       name,
       location,
@@ -49,10 +86,6 @@ export const VehicleDetail = () => {
 
     const goBack = () => {
       window.history.back();
-    };
-
-    const goToReservation = () => {
-      navigate('/reservation');
     };
 
     const availability = qty - booked;
@@ -103,10 +136,10 @@ export const VehicleDetail = () => {
               (availability < 3 && availability > 0) && <p className="availability text-warning"> {availability} {capitalize(categoryName)} left </p>
             }
             {
-              Number(prepayment) > 0 && <p className="prepayment text-success">Has prepayment</p>
+              Number(prepayment) > 0 && <p className="prepayment text-success">Can prepayment</p>
             }
             {
-              Number(prepayment) < 1 && <p className="prepayment text-danger">No prepayment</p>
+              Number(prepayment) < 1 && <p className="prepayment text-danger">Can&apos;t prepayment</p>
             }
 
             <p className="vehicle-desc">
@@ -114,25 +147,25 @@ export const VehicleDetail = () => {
               Type : {capitalize(categoryName)} <br />
               Reservation before 2 PM
             </p>
-            <p className="price mb-0 text-lg-end">Rp. {priceFormat(price)}/day</p>
+            <p className="price mb-0 text-lg-end">Rp. {priceFormat(price * (bookedVehicle.qty || 1))}/day</p>
           </div>
           <div className="counter mt-5 mt-md-0 d-lg-flex justify-content-start">
             <div className="d-flex justify-content-around align-items-center w-100 h-100">
-              <Button className="qty-control minus">
+              <Button onClick={decreaseQtyHandler} className="qty-control minus">
                 <FaMinus className='fs-2' />
               </Button>
-              <span className="qty-number fs-1">2</span>
-              <Button className="qty-control plus">
+              <span className="qty-number fs-1">{bookedVehicle.qty || 0}</span>
+              <Button onClick={increaseQtyHandler} className="qty-control plus">
                 <FaPlus className='fs-2' />
               </Button>
             </div>
           </div>
-          <div
-            className="action-group mt-5 mt-md-0 d-flex flex-column flex-md-row justify-content-between"
-          >
+          <div className="action-group mt-5 mt-md-0 d-flex flex-column flex-md-row justify-content-between">
             <Button className="mb-3 mb-md-0">Chat Admin</Button>
-            <Button onClick={goToReservation} className="reservation btn mb-3 mb-md-0 mx-md-5"
-              >Reservation</Button>
+
+            <Button onClick={goToReservation} className={`${availability ? '' : 'disabled'} reservation btn mb-3 mb-md-0 mx-md-5`}>
+              Reservation
+            </Button>
             <Button className="btn like d-flex justify-content-center align-items-center">
               <FaHeart className="heart-icon mb-1 me-2 me-lg-3" /> <span>Like</span>
             </Button>
@@ -144,9 +177,13 @@ export const VehicleDetail = () => {
 
   return (
     <Layout>
-      <main className="detail container mt-lg-4 px-4 px-md-5 px-lg-0">
+      <main className={`${bookedVehicle ? '' : 'd-flex justify-content-center align-items-center vh-100'} detail container mt-lg-4 px-4 px-md-5 px-lg-0`}>
         {
-          Object.keys(vehicle).length && detailDisplay(vehicle)
+          (Object.keys(vehicle).length && bookedVehicle)
+            ? pageDisplay(vehicle)
+            : <div className="spinner-border text-custom-primary" style={{ width: '3rem', height: '3rem' }} role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
         }
       </main>
     </Layout>

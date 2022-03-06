@@ -236,7 +236,7 @@ export default function Profile () {
                 <label className="input-lable" htmlFor="birthdate">Birthdate</label>
                 <input
                   onChange={dateChange}
-                  className="text-input d-block"
+                  className="text-input d-block text-uppercase"
                   type="date"
                   name="birthdate"
                   id="birthdate"
