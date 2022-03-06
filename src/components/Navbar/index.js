@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HiSearch } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,11 +12,13 @@ import { getUserData, logoutUser } from '../../redux/actions/user';
 import { useEffect } from 'react';
 
 const Navbar = () => {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const { auth, user } = useSelector(state => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(pathname);
     const userToken = JSON.parse(localStorage.getItem('user'));
     if (userToken && !user.profile) {
       dispatch(getUserData(userToken));
@@ -43,8 +45,8 @@ const Navbar = () => {
       <>
         <div className="d-flex">
           {
-            auth.user
-              ? (
+            auth.user &&
+            (
               <div
                 className="profile d-flex d-lg-none justify-content-between align-items-center"
               >
@@ -78,11 +80,10 @@ const Navbar = () => {
                       </div>
                     </div>
                   </>
-                    : <Spinner variant='primary' style={{ width: '2rem', height: '2rem' }} />
+                    : <Spinner variant='primary' className='test1' style={{ width: '2rem', height: '2rem' }} />
                 }
               </div>
-                )
-              : <Spinner variant='primary' style={{ width: '2rem', height: '2rem' }} />
+            )
           }
 
           <button
@@ -100,24 +101,22 @@ const Navbar = () => {
 
         <div className="collapse navbar-collapse justify-content-lg-end" id="navbarNavAltMarkup">
           <div className="navbar-nav d-flex me-lg-5 justify-content-end flex-fill">
-            <Link to='/' className="nav-link" aria-current="page" >Home</Link>
-            <Link to='/vehicles' className="nav-link" >Vehicle Type</Link>
-            <Link to='/histories' className="nav-link active" >History</Link>
+            <Link to='/' className={`${pathname === '/' ? 'active' : ''} nav-link`} aria-current="page" >Home</Link>
+            <Link to='/vehicles' className={`${pathname === '/vehicles' ? 'active' : ''} nav-link`} >Vehicle Type</Link>
+            <Link to='/histories' className={`${pathname === '/histories' ? 'active' : ''} nav-link`} >History</Link>
             <Link to='/' className="nav-link" >About</Link>
             {
-              auth.user
-                ? <form onSubmit={onSearchHandler} className="input-group my-3 my-lg-0 ms-lg-5 me-lg-3">
+              auth.user &&
+              <form onSubmit={onSearchHandler} className="input-group my-3 my-lg-0 ms-lg-5 me-lg-3">
                 <input type="text" className="form-control border-end-0" placeholder="Search vehicle" aria-label="Recipient's username" aria-describedby="button-addon2" />
                 <button type="submit" className="search-btn btn btn-outline-secondary" id="button-addon2">
                   <HiSearch className='search-icon text-secondary' />
                 </button>
               </form>
-                : <Spinner variant='primary' style={{ width: '2rem', height: '2rem' }} />
             }
           </div>
           {
-            (auth.user && user.profile)
-              ? (
+            (auth.user && user.profile) && (
               <div className="profile d-none d-lg-flex justify-content-between align-items-center" >
                 {
                   user.isLoading
@@ -154,8 +153,7 @@ const Navbar = () => {
                   </>
                 }
               </div>
-                )
-              : <Spinner variant='primary' style={{ width: '2rem', height: '2rem' }} />
+            )
           }
           {
             !auth.user && (

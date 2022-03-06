@@ -57,9 +57,9 @@ export default function App () {
 
           <Route path="/profile" element={<PrivateRoute restricted={true} page={<Profile />} />} />
 
-          <Route path="/histories" element={<History />} />
-          <Route path="/reservation" element={<Reservation />} />
-          <Route path="/payment" element={<Payment />} />
+          <Route path="/histories" element={ <PrivateRoute restricted={true} page={<History />} /> } />
+          <Route path="/reservation" element={ <PrivateRoute page={<Reservation />} /> } />
+          <Route path="/payment" element={ <PrivateRoute page={<Payment />} /> } />
           <Route path='*' element={<Home />} />
         </Routes>
       </BrowserRouter>
