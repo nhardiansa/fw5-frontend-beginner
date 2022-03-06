@@ -8,8 +8,10 @@ import Layout from '../../components/Layout';
 import { capitalize } from '../../helpers/stringFormat';
 
 import './style.css';
+import constants from '../../config/constants';
 
 export const ViewMore = () => {
+  const { baseURL } = constants;
   const { type } = useParams();
   const [vehicles, setVehicles] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
@@ -40,7 +42,7 @@ export const ViewMore = () => {
   const getVehicle = async (uri, stateReducer) => {
     try {
       if (uri) {
-        const { data } = await axios.get('http://localhost:5000' + uri);
+        const { data } = await axios.get(baseURL + uri);
         stateReducer(data.results);
         setPageInfo(data.pageInfo);
       } else {

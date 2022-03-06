@@ -11,11 +11,13 @@ import { capitalize } from '../../helpers/stringFormat';
 import testimonialImage from '../../assets/img/testimonial-user-pict/edward-newgate.png';
 import navigationIcon from '../../assets/img/circle-chevron-arrow.svg';
 
+import constants from '../../config/constants';
 import './style.css';
 import Button from '../../components/Button';
 import { useSelector } from 'react-redux';
 
 export const Home = () => {
+  const { baseURL } = constants;
   const { selectData } = useSelector(state => state);
   const navigate = useNavigate();
 
@@ -45,7 +47,7 @@ export const Home = () => {
 
   const getVehicles = async (uri, stateReducer) => {
     try {
-      const { data } = await axios.get('http://localhost:5000' + uri);
+      const { data } = await axios.get(baseURL + uri);
       stateReducer(data.results);
       setIsLoading(false);
     } catch (error) {

@@ -10,8 +10,10 @@ import './style.css';
 import { priceFormat, queryFormat } from '../../helpers/stringFormat';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookVehicle, bookVehicleDecreaseQty, bookVehicleIncreaseQty, clearBookedVehicle, makeVehicleReservation, saveVehicleDetails } from '../../redux/actions/vehicle';
+import constants from '../../config/constants';
 
 export const VehicleDetail = () => {
+  const { baseURL } = constants;
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,7 +41,7 @@ export const VehicleDetail = () => {
 
   const getVehicleData = async (id) => {
     try {
-      const { data } = await axios.get(`http://localhost:5000/vehicles/${id}`);
+      const { data } = await axios.get(`${baseURL}/vehicles/${id}`);
       setVehicle(data.results);
     } catch (error) {
       console.error(error);
