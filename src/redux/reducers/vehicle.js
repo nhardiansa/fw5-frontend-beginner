@@ -1,4 +1,4 @@
-import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_RESERVATION, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
+import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, GET_VEHICLE_DETAILS, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
 
 const initialState = {
   bookedVehicle: null,
@@ -7,7 +7,9 @@ const initialState = {
 
   paymentData: null,
   paymentLoading: false,
-  paymentError: null
+  paymentError: null,
+
+  error: null
 };
 
 const vehicleReducer = (state = initialState, action) => {
@@ -33,6 +35,24 @@ const vehicleReducer = (state = initialState, action) => {
 
     case CLEAR_BOOKED_VEHICLE: {
       state.bookedVehicle = null;
+      return { ...state };
+    }
+
+    case GET_VEHICLE_DETAILS + '_PENDING': {
+      state.vehicleDetails = null;
+      return { ...state };
+    }
+
+    case GET_VEHICLE_DETAILS + '_FULFILLED': {
+      const { results } = action.payload.data;
+      state.vehicleDetails = results;
+      return { ...state };
+    }
+
+    case GET_VEHICLE_DETAILS + '_REJECTED': {
+      const { message } = action.payload.response.data;
+      state.vehicleDetails = null;
+      state.error = message;
       return { ...state };
     }
 
@@ -90,6 +110,12 @@ const vehicleReducer = (state = initialState, action) => {
       state.paymentError = message;
       state.paymentData = null;
       state.paymentLoading = false;
+      return { ...state };
+    }
+
+    case CLEAR_VEHICLE_PAYMENT: {
+      state.paymentData = null;
+      state.error = null;
       return { ...state };
     }
 

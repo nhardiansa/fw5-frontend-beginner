@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { axiosInstance } from '../../helpers/http';
-import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_RESERVATION, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
+import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, GET_VEHICLE_DETAILS, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
 
 export const bookVehicle = (vehicleData) => {
   const {
@@ -62,6 +62,13 @@ export const clearVehicleReservation = () => {
   };
 };
 
+export const getVehicleDetails = (id) => {
+  return {
+    type: GET_VEHICLE_DETAILS,
+    payload: axiosInstance().get(`/vehicles/${id}`)
+  };
+};
+
 export const saveVehicleDetails = (vehicleData) => {
   return {
     type: SAVE_VEHICLE_DETAILS,
@@ -80,5 +87,11 @@ export const makeVehiclePayment = (paymentData) => {
   return {
     type: MAKE_VEHICLE_PAYMENT,
     payload: axiosInstance(true).post('/histories', data)
+  };
+};
+
+export const clearVehiclePayment = () => {
+  return {
+    type: CLEAR_VEHICLE_PAYMENT
   };
 };

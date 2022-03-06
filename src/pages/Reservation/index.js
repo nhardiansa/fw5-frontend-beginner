@@ -31,7 +31,13 @@ export const Reservation = () => {
 
     setDateRent(dateFormatter(new Date()));
     return () => {
-      clearData();
+      if (paymentData) {
+        console.log('not clear details');
+        clearData(false);
+      } else {
+        console.log('clear details');
+        clearData();
+      }
     };
   }, []);
 
@@ -44,14 +50,26 @@ export const Reservation = () => {
       console.log('payment error');
       alert(paymentError);
     }
+
+    return () => {
+      if (paymentData) {
+        console.log('not clear details');
+        clearData(false);
+      } else {
+        console.log('clear details');
+        clearData();
+      }
+    };
   }, [paymentLoading]);
 
   const goBack = () => {
     window.history.back();
   };
 
-  const clearData = () => {
-    dispatch(clearVehicleDetails());
+  const clearData = (clearDetails = true) => {
+    if (clearDetails) {
+      dispatch(clearVehicleDetails());
+    }
     dispatch(clearVehicleReservation());
   };
 

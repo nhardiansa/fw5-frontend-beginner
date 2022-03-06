@@ -15,27 +15,27 @@ html {
   font-size: 12px;
 }
 /* Main start */
-main {
+main.payment {
   font-family: var(--nunito-font);
   padding-top: 6rem !important;
   padding-bottom: 5rem;
 }
 
-p {
+.payment p {
   margin: 0;
 }
 
-.back-link {
+.payment .back-link {
   font-size: 1.2rem;
   font-weight: bold;
 }
 
-.back-icon {
+.payment  .back-icon {
   font-size: 1.5rem;
   margin-right: 1rem;
 }
 
-.img-product {
+.payment .img-product {
   width: 100%;
   height: 100%;
 
@@ -43,40 +43,40 @@ p {
   border-radius: 0.6rem;
 }
 
-.qty-detail, .reservation-date, .order-details, .identity, .payment-code-copy, .payment-method-select {
+.payment .qty-detail, .payment .reservation-date, .payment .order-details, .payment .identity, .payment .payment-code-copy, .payment {
   border: 1px solid #80918E;
   border-radius: 0.5rem;
 
   box-sizing: border-box;
 }
 
-.invoice-vehicle-name, .booking-code, .payment-code {
+.payment .invoice-vehicle-name, .payment .booking-code, .payment .payment-code {
   font-family: var(--playfair-font);
 }
 
-.invoice-vehicle-name {
+.payment .invoice-vehicle-name {
   font-weight: 900;
   /* width: 60%; */
   line-height: 2rem;
 }
 
-.prepayment {
+.payment .prepayment {
   font-size: 1.2rem;
   font-weight: bold;
   color: #B8BECD;
 }
 
-.location {
+.payment .location {
   font-size: 1.5rem;
   font-weight: normal;
 }
 
-.booking-code {
+.payment .booking-code {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-.copy-btn, .copy-btn:focus, .payment-code-copy-btn {
+.payment .copy-btn, .copy-btn:focus, .payment-code-copy-btn {
   font-weight: bold;
   background: var(--one-color);
   color: #FFFFFF;
@@ -84,17 +84,17 @@ p {
   border-radius: 0.6rem;
 }
 
-.copy-btn {
+.payment .copy-btn {
   width: 40%;
 }
 
-.payment-code-copy-btn {
+.payment .payment-code-copy-btn {
   background: var(--five-color);
   color: var(--one-color);
   padding: 0.8% 8%;
 }
 
-.qty-detail, .reservation-date, .order-details, .payment-method-select, .payment-code-copy {
+.payment .qty-detail, .payment .reservation-date, .payment .order-details, .payment .payment-code-copy {
   width: 100%;
   height: 100%;
   padding: 1rem;
@@ -102,49 +102,38 @@ p {
   font-weight: bold;
 }
 
-.order-title {
+.payment .order-title {
   font-weight: 900;
 }
 
-.identity {
+.payment .identity {
   padding: 0 10%;
 }
 
-.identity-title {
+.payment .identity-title {
   font-weight: 900;
 }
 
-.payment-title {
+.payment .payment-title {
   font-size: 1.2rem;
 }
 
-.payment-code-copy {
+.payment .payment-code-copy {
   padding: 2% 7%;
 }
 
-.payment-method-select {
-  padding: 0 2% !important;
-
-  color: #80918E;
-}
-
-.payment-action {
-  background: var(--five-color);
-  color: var(--one-color);
-  font-weight: 900;
-  padding: 3% 0;
-  border-radius: 0.6rem;
-  box-shadow: 0px 0px 20px var(--five-color);
-
-  width: 100%;
-}
-
-.vehicle-img, .invoice-head, .qty-detail, .reservation-date, .order-details, .identity, .payment-method, .payment-code-copy, .payment-title {
+.payment .vehicle-img, .payment .invoice-head, .payment .qty-detail, .payment .reservation-date, .payment .order-details, .payment .identity, .payment .payment-method, .payment .payment-code-copy, .payment .payment-title {
   margin-bottom: 2rem;
 }
 
-.payment-title {
+.payment .payment-title {
   margin-bottom: 1rem;
+}
+
+.payment-method-select {
+  font-family: var(--nunito-font);
+  border-radius: 0.6rem;
+  border-color: #80918e;
 }
 /* Main end */
 
@@ -153,36 +142,32 @@ p {
     font-size: 13px;
   }
 
-  .vehicle-img, .invoice-head, .qty-detail, .reservation-date, .order-details, .identity, .payment-method, .payment-code-copy, .payment-title {
+  .payment .vehicle-img, .payment .invoice-head, .payment .qty-detail, .payment .reservation-date, .payment .order-details, .payment .identity, .payment .payment-method, .payment .payment-code-copy, .payment .payment-title {
     margin-bottom: 0;
   }
 
-  .payment-wrapper {
+  .payment .payment-wrapper {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     column-gap: 1.5rem;
     row-gap: 1rem;
   }
 
-  .vehicle-img {
+  .payment .vehicle-img {
     grid-column: 1 / 2;
   }
 
-  .payment-method {
+  .payment .payment-method {
     grid-column: 1 / 3;
   }
 
-  .payment-action {
+  .payment .payment-action {
     grid-column: 1 / 3;
   }
 
   .payment-title {
     width: 50%;
     /* margin-right: 10rem; */
-  }
-
-  .payment-code-copy, .payment-method-select {
-    height: 70%;
   }
 
   .payment-code-copy {
@@ -200,7 +185,7 @@ p {
   }
 
   /* Main start */
-  main {
+  main.payment {
     padding-top: 8rem !important;
   }
 
@@ -236,7 +221,7 @@ p {
     padding: 2%;
   }
 
-  .qty-detail, .reservation-date, .order-details, .identity, .payment-code-copy, .payment-method-select, .payment-action, .payment-code-copy-btn, .payment-code {
+  .qty-detail, .reservation-date, .order-details, .identity, .payment-code-copy, .payment-code-copy-btn, .payment-code {
     font-size: 1.2rem;
   }
 

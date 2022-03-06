@@ -1,104 +1,156 @@
 import Layout from '../../components/Layout';
 import { FaChevronLeft } from 'react-icons/fa';
-import { connect } from 'react-redux';
+import Button from '../../components/Button';
 
-import vehiclePict from '../../assets/img/bike/image-banner.png';
 import './style.css';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { priceFormat, queryFormat } from '../../helpers/stringFormat';
+import Spinner from '../../components/Spinner';
+import { clearVehicleDetails, clearVehiclePayment, getVehicleDetails } from '../../redux/actions/vehicle';
+import { useNavigate } from 'react-router-dom';
 
-const mapStateToProps = state => ({ counter: state.counter });
+export default function Payment () {
+  const navigate = useNavigate();
+  const { vehicleReducer, user } = useSelector(state => state);
+  const dispatch = useDispatch();
+  const { paymentData, vehicleDetails } = vehicleReducer;
+  const { profile } = user;
 
-export const Payment = ({ counter }) => {
   useEffect(() => {
-    console.log(counter);
-  }, []);
+    if (!paymentData) {
+      navigate('/vehicles');
+    }
+
+    if (!vehicleDetails && paymentData) {
+      dispatch(getVehicleDetails(paymentData.vehicle_id));
+    }
+
+    return () => {
+      clearData();
+    };
+  }, [paymentData]);
+
+  const clearData = () => {
+    dispatch(clearVehiclePayment());
+    dispatch(clearVehicleDetails());
+  };
 
   const onClick = () => {
     window.history.back();
   };
 
-  return (
-    <Layout isLogged={true}>
-      <main className="container">
-        <div className="payment-wrapper text-center text-md-start">
-          <div className="back-btn mb-5">
-            <div
-              onClick={onClick}
-              className="back-link link-dark d-flex align-items-center"
-            >
-              <FaChevronLeft className="back-icon" />
-              Payment
-            </div>
-          </div>
-          <div className="vehicle-img">
-            <img
-              src={vehiclePict}
-              alt="example"
-              className="img-product"
-            />
-          </div>
+  const pageDisplay = (paymentData, vehicleData, userData) => {
+    const {
+      payment_code: paymentCode,
+      qty: vehicleQty,
+      start_rent: startRent,
+      total_paid: totalToPay
+    } = paymentData;
+    const {
+      image: vehicleImage,
+      name: vehicleName,
+      location: vehicleLocation,
+      category_name: vehicleCategory,
+      price: vehiclePrice
+    } = vehicleData;
+    const {
+      name: userName,
+      email: userEmail,
+      phone: userPhone
+    } = userData;
+
+    const image = vehicleImage || `https://via.placeholder.com/500x335?text=${queryFormat(name)}`;
+
+    return (
+      <div className="payment-wrapper text-center text-md-start">
+        <div className="back-btn mb-5">
           <div
-            className="invoice-head d-flex flex-column justify-content-between align-items-center align-items-md-start"
+            onClick={onClick}
+            className="link-dark fw-bold fs-1 d-flex align-items-center"
           >
-            <h1 className="invoice-vehicle-name">
-              Fixie - Gray Only <br />
-              <span className="location">Yogyakarta</span>
-            </h1>
-            <p className="prepayment mb-3">No prepayment</p>
-            <p className="booking-code mb-2">#FG1209878YZS</p>
-            <button className="copy-btn btn">Copy booking code</button>
+            <FaChevronLeft className="back-icon fs-1" />
+            Payment
           </div>
-          <div className="qty-detail">
-            <p className="qty-text text-center">Quantity : {counter.value} bikes</p>
-          </div>
-          <div
-            className="reservation-date d-flex justify-content-around align-items-center"
-          >
-            <p className="reservation-title">Reservation Date :</p>
-            <p className="reservation-text fw-normal">Jan 18 - 20 2021</p>
-          </div>
-          <div className="order-details">
-            <p className="order-title">Order details :</p>
-            <p className="order-text fw-normal mt-2">1 bike : Rp. 78.000</p>
-            <p className="order-text fw-normal">1 bike : Rp. 78.000</p>
-            <p className="order-total fw-bold mt-4">Total : 178.000</p>
-          </div>
-          <div className="identity d-flex flex-column justify-content-center">
-            <p className="identity-title">Identity :</p>
-            <p className="user-data fw-normal">
-              Samantha Doe (+6290987682) <br />
-              samanthadoe@mail.com
-            </p>
-          </div>
-          <div className="payment-method d-md-flex align-items-center">
-            <p className="payment-title fw-bold">Payment code :</p>
-            <div
-              className="payment-code-copy d-flex align-items-center justify-content-evenly justify-content-md-between"
-            >
-              <p className="payment-code fw-bold">#FG1209878YZS</p>
-              <button className="payment-code-copy-btn btn">Copy</button>
-            </div>
-            <select
-              className="payment-method-select form-select"
-              aria-label="Default select example"
-            >
-              <option defaultValue>
-                {/* <span className="placeholder-select">Select payment methods</span> */}
-                Select payment methods
-              </option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-          <button className="payment-action btn">
-            Finish payment :
-            <span className="payment-time-limit text-danger">59:30</span>
-          </button>
         </div>
+        <div className="vehicle-img">
+          <img
+            src={image}
+            alt="example"
+            className="img-product"
+          />
+        </div>
+        <div
+          className="invoice-head d-flex flex-column justify-content-between align-items-center align-items-md-start"
+        >
+          <h1 className="invoice-vehicle-name fs-1 lh-base">
+            {vehicleName} <br />
+            <span className="location fs-2">{vehicleLocation}</span>
+          </h1>
+          <p className="prepayment my-3 fw-bold">No prepayment</p>
+          <p className="booking-code my-2">{paymentCode}</p>
+          <Button className='px-4 fw-bold rounded-pill fs-6' >Copy booking code</Button>
+        </div>
+        <div className="qty-detail">
+          <p className="qty-text text-center">Quantity : {vehicleQty} {vehicleCategory}</p>
+        </div>
+        <div
+          className="reservation-date d-flex justify-content-around align-items-center"
+        >
+          <p className="reservation-title">Reservation Date :</p>
+          <p className="reservation-text fw-normal">{startRent}</p>
+        </div>
+        <div className="order-details ps-md-5 py-4 py-lg-5">
+          <p className="order-title">Order details :</p>
+          <p className="order-text fw-normal mt-2">{vehicleQty} {vehicleCategory} : Rp. {priceFormat(vehiclePrice)}</p>
+          <p className="order-total fw-bold mt-4">Total : {priceFormat(totalToPay)}</p>
+        </div>
+        <div className="identity d-flex flex-column justify-content-center py-4">
+          <p className="identity-title">Identity :</p>
+          <p className="user-data fw-normal">
+            {userName || 'unknown'} {userPhone || ''} <br />
+            {userEmail}
+          </p>
+        </div>
+        <div className="payment-method d-md-flex align-items-center">
+          <p className="payment-title fw-bold">Payment code :</p>
+          <div
+            className="payment-code-copy d-flex align-items-center justify-content-evenly justify-content-md-between py-3"
+          >
+            <p className="payment-code fw-bold fs-5">{paymentCode}</p>
+            <Button className="px-4" variant='secondaryBtn'>Copy</Button>
+          </div>
+          <select
+            className="payment-method-select form-select h-100 py-3 fw-bold text-secondary"
+            aria-label="Default select example"
+          >
+            <option defaultValue>
+              {/* <span className="placeholder-select">Select payment methods</span> */}
+              Select payment methods
+            </option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+        <Button className="payment-action py-3 py-md-4 fs-5 mt-2 mt-md-4 w-100" variant='secondaryBtn'>
+          Finish payment :
+          <span className="payment-time-limit text-danger">59:30</span>
+        </Button>
+      </div>
+    );
+  };
+
+  return (
+    <Layout>
+      <main
+        className={`${paymentData && vehicleDetails && profile ? '' : 'd-flex justify-content-center align-items-center vh-100'} payment container px-4 border-0`}>
+        {
+          (paymentData && vehicleDetails && profile)
+            ? pageDisplay(paymentData, vehicleDetails, profile)
+            : <Spinner variant="primary" style={{ width: '6rem', height: '6rem' }} />
+        }
       </main>
     </Layout>
   );
-};
-
-export default connect(mapStateToProps)(Payment);
+}
