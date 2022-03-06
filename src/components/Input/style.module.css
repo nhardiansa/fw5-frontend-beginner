@@ -1,0 +1,17 @@
+.input {
+  border: none;
+  background: var(--grey-input);
+  
+  border-radius: 0.6rem;
+  color: #80918E;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: #80918E 0px 0px 0px 1px;
+}
+
+.error {
+  box-shadow: 0px 0px 14px 0px rgba(255,0,0,0.75);
+  outline: rgba(255,0,0);
+}
