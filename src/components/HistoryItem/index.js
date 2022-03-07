@@ -11,8 +11,7 @@ export default class HistoryItem extends Component {
   }
 
   onClick (e) {
-    const { id } = e.target;
-    if (id === 'historyItem' || id === 'historyImg') {
+    if (e.target.classList.contains(style.itemRecognition)) {
       this.setState({
         clicked: !this.state.clicked
       });
@@ -39,33 +38,33 @@ export default class HistoryItem extends Component {
       <div
         onClick={this.onClick.bind(this)}
         id='historyItem'
-        className={`${classNameContainer} ${style.historyItem} d-flex align-items-center position-relative`}
+        className={`${style.itemRecognition} ${classNameContainer} ${style.historyItem} d-flex align-items-center position-relative`}
       >
-        <div className={`${style.detailWrapper} ${clicked ? style.detailWrapperClicked : ''} d-flex align-items-center position-relative`}>
+        <div className={`${style.itemRecognition} ${style.detailWrapper} ${clicked ? style.detailWrapperClicked : ''} d-flex align-items-center position-relative`}>
           <img
             id='historyImg'
             src={image}
             alt={image}
-            className={`${classNameImage} ${style.image} me-3`}
+            className={`${style.itemRecognition} ${classNameImage} ${style.image} me-3`}
           />
-          <div className="">
-            <h3 className="fw-bold fs-5 text-capitalize">{name}</h3>
-            <p className="fs-6">{startRent}</p>
-            <p className="fs-5 fw-bold">Prepayment : Rp. 245.000</p>
+          <div className={`${style.itemRecognition}`}>
+            <h3 className={`${style.itemRecognition} fw-bold fs-5 text-capitalize`}>{name}</h3>
+            <p className={`${style.itemRecognition} fs-6`}>{startRent}</p>
+            <p className={`${style.itemRecognition} fs-5 fw-bold`}>Prepayment : Rp. 245.000</p>
             {
               returned
                 ? (
-                <p className="text-success fs-6">Has been returned</p>
+                <p className={`${style.itemRecognition} text-success fs-6`}>Has been returned</p>
                   )
                 : (
-                <p className="text-danger fs-6">{notPaidText}</p>
+                <p className={`${style.itemRecognition} text-danger fs-6`}>{notPaidText}</p>
                   )
             }
           </div>
         </div>
-        <div className={`${style.button} ${this.state.clicked ? style.clicked : ''} position-absolute d-flex flex-column`}>
-          <Button className='my-1 py-2 px-3' id={historyId} onClick={detailClicked} >Detail</Button>
-          <Button className='my-1 py-2 px-3' id={historyId} variant={'dangerBtn'} onClick={deleteClicked} >Delete</Button>
+        <div className={`${style.itemRecognition} ${style.button} ${this.state.clicked ? style.clicked : ''} position-absolute d-flex flex-column`}>
+          <Button className={'my-1 py-2 px-3'} id={historyId} onClick={detailClicked} >Detail</Button>
+          <Button className={`${style.itemRecognition} my-1 py-2 px-3`} id={historyId} variant={'dangerBtn'} onClick={deleteClicked} >Delete</Button>
         </div>
       </div>
     );

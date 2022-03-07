@@ -5,6 +5,10 @@
   border-radius: 1.5rem;
 }
 
+.itemRecognition {
+  cursor: pointer;
+}
+
 .historyItem {
   overflow: hidden;
   cursor: pointer;
