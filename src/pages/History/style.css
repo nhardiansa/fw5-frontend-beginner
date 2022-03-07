@@ -190,24 +190,16 @@ main.histories {
   padding-inline: 1rem;
 }
 
-.histories .new-arrival-title {
-  font-family: var(--playfair-font);
-  font-weight: 900;
+.histories .new-arrival .desc {
+  max-width: 60%;
+  border-radius: 0 1rem 0 0;
 }
 
-.histories .new-arrival-img {
-  width: 100%;
-  border-radius: 0.8rem;
-}
-
-.histories .new-arrival-item-desc {
-  background: #FFFFFF;
-  bottom: 0;
-  left: -1px;
-  min-width: 45%;
-
-  border-radius: 0 0.6rem 0 0;
-  padding: 1rem 1rem 0 2px;
+.histories .new-arrival .new-arrival-image {
+  /* width: 100%; */
+  min-height: 22rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
 }
 
 .histories .view-more-link {
@@ -253,19 +245,15 @@ main.histories {
     transform: translateX(-12%);
   }
 
-  .histories .history-wrapper {
+  /* .histories .history-wrapper {
     display: grid;
     column-gap: 5rem;
-  }
+  } */
 
-  .histories .search-filter, .histories .today-list-nav, .histories .a-week-ago {
+  /* .histories .search-filter, .histories .today-list-nav, .histories .a-week-ago {
     grid-column: 1 / 8;
-  }
+  } */
 
-  .histories .new-arrival {
-    grid-column: 8 / 12;
-    grid-row: 1 / 4;
-  }
 
   .a-week-ago {
     max-height: 75vh;

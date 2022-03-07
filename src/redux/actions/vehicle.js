@@ -1,6 +1,7 @@
 import qs from 'qs';
+import constants from '../../config/constants';
 import { axiosInstance } from '../../helpers/http';
-import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, DELETE_VEHICLE_PAYMENT, FINISH_PAYMENT, GET_VEHICLE_DETAILS, GET_VEHICLE_PAYMENT_DETAILS, GET_VEHICLE_PAYMENT_LIST, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, RETURN_VEHICLE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
+import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_DELETED_VEHICLE_PAYMENT, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, DELETE_VEHICLE_PAYMENT, FINISH_PAYMENT, GET_VEHICLE_DETAILS, GET_VEHICLE_PAYMENT_DETAILS, GET_VEHICLE_PAYMENT_LIST, LOAD_MORE_VEHICLE_PAYMENT_LIST, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, RETURN_VEHICLE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
 
 export const bookVehicle = (vehicleData) => {
   const {
@@ -96,10 +97,26 @@ export const clearVehiclePayment = () => {
   };
 };
 
-export const getVehiclePaymentList = () => {
+export const getVehiclePaymentList = (input) => {
+  const data = new URLSearchParams({
+    limit: constants.itemLimit,
+    ...input
+  });
+
+  console.log(data.toString());
+
   return {
     type: GET_VEHICLE_PAYMENT_LIST,
-    payload: axiosInstance(true).get('/histories?created=desc')
+    payload: axiosInstance(true).get(`/histories?${data.toString()}`)
+  };
+};
+
+export const loadMoreVehiclePaymentList = (input) => {
+  const data = new URLSearchParams(input);
+  console.log(data);
+  return {
+    type: LOAD_MORE_VEHICLE_PAYMENT_LIST,
+    payload: axiosInstance(true).get(`/histories?${data.toString()}`)
   };
 };
 
@@ -114,6 +131,12 @@ export const deleteVehiclePayment = (id) => {
   return {
     type: DELETE_VEHICLE_PAYMENT,
     payload: axiosInstance(true).delete(`/histories/${id}`)
+  };
+};
+
+export const clearDeletedPaymentData = () => {
+  return {
+    type: CLEAR_DELETED_VEHICLE_PAYMENT
   };
 };
 

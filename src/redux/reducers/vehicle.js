@@ -1,4 +1,4 @@
-import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, DELETE_VEHICLE_PAYMENT, FINISH_PAYMENT, GET_VEHICLE_DETAILS, GET_VEHICLE_PAYMENT_DETAILS, GET_VEHICLE_PAYMENT_LIST, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, RETURN_VEHICLE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
+import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_DELETED_VEHICLE_PAYMENT, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, DELETE_VEHICLE_PAYMENT, FINISH_PAYMENT, GET_VEHICLE_DETAILS, GET_VEHICLE_PAYMENT_DETAILS, GET_VEHICLE_PAYMENT_LIST, LOAD_MORE_VEHICLE_PAYMENT_LIST, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, RETURN_VEHICLE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
 
 const initialState = {
   bookedVehicle: null,
@@ -162,6 +162,28 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
+    case LOAD_MORE_VEHICLE_PAYMENT_LIST + '_PENDING': {
+      state.paymentLoading = true;
+      state.paymentError = null;
+      return { ...state };
+    }
+
+    case LOAD_MORE_VEHICLE_PAYMENT_LIST + '_FULFILLED': {
+      const { results, pageInfo } = action.payload.data;
+      state.listPagination = pageInfo;
+      state.paymentList = [...state.paymentList, ...results];
+      state.paymentError = null;
+      state.paymentLoading = false;
+      return { ...state };
+    }
+
+    case LOAD_MORE_VEHICLE_PAYMENT_LIST + '_REJECTED': {
+      const { message } = action.payload.response.data;
+      state.paymentError = message;
+      state.paymentLoading = false;
+      return { ...state };
+    }
+
     case GET_VEHICLE_PAYMENT_DETAILS + '_PENDING': {
       state.paymentLoading = true;
       state.paymentError = null;
@@ -204,6 +226,11 @@ const vehicleReducer = (state = initialState, action) => {
       const { message } = action.payload.response.data;
       state.paymentDeleteLoading = false;
       state.paymentDeleteError = message;
+      state.paymentDeleteSuccess = null;
+      return { ...state };
+    }
+
+    case CLEAR_DELETED_VEHICLE_PAYMENT: {
       state.paymentDeleteSuccess = null;
       return { ...state };
     }
