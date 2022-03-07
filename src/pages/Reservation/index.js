@@ -26,7 +26,8 @@ export const Reservation = () => {
   useEffect(() => {
     if (!vehicleDetails || !reservationData) {
       console.log('data null');
-      navigate('/vehicles');
+      // navigate('/vehicles');
+      window.history.back();
     }
 
     setDateRent(dateFormatter(new Date()));

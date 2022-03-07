@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { priceFormat, queryFormat } from '../../helpers/stringFormat';
 import Spinner from '../../components/Spinner';
 import { clearVehicleDetails, clearVehiclePayment, finishPayment, getVehicleDetails, returnVehicle } from '../../redux/actions/vehicle';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export default function Payment () {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { vehicleReducer, user } = useSelector(state => state);
   const dispatch = useDispatch();
   const { paymentData, vehicleDetails, paymentFinishSuccess, returningVehicleSuccess } = vehicleReducer;
@@ -19,7 +19,7 @@ export default function Payment () {
 
   useEffect(() => {
     if (!paymentData) {
-      navigate('/vehicles');
+      window.history.back();
     }
 
     if (!vehicleDetails && paymentData) {
