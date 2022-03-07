@@ -1,7 +1,7 @@
 import { FaPencilAlt } from 'react-icons/fa';
 
 import Button from '../../components/Button';
-import profilePicture from '../../assets/img/profile-picture/samantha-doe.png';
+import profilePicture from '../../assets/img/profile-placeholder.png';
 import Layout from '../../components/Layout';
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -94,12 +94,12 @@ export default function Profile () {
     console.log('change password');
   };
 
-  // const fileInputHandler = (e) => {
-  //   console.log(e.target.files);
-  //   setUpdateProfile({
-  //     file: e.target.files[0]
-  //   });
-  // };
+  const fileInputHandler = (e) => {
+    console.log(e.target.files[0]);
+    setUpdateProfile({
+      image: e.target.files[0]
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -114,8 +114,11 @@ export default function Profile () {
     }
 
     if (Object.keys(updateProfile).length > 0) {
-      updateProfile.birthdate = dateFormatter(updateProfile.birthdate, true);
+      if (updateProfile.birthdate) {
+        updateProfile.birthdate = dateFormatter(updateProfile.birthdate, true);
+      }
       dispatch(updateUser(user.profile, updateProfile));
+      // console.log(user.profile, updateProfile);
       setUpdateProfile({});
     }
   };
@@ -129,18 +132,18 @@ export default function Profile () {
         <div
           className="contact text-center d-flex flex-column align-items-center mt-5"
         >
-          <div className="img-wrapper d-inline-block position-relative">
+          <div className="img-wrapper d-inline-block position-relative pe-auto">
             <img
               src={user.profile.image || profilePicture}
               alt="samantha-doe"
               className="contact-img img-thumbnail rounded-circle"
             />
             <Button
-              className="edit-btn rounded-circle btn position-absolute"
+              className="edit-btn rounded-circle btn position-absolute pe-auto"
             >
               <FaPencilAlt />
+            <input type="file" name='image' onChange={fileInputHandler} className='image-input position-absolute pe-auto' />
             </Button>
-            {/* <input type="file" name='image' onChange={fileInputHandler} /> */}
           </div>
           <div className="contact-info mt-5">
             <h2 className="">{capitalize(user.profile.name || 'not set')}</h2>

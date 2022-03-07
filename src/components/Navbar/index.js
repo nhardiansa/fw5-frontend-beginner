@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Spinner from '../../components/Spinner';
 import logo from '../../assets/img/car-wheel.png';
-import profilePict from '../../assets/img/profile-picture/samantha-doe.png';
+import profilePict from '../../assets/img/profile-placeholder.png';
 import msgIcon from '../../assets/img/msg-icon.svg';
 import './style.css';
 import { logout } from '../../redux/actions/auth';

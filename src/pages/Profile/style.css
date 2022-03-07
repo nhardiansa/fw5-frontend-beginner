@@ -180,6 +180,15 @@ main.profile .form-section .button-groups button.cancel {
 main.profile .form-section .button-groups button.cancel:hover {
   background:  rgba(140, 140, 153, 0.27);
 }
+
+main.profile .image-input {
+  width: 100%;
+  right: 1%;
+  top: 20%;
+  opacity: 0;
+  cursor: pointer ;
+}
+
   /* Main end */
   
 @media (min-width: 768px) { 
