@@ -4,6 +4,9 @@
   --three-color: #E69580;
   --four-color: #DCA7A3;
   --five-color: #FFE5D2;
+
+  --one-color-dark: #da5531;
+  --five-color-dark: #ffd6b8;
 }
 
 html {
@@ -58,9 +61,13 @@ form.login-form > input {
 }
 
 .login-btn {
-  background: var(--five-color);
-  box-shadow: 0px 0px 20px var(--five-color);
-  color: var(--one-color);
+  box-shadow: 0px 0px 20px var(--one-color);
+}
+
+.login-btn:hover {
+  color: var(--five-color-dark);
+  background: #e66b44;
+  /* background: red !important; */
 }
 
 img.google-icon {

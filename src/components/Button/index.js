@@ -8,11 +8,11 @@ export default class Button extends Component {
   }
 
   render () {
-    const { className, variant, ...rest } = this.props;
+    const { className, variant, disabled, ...rest } = this.props;
 
     return (
       <button
-        className={`btn ${variant ? style[variant] : style.primaryBtn} ${className}`}
+        className={`btn ${variant ? style[variant] : style.primaryBtn} ${className} ${disabled ? 'disabled' : ''}`}
         ref={this.myRef}
         {...rest}
       >{this.props.children}</button>

@@ -64,16 +64,16 @@ header form input, header form > button {
   font-weight: 900 !important;
 }
 
-header form input[type="email"]::placeholder {
+header form input.forgot-input::placeholder {
   color: #FFFFFF;
   font-weight: bold;
 }
 
-header form input[type="email"] {
+header form input.forgot-input {
   background: rgba(255, 255, 255, 0.26);
 }
 
-header form input[type="email"]:focus {
+header form input.forgot-input:focus {
   background: rgba(255, 255, 255, 0.26);
   outline: none !important;
 }

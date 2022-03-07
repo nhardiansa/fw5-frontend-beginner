@@ -10,6 +10,7 @@ import carWheel from '../../assets/img/car-wheel.png';
 import googleIcon from '../../assets/img/google-icon.svg';
 
 import './style.css';
+import Button from '../../components/Button';
 
 export const Login = () => {
   const { auth } = useSelector(state => state);
@@ -57,7 +58,8 @@ export const Login = () => {
               <input className="mb-3" type="password" placeholder="Password" name='password' onChange={handleChange} />
               {
                 !auth.isLoading &&
-                <button type='submit' className="btn login mt-4" >Login</button>
+                // <button type='submit' className="btn login mt-4" >Login</button>
+                <Button className='login-btn' >Login</Button>
               }
               {
                 auth.isLoading &&
@@ -85,7 +87,7 @@ export const Login = () => {
                 />
                 Login with Google
               </a>
-              <Link to='/register' className="btn sign-up">Sign Up</Link>
+              <Link to='/register' className="btn sign-up text-custom-primary">Sign Up</Link>
             </div>
           </div>
           <footer className='pb-1 flex-fill'>

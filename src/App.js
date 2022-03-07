@@ -47,7 +47,7 @@ export default function App () {
           <Route path="/login" element={<PublicRoute restricted={true} page={<Login />} />} />
           <Route path="/register" element={<PublicRoute restricted={true} page={<Register />} />} />
           <Route path="/forgotPassword" element={<PublicRoute restricted={true} page={<ForgotPassword />} />} />
-          <Route path="/forgotPassword" element={<PublicRoute restricted={true} page={<ForgotPassword />} />} />
+          <Route path="/verify" element={<PublicRoute restricted={true} page={<ForgotPassword />} />} />
 
           <Route path="/" element={<Home />} />
           <Route path="/vehicles" element={<VehicleType />} />
