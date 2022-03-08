@@ -3,10 +3,10 @@ import style from './style.module.css';
 
 export default class Spinner extends Component {
   render () {
-    const { className, variant, ...rest } = this.props;
+    const { className, variant, grow, ...rest } = this.props;
     return (
       <div
-        className={`${className} ${style[variant]}  spinner-border`}
+        className={`${className} ${style[variant]}  ${grow ? 'spinner-grow' : 'spinner-border'}`}
         role="status"
         {...rest}
         >
