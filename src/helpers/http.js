@@ -43,7 +43,7 @@ export const fetchSelectData = async ({ locations, types }) => {
   }
 };
 
-export const axiosInstance = (useToken = false) => {
+export const axiosInstance = (useToken = false, useBaseURL = true) => {
   const headers = {};
 
   if (useToken) {
@@ -51,8 +51,14 @@ export const axiosInstance = (useToken = false) => {
     headers.Authorization = `Bearer ${token}`;
   }
 
+  // if (useBaseURL) {
+  //   return axios.create({
+  //     headers
+  //   });
+  // }
+
   return axios.create({
-    baseURL,
+    baseURL: useBaseURL ? baseURL : '',
     headers
   });
 };
