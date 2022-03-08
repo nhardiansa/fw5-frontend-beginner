@@ -95,7 +95,18 @@ export default function Profile () {
   };
 
   const fileInputHandler = (e) => {
-    console.log(e.target.files[0]);
+    const reader = new FileReader();
+    const image = e.target.files[0];
+
+    console.log(image);
+
+    const imageProfile = document.querySelector('.contact-img');
+    reader.readAsDataURL(image);
+
+    reader.onload = (e) => {
+      imageProfile.src = e.target.result;
+    };
+
     setUpdateProfile({
       image: e.target.files[0]
     });

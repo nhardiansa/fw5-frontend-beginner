@@ -18,7 +18,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(pathname);
     const userToken = JSON.parse(localStorage.getItem('user'));
     if (userToken && !user.profile) {
       dispatch(getUserData(userToken));
