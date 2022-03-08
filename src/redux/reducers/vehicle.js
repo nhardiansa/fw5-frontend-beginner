@@ -226,6 +226,7 @@ const vehicleReducer = (state = initialState, action) => {
       const { message } = action.payload.response.data;
       state.paymentDeleteLoading = false;
       state.paymentDeleteError = message;
+      alert(`Can't delete this payment because ${message}`);
       state.paymentDeleteSuccess = null;
       return { ...state };
     }
