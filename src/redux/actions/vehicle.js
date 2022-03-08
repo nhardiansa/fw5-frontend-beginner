@@ -1,7 +1,8 @@
 import qs from 'qs';
 import constants from '../../config/constants';
+import { clearEmptyObject } from '../../helpers/dataFilter';
 import { axiosInstance } from '../../helpers/http';
-import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_DELETED_VEHICLE_PAYMENT, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, DELETE_VEHICLE_PAYMENT, FINISH_PAYMENT, GET_VEHICLE_DETAILS, GET_VEHICLE_PAYMENT_DETAILS, GET_VEHICLE_PAYMENT_LIST, LOAD_MORE_VEHICLE_PAYMENT_LIST, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, RETURN_VEHICLE, SAVE_VEHICLE_DETAILS } from '../types/vehicle';
+import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_DELETED_VEHICLE_PAYMENT, CLEAR_SEARCH_VEHICLE_LIST, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, DATA_TO_SEARCH_VEHICLE, DELETE_VEHICLE_PAYMENT, FINISH_PAYMENT, GET_VEHICLE_DETAILS, GET_VEHICLE_PAYMENT_DETAILS, GET_VEHICLE_PAYMENT_LIST, LOAD_MORE_VEHICLE_PAYMENT_LIST, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, RETURN_VEHICLE, SAVE_VEHICLE_DETAILS, SEARCH_VEHICLE, LOAD_MORE_SEARCH_VEHICLE_LIST } from '../types/vehicle';
 
 export const bookVehicle = (vehicleData) => {
   const {
@@ -153,5 +154,33 @@ export const returnVehicle = (id) => {
   return {
     type: RETURN_VEHICLE,
     payload: axiosInstance(true).patch(`/histories/${id}`, data)
+  };
+};
+
+export const searchVehicle = (queriesObj, loadMoreURI = false) => {
+  if (loadMoreURI) {
+    return {
+      type: LOAD_MORE_SEARCH_VEHICLE_LIST,
+      payload: axiosInstance().get(loadMoreURI)
+    };
+  }
+
+  if (!queriesObj) {
+    return {
+      type: CLEAR_SEARCH_VEHICLE_LIST
+    };
+  }
+
+  const data = qs.stringify(clearEmptyObject({ ...queriesObj, limit: constants.itemLimit }));
+  return {
+    type: SEARCH_VEHICLE,
+    payload: axiosInstance().get(`/vehicles/filter?${data}`)
+  };
+};
+
+export const changeDataToSearchVehicle = (dataObj) => {
+  return {
+    type: DATA_TO_SEARCH_VEHICLE,
+    payload: dataObj
   };
 };

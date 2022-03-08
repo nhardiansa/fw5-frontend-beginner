@@ -14,18 +14,20 @@ import navigationIcon from '../../assets/img/circle-chevron-arrow.svg';
 import constants from '../../config/constants';
 import './style.css';
 import Button from '../../components/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeDataToSearchVehicle, searchVehicle } from '../../redux/actions/vehicle';
 
 export const Home = () => {
   const { baseURL } = constants;
-  const { selectData } = useSelector(state => state);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { selectData, vehicleReducer } = useSelector(state => state);
+  const { dataToSearchVehicle } = vehicleReducer;
 
   const [popular, setPopular] = useState([]);
   const [types, setTypes] = useState([]);
   const [locations, setLocations] = useState([]);
-
-  const [filterInput, setFilterInput] = useState({});
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -57,65 +59,29 @@ export const Home = () => {
   };
 
   const selectHandler = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const { name, value } = e.target;
     const selectedElement = e.target.querySelector(`option[value="${value}"]`);
-
     if (selectedElement === null) {
-      setFilterInput({
-        ...filterInput,
+      dispatch(changeDataToSearchVehicle({
+        ...dataToSearchVehicle,
         [name]: ''
-      });
-      return 0;
-    }
-
-    if (name === 'category_id') {
-      setFilterInput({
-        ...filterInput,
-        category_id: value
-      });
-    }
-
-    if (name === 'prepayment') {
-      setFilterInput({
-        ...filterInput,
-        prepayment: value
-      });
-    }
-
-    if (name === 'location') {
-      setFilterInput({
-        ...filterInput,
-        location: value
-      });
+      }));
+    } else {
+      dispatch(changeDataToSearchVehicle({
+        ...dataToSearchVehicle,
+        [name]: value
+      }));
     }
   };
 
   const goToFilterPage = (e) => {
     e.preventDefault();
-    const tempInput = filterInput;
-    Object.keys(tempInput).forEach(key => {
-      if (tempInput[key] === '') {
-        delete tempInput[key];
-      }
-    });
-    const searchParams = generateSearchParams(tempInput);
 
-    if (searchParams.length > 0) {
-      navigate(`/search?${searchParams}`);
+    const dataToSearchLength = Object.keys(dataToSearchVehicle).length;
+    if (dataToSearchLength) {
+      dispatch(searchVehicle(dataToSearchVehicle));
+      navigate('/search');
     }
-  };
-
-  const generateSearchParams = (queries) => {
-    const arr = [];
-
-    Object.keys(queries).forEach(key => {
-      if (queries[key] !== '') {
-        arr.push(`${key}=${queries[key]}`);
-      }
-    });
-
-    return arr.join('&');
   };
 
   return (
@@ -140,11 +106,11 @@ export const Home = () => {
                       name='location'
                       onChange={selectHandler}
                     >
-                      <option defaultValue>Location</option>
+                      <option id='default-opt' defaultValue>Location</option>
                       {
                         locations.length > 0
                           ? locations.map((data, idx) => (
-                          <option key={idx} value={data.location}>{data.location}</option>
+                          <option key={idx} value={data.location}>{capitalize(data.location)}</option>
                           ))
                           : <option defaultValue>Location not found</option>
                       }
@@ -163,7 +129,7 @@ export const Home = () => {
                       {
                         types.length > 0
                           ? types.map((category, idx) => (
-                          <option key={idx} value={category.id}>{category.name}</option>
+                          <option key={idx} value={category.id}>{capitalize(category.name)}</option>
                           ))
                           : <option defaultValue>Types not found</option>
                       }

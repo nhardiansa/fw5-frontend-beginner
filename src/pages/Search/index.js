@@ -1,279 +1,220 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { FaFilter } from 'react-icons/fa';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import Button from '../../components/Button';
-import constants from '../../config/constants';
 import Layout from '../../components/Layout';
 import VehicleImage from '../../components/VehicleImage/VehicleImage';
 import { capitalize } from '../../helpers/stringFormat';
-import imgPlaceholder from '../../assets/img/placeholder.png';
 
 import './style.css';
+import Spinner from '../../components/Spinner';
+import { imagePlaceholder } from '../../helpers/media';
+import { clearEmptyObject } from '../../helpers/dataFilter';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchVehicle, changeDataToSearchVehicle } from '../../redux/actions/vehicle';
 
-export default function Search ({ viewMore }) {
-  const navigate = useNavigate();
-  const { baseURL, itemLimit } = constants;
-
-  const location = useLocation();
+export default function Search () {
+  const { type } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [pageInfo, setPageInfo] = useState({});
-  const [vehicles, setVehicles] = useState([]);
+  // const navigate = useNavigate();
 
-  const [types, setTypes] = useState([]);
-  const [locations, setLocations] = useState([]);
-  const [filterInput, setFilterInput] = useState({});
+  const dispatch = useDispatch();
+  const { vehicleReducer, selectData } = useSelector(state => state);
+  const { searchVehicleList, searchVehicleListPagination, dataToSearchVehicle, searchVehicleLoading, loadMoreLoading } = vehicleReducer;
+  const { locations, types } = selectData;
 
   const [title, setTitle] = useState('');
-  const [trigger, setTrigger] = useState(true);
 
   useEffect(() => {
-    if (trigger) {
-      const queries = Object.fromEntries([...searchParams]);
-
-      if (queries.popular !== '1') {
-        if (Object.prototype.hasOwnProperty.call(queries, 'popular')) {
-          delete queries.popular;
-        }
-      }
-      emptyQueriesHandler(queries);
-      setFilterInput(queries);
-
-      getTypes(setTypes);
-
-      if (queries.popular === '1') {
-        getVehicles(queries, true, false);
-      } else {
-        getVehicles(queries);
-      }
-
-      getLocations(setLocations);
-
-      if (viewMore) {
-        pageName(location);
-      }
-
-      setTrigger(false);
-      console.log('useEffect');
-    }
-  }, [trigger]);
+    pageName(type);
+    console.log(getQueryParams());
+    dispatch(changeDataToSearchVehicle(getQueryParams()));
+  }, [type]);
 
   useEffect(() => {
-    if (viewMore && types.length > 0) {
-      pageName(location);
-    }
-  }, [types]);
+    const queryParamsLength = Object.keys(getQueryParams()).length;
+    const dataToSearchLength = Object.keys(dataToSearchVehicle).length;
 
-  const getVehicles = async (queries, replace = true, filter = true) => {
-    try {
-      let url;
-
-      if (replace) {
-        url = generateEndpoint(queries, filter);
-      } else {
-        url = pageInfo.nextPage;
-      }
-
-      const { data } = await axios.get(url);
-      setPageInfo(data.pageInfo);
-
-      // decide if we need to replace or append
-      if (replace) {
-        setVehicles(data.results);
-      } else {
-        setVehicles([
-          ...vehicles,
-          ...data.results
-        ]);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getTypes = async (cb = null) => {
-    try {
-      const { data } = await axios.get(`${baseURL}/categories`);
-      cb && cb(data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const generateEndpoint = (query, filter) => {
-    const uri = `${baseURL}/vehicles/${filter ? 'filter' : 'popular'}?limit=${itemLimit}&`;
-    const arr = [];
-
-    for (const key in query) {
-      if (Object.prototype.hasOwnProperty.call(query, key)) {
-        if (query[key] !== '') {
-          arr.push(`${key}=${query[key]}`);
-        }
-      }
+    if (!queryParamsLength && !dataToSearchLength) {
+      console.log('no data');
     }
 
-    return uri + arr.join('&');
-  };
-
-  const emptyQueriesHandler = (queries, justNavigate = false) => {
-    const keys = Object.keys(queries).length;
-
-    if (keys < 1 || justNavigate) {
-      navigate('/');
+    if (!queryParamsLength && dataToSearchLength) {
+      setSearchParams(clearEmptyObject(dataToSearchVehicle));
     }
-  };
+
+    if (queryParamsLength) {
+      dispatch(searchVehicle(getQueryParams()));
+    } else if (dataToSearchLength) {
+      dispatch(searchVehicle(dataToSearchVehicle));
+    }
+
+    return () => {
+      dispatch(searchVehicle());
+    };
+  }, []);
 
   const selectHandler = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const { name, value } = e.target;
+    console.log(name, value);
     const selectedElement = e.target.querySelector(`option[value="${value}"]`);
-
     if (selectedElement === null) {
-      setFilterInput({
-        ...filterInput,
+      dispatch(changeDataToSearchVehicle({
+        ...dataToSearchVehicle,
         [name]: ''
-      });
-      return 0;
-    }
-
-    if (name === 'category_id') {
-      setFilterInput({
-        ...filterInput,
-        category_id: value
-      });
-    }
-
-    if (name === 'prepayment') {
-      setFilterInput({
-        ...filterInput,
-        prepayment: value
-      });
-    }
-
-    if (name === 'location') {
-      setFilterInput({
-        ...filterInput,
-        location: value
-      });
+      }));
+    } else {
+      dispatch(changeDataToSearchVehicle({
+        ...dataToSearchVehicle,
+        [name]: value
+      }));
     }
   };
 
-  const getLocations = async (cb = null) => {
-    try {
-      const { data } = await axios.get(`${baseURL}/vehicles/location`);
-      cb && cb(data.results);
-    } catch (error) {
-      console.error(error);
-    }
+  const getFilterData = () => {
+    const filterBar = document.querySelector('#collapse-filter-sorter');
+    filterBar.classList.toggle('show');
+    setSearchParams(clearEmptyObject(dataToSearchVehicle));
+    dispatch(searchVehicle(dataToSearchVehicle));
   };
 
-  const getFilterData = (e) => {
-    const tempInput = filterInput;
-    Object.keys(tempInput).forEach(key => {
-      if (tempInput[key] === '') {
-        delete tempInput[key];
-      }
-    });
-    setSearchParams(tempInput);
-    setTrigger(true);
+  const getQueryParams = () => {
+    return Object.fromEntries([...searchParams]);
   };
 
-  const pageName = (location) => {
-    const { pathname, search } = location;
-    const page = pathname.split('/')[2];
-
-    if (page === 'more') {
-      if (search.includes('popular=1')) {
+  const pageName = (type) => {
+    switch (type) {
+      case 'popular': {
         setTitle('Popular in town');
-      } else {
-        if (search.includes('category_id')) {
-          const category = search.split('&')[0].split('=')[1];
-          const categoryName = types.find(type => type.id === Number(category));
-
-          if (categoryName) {
-            setTitle(capitalize(categoryName.name) + 's');
-          }
-        }
+        break;
       }
+      case 'motorbikes': {
+        setTitle('Motorbikes');
+        break;
+      }
+      case 'cars': {
+        setTitle('Cars');
+        break;
+      }
+      case 'bikes': {
+        setTitle('Bikes');
+        break;
+      }
+      default:
+        setTitle('Search results');
+        break;
     }
   };
 
-  return (
-    <Layout>
-      <main className={`container ${vehicles.length < 1 ? 'vh-100' : ''}`}>
-        {
-          title
-            ? <h1 className='ps-lg-4 mt-lg-5 text-center text-lg-start fs-1'>{title}</h1>
-            : <h1 className='ps-lg-4 mt-lg-5 text-center text-lg-start fs-1'>Search results</h1>
-        }
-        <div className="filter-bar container mt-4 mt-lg-5">
-          <div className="row container mt-3 g-2">
-            <div className="col-6 col-md">
-              <select onChange={selectHandler} name='location' className="filter-input form-select" aria-label="Default select example">
-                <option defaultValue>Location</option>
-                {
-                  locations.map((data, idx) => (
-                    <option key={idx} value={data.location}>{data.location}</option>
-                  ))
-                }
-              </select>
-            </div>
-            <div className="col-6 col-md">
-              <select onChange={selectHandler} name='category_id' className="filter-input form-select" aria-label="Default select example">
-                <option defaultValue>Type</option>
-                {
-                  types.map(type => (
-                    <option key={type.id} value={type.id}>{type.name}</option>
-                  ))
-                }
-              </select>
-            </div>
-            <div className="col-6 col-md">
-              <select onChange={selectHandler} name='prepayment' className="filter-input form-select" aria-label="Default select example">
-                <option defaultValue>Payment</option>
-                <option value="0">Only cash</option>
-                <option value="1">Can prepayment</option>
-              </select>
-            </div>
-            <div className="col-6 col-md">
-              <select className="filter-input form-select" aria-label="Default select example">
-                <option defaultValue>Date</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-            <Button onClick={getFilterData} className='filter-btn btn col-12'>Filter</Button>
+  const loadMoreHandler = () => {
+    dispatch(searchVehicle({}, searchVehicleListPagination.nextPage));
+  };
 
-          </div>
-        </div>
-        <div className="results container row m-0 mt-4 mt-md-5">
-          {
-            vehicles.map(vehicle => {
-              const img = vehicle.image ? vehicle.image : imgPlaceholder;
-              return (
+  const openFilterHandler = () => {
+    window.scrollTo(0, 0);
+  };
+
+  const displayResults = (vehicles) => {
+    return (
+      vehicles.map(vehicle => {
+        const img = vehicle.image ? vehicle.image : imagePlaceholder(capitalize(vehicle.name));
+        return (
                 <VehicleImage
                   key={vehicle.id}
                   src={img}
                   to={`/vehicles/${vehicle.id}`}
                   name={capitalize(vehicle.name)}
                   location={capitalize(vehicle.location)}
-                  className='result-item col-12 col-md-4 col-lg-3 p-0 pe-3'
+                  className='result-item col-12 col-md-4 col-lg-3 p-0 pe-md-3'
                 />
-              );
-            })
+        );
+      })
+    );
+  };
+
+  return (
+    <Layout>
+      <main className={`view-more container ${searchVehicleList.length < 1 ? 'vh-100' : ''}`}>
+        {
+          title
+            ? <h1 className='ps-lg-4 mt-lg-5 mb-5 mb-lg-0 text-center text-lg-start fs-1 fw-bold d-lg-inline'>{title}</h1>
+            : <h1 className='ps-lg-4 mt-lg-5 mb-5 mb-lg-0 text-center text-lg-start fs-1 fw-bold d-lg-inline'>Search results</h1>
+        }
+        <Button onClick={openFilterHandler} id='open-filter-btn' className="fs-5 ms-lg-4 mb-lg-3 rounded-circle" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-filter-sorter" aria-expanded="false" aria-controls="collapse-filter-sorter">
+          <FaFilter />
+        </Button>
+        <div className="collapse" id="collapse-filter-sorter">
+          <div className="filter-bar container mt-4 mt-lg-5">
+            <h2 className='fs-6 lh-1 ms-2 mb-3'>Filter</h2>
+            <div className="filter-input-group d-flex container mb-4 g-2">
+              <div className="filter-input me-2 col-6 col-md">
+                <select onChange={selectHandler} defaultValue={dataToSearchVehicle.location} name='location' className="filter-input form-select" aria-label="Default select example">
+                  <option defaultValue>Location</option>
+                  {
+                    locations.map((data, idx) => (
+                      <option key={idx} value={data.location} selected={dataToSearchVehicle.location === data.location} >{capitalize(data.location)}</option>
+                    ))
+                  }
+                </select>
+              </div>
+              <div className="filter-input me-2 col-6 col-md">
+                <select onChange={selectHandler} name='category_id' className="filter-input form-select" aria-label="Default select example">
+                  <option defaultValue>Type</option>
+                  {
+                    types.map(type => (
+                      <option key={type.id} selected={dataToSearchVehicle.category_id === `${type.id}`} value={type.id}>{capitalize(type.name)}</option>
+                    ))
+                  }
+                </select>
+              </div>
+              <div className="filter-input me-2 col-6 col-md">
+                <select onChange={selectHandler} name='prepayment' className="filter-input form-select" aria-label="Default select example">
+                  <option defaultValue>Payment</option>
+                  <option value="0" selected={dataToSearchVehicle.prepayment === '0'} >Only cash</option>
+                  <option value="1" selected={dataToSearchVehicle.prepayment === '1'}>Can prepayment</option>
+                </select>
+              </div>
+            </div>
+            <h2 className='fs-6 lh-1 ms-2 mb-3'>Sorter</h2>
+            <div className="sorter-input-group d-flex container mb-4 g-2">
+              <div className="sorter-input me-2 col-6 col-md">
+                <select onChange={selectHandler} name='created' className="filter-input form-select" aria-label="Default select example">
+                  <option defaultValue>Date added</option>
+                  <option selected={dataToSearchVehicle.created === 'desc'} value="desc">Latest to added</option>
+                  <option selected={dataToSearchVehicle.created === 'asc'} value="asc">Old to added</option>
+                </select>
+              </div>
+              <div className="sorter-input me-2 col-6 col-md">
+                <select onChange={selectHandler} name='sort_price' className="sorter-input form-select" aria-label="Default select example">
+                  <option defaultValue>Harga</option>
+                  <option selected={dataToSearchVehicle.sort_price === 'asc'} value="asc" >Cheapest</option>
+                  <option selected={dataToSearchVehicle.sort_price === 'desc'} value="desc" >Highest</option>
+                </select>
+              </div>
+            </div>
+            <Button onClick={getFilterData} className='filter-btn ms-2 mt-3 px-4 rounded-pill'>Filter</Button>
+          </div>
+        </div>
+        <div className={`${searchVehicleLoading ? 'justify-content-center align-items-center h-75' : ''} results container row m-0 mt-4 mt-md-5`}>
+          {
+            searchVehicleLoading ? <Spinner variant='secondary' style={{ width: '7rem', height: '7rem' }} /> : displayResults(searchVehicleList)
           }
         </div>
         {
-          vehicles.length < 1 &&
+          (searchVehicleList.length < 1 && !searchVehicleLoading) &&
           <div className="empty-results h-100 d-flex align-items-center justify-content-center">
-            <h2 className="text-center text-secondary">No results found</h2>
+            <h2 className="text-center text-secondary f-nunito fw-bold">No results found</h2>
           </div>
         }
         {
-          pageInfo.nextPage &&
+          searchVehicleListPagination.nextPage &&
           <div className="pagination d-flex justify-content-center mt-5">
-            <button onClick={() => getVehicles(null, false)} className='filter-btn btn'>Load More</button>
+            {
+              loadMoreLoading
+                ? <Spinner variant='secondary' />
+                : <Button onClick={loadMoreHandler} className='filter-btn btn'>Load more</Button>
+            }
           </div>
         }
       </main>

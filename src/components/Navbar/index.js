@@ -10,11 +10,13 @@ import './style.css';
 import { logout } from '../../redux/actions/auth';
 import { getUserData, logoutUser } from '../../redux/actions/user';
 import { useEffect } from 'react';
+import { changeDataToSearchVehicle, searchVehicle } from '../../redux/actions/vehicle';
 
 const Navbar = () => {
+  const { auth, user, vehicleReducer } = useSelector(state => state);
+  const { dataToSearchVehicle } = vehicleReducer;
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { auth, user } = useSelector(state => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,10 +28,22 @@ const Navbar = () => {
 
   const onSearchHandler = (e) => {
     e.preventDefault();
-    const keyword = e.target.querySelector('input').value;
-    if (keyword.length > 0) {
-      navigate(`/search?name=${keyword}`);
+    const dataToSearchLength = Object.keys(dataToSearchVehicle).length;
+    if (dataToSearchLength) {
+      dispatch(searchVehicle(dataToSearchVehicle));
+      if (pathname !== '/search') {
+        navigate('/search');
+      }
     }
+  };
+
+  const changeSearchHandler = (e) => {
+    console.log(pathname);
+    const { value, name } = e.target;
+    dispatch(changeDataToSearchVehicle({
+      ...dataToSearchVehicle,
+      [name]: value
+    }));
   };
 
   const onLogoutHandler = (e) => {
@@ -107,7 +121,7 @@ const Navbar = () => {
             {
               auth.user &&
               <form onSubmit={onSearchHandler} className="input-group my-3 my-lg-0 ms-lg-5 me-lg-3">
-                <input type="text" className="form-control border-end-0" placeholder="Search vehicle" aria-label="Recipient's username" aria-describedby="button-addon2" />
+                <input name='vehicle_name' defaultValue={dataToSearchVehicle.vehicle_name || ''} onChange={changeSearchHandler} type="text" className="form-control border-end-0" placeholder="Search vehicle" aria-label="Recipient's username" aria-describedby="button-addon2" />
                 <button type="submit" className="search-btn btn btn-outline-secondary" id="button-addon2">
                   <HiSearch className='search-icon text-secondary' />
                 </button>
