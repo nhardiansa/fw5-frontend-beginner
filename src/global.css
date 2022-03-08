@@ -19,6 +19,10 @@
   font-weight: 900;
 }
 
+.f-nunito {
+  font-family: var(--nunito-font);
+}
+
 .text-custom-primary {
   color: var(--one-color);
 }
