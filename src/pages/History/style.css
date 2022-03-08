@@ -40,7 +40,7 @@ main.histories {
   font-family: var(--poppins-font);
 }
 
-.histories .search-input, .search-btn, .select-field {
+.histories .search-input, .search-btn {
   border: 0.5px solid #C4C4C4;
   background: rgba(218, 218, 218, 0.27);
 
@@ -48,7 +48,7 @@ main.histories {
   border-radius: 0.5rem;
 }
 
-.histories .search-input:focus, .search-btn:focus, .select-field:focus {
+.histories .search-input:focus, .search-btn:focus {
   outline: none;
   box-shadow: none;
   background: rgba(218, 218, 218, 0.27);
@@ -77,13 +77,43 @@ main.histories {
   font-size: 1.5rem;
 }
 
-.histories  .select-field, .search-input::placeholder, .histories .search-input {
+.histories .search-input::placeholder, .histories .search-input {
   color: #B8BECD;
 }
 
 .histories .dropdown-icon {
   top: 35%;
   right: 10%;
+}
+
+.histories .dropdown{
+  width: 100%;
+}
+
+.histories .dropdown-toggle {
+  font-family: var(--nunito-font);
+  border-radius: 0.5rem;
+  background: rgba(218, 218, 218, 0.27);
+  color: #B8BECD;
+  border: 0.5px solid #C4C4C4;
+  padding: 1rem;
+}
+
+.histories .dropdown-toggle:focus {
+  box-shadow: none;
+}
+
+.histories .dropdown-toggle::after {
+  content: none;
+}
+
+.histories .select-item-dropdown {
+  border: none;
+  min-width: 8rem;
+}
+
+.histories .select-item-dropdown:focus {
+  box-shadow: none;
 }
 
 .histories .today-title, .histories .a-week-ago-title {
@@ -226,6 +256,10 @@ main.histories {
     transition: 0.3s ease-in-out;
     
     transform: translateX(-10%);
+  }
+
+  .histories .dropdown{
+    width: 25%;
   }
   /* Main end */
 }

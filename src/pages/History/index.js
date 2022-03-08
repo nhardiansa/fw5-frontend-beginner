@@ -13,13 +13,15 @@ import { clearDeletedPaymentData, deleteVehiclePayment, getVehiclePaymentDetails
 import Spinner from '../../components/Spinner';
 import { imagePlaceholder } from '../../helpers/media';
 import { capitalize, dateFormatter } from '../../helpers/stringFormat';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { clearEmptyObject } from '../../helpers/dataFilter';
 import { axiosInstance } from '../../helpers/http';
 
 export default function History () {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const { vehicleReducer } = useSelector(state => state);
   const { paymentList, paymentData, paymentDeleteSuccess, listPagination } = vehicleReducer;
 
@@ -27,34 +29,39 @@ export default function History () {
   const [filterInput, setFilterInput] = useState({});
   const [newArrivals, setNewArrivals] = useState([]);
 
-  // const newArrivals = [
-  //   {
-  //     src: vespa,
-  //     name: 'Lamborghini',
-  //     location: 'Yogyakarta'
-  //   },
-  //   {
-  //     src: vespa,
-  //     name: 'White Jeep',
-  //     location: 'Kalimantan'
-  //   }
-  // ];
+  const [trigger, setTrigger] = useState(false);
+  const [types, setTypes] = useState([]);
 
   useEffect(() => {
+    const data = Object.fromEntries([...searchParams]);
+    dispatch(getVehiclePaymentList({
+      ...data,
+      created: data.created || 'desc'
+    }));
+  }, [searchParams, trigger]);
+
+  useEffect(() => {
+    const queries = Object.fromEntries([...searchParams]);
+    setFilterInput(queries);
+    // console.log(queries);
+
     if (paymentDeleteSuccess !== null || changePage) {
       if (paymentDeleteSuccess !== null) {
         alert('Delete Success');
       }
+      // setSearchParams(queries);
+      setTrigger(!trigger);
       getNewArrivals();
-      dispatch(getVehiclePaymentList({
-        created: 'desc'
-      }));
     }
 
     return () => {
       dispatch(clearDeletedPaymentData());
     };
   }, [paymentDeleteSuccess]);
+
+  useEffect(() => {
+    getTypes();
+  }, []);
 
   useEffect(() => {
     if (paymentData && !changePage) {
@@ -92,10 +99,25 @@ export default function History () {
 
   const filterHandler = (e) => {
     e.preventDefault();
-    setFilterInput({
-      ...filterInput,
-      [e.target.name]: e.target.value
-    });
+    const { name, value, type } = e.target;
+    let elValue;
+
+    if (type === 'select-one') {
+      elValue = e.target.querySelector(`option[value="${value}"]`);
+      console.log(elValue);
+    }
+
+    if (elValue === null) {
+      console.log(value);
+      console.log('delete');
+      delete filterInput[name];
+    } else {
+      console.log(name, 'name');
+      setFilterInput({
+        ...filterInput,
+        [name]: value
+      });
+    }
   };
 
   const loadMoreHandler = () => {
@@ -106,14 +128,30 @@ export default function History () {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
     const data = clearEmptyObject(filterInput);
 
     if (Object.keys(data).length > 0) {
-      dispatch(getVehiclePaymentList({
-        ...data,
-        created: 'desc'
-      }));
+      console.log(filterInput.created);
+    }
+    setSearchParams({
+      ...data,
+      created: data.created || 'desc'
+    });
+  };
+
+  const getTypes = async () => {
+    try {
+      const { data } = await axiosInstance().get('/categories');
+
+      if (data.success) {
+        setTypes(data.results);
+      } else {
+        setTypes([]);
+      }
+    } catch (error) {
+      console.error(error.response);
+      alert(error.response.data.message);
+      setTypes([]);
     }
   };
 
@@ -159,8 +197,8 @@ export default function History () {
             <div className="history-wrapper container pe-0 me-0 row mt-lg-5">
               <div className="col-lg-9 p-0 pe-lg-5">
                 <div className="search-filter">
-                  <form onSubmit={submitHandler} className="d-flex">
-                    <div className="search-field d-flex me-3">
+                  <form onSubmit={submitHandler} className="d-flex flex-column flex-md-row">
+                    <div className="search-field d-flex me-0 me-md-3 w-100">
                       <input
                         type="text"
                         className="search-input form-control"
@@ -169,23 +207,82 @@ export default function History () {
                         aria-describedby="button-addon2"
                         name="vehicle_name"
                         onChange={filterHandler}
+                        value={filterInput.vehicle_name}
                       />
                       <button type='submit' className="search-btn btn" id="button-addon2">
                         <HiSearch className='search-icon' />
                       </button>
                     </div>
-                    <div className="select-input flex-fill position-relative">
-                      <select
-                        className="select-field form-select"
-                        aria-label="Default select example"
-                      >
-                        <option defaultValue>Filter</option>
-                        <option value="Type">Type</option>
-                        <option value="Date Added">Date Added</option>
-                        <option value="Name">Name</option>
-                        <option value="Favorite Product">Favorite Product</option>
-                      </select>
-                      <FaChevronDown className="dropdown-icon position-absolute" />
+                    <div className="dropdown mt-3 mt-md-0">
+                      <button className="dropdown-toggle btn btn-secondary fw-normal  d-flex align-items-center w-100 h-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Filter & Sorter <FaChevronDown className="dropdown-icon position-absolute" />
+                      </button>
+                      <ul className="dropdown-menu list-group-flush" aria-labelledby="dropdownMenuButton1">
+                        <li><p className='fw-bold ms-3 f-nunito'>Filter</p></li>
+                        <li className="list-group-item">
+                          {
+                            types.length > 0
+                              ? (
+                              <select
+                                className="select-item-dropdown form-select"
+                                aria-label="Default select example"
+                                name='category_id'
+                                onChange={filterHandler}
+                              >
+                                <option className='text-capitalize' defaultValue>Type</option>
+                                {
+                                  types.map((item) => {
+                                    return (
+                                      <option key={item.id} selected={filterInput.category_id === item.id} value={item.id}>{capitalize(item.name)}</option>
+                                    );
+                                  })
+                                }
+                              </select>
+                                )
+                              : (
+                                  'Notype'
+                                )
+                          }
+
+                        </li>
+                        <li className="list-group-item">
+                          <select
+                            className="select-item-dropdown form-select"
+                            aria-label="Default select example"
+                            name='payment_status'
+                            onChange={filterHandler}
+                          >
+                            <option className='text-capitalize' defaultValue>Payment</option>
+                            <option className='text-capitalize' selected={filterInput.payment_status === '1'} value="1">Paid</option>
+                            <option className='text-capitalize' value="0" selected={filterInput.payment_status === '0'}>Not Paid</option>
+                          </select>
+                        </li>
+                        <li className="list-group-item">
+                          <select
+                            className="select-item-dropdown form-select"
+                            aria-label="Default select example"
+                            name='returned_status'
+                            onChange={filterHandler}
+                          >
+                            <option className='text-capitalize' defaultValue>Return status</option>
+                            <option className='text-capitalize' selected={filterInput.returned_status === '1'} value="1">Has Returned</option>
+                            <option className='text-capitalize' selected={filterInput.returned_status === '0'} value="0">Not returned</option>
+                          </select>
+                        </li>
+                        <li><p className='fw-bold ms-3 mt-3 f-nunito'>Sorter</p></li>
+                        <li className="list-group-item">
+                          <select
+                            className="select-item-dropdown form-select"
+                            aria-label="Default select example"
+                            name='created'
+                            onChange={filterHandler}
+                          >
+                            <option className='text-capitalize' defaultValue >Date added</option>
+                            <option className='text-capitalize' selected={filterInput.created === 'desc'} value="desc">Newest</option>
+                            <option className='text-capitalize' selected={filterInput.created === 'asc'} value="asc">Oldest</option>
+                          </select>
+                        </li>
+                      </ul>
                     </div>
                   </form>
                 </div>
@@ -195,15 +292,13 @@ export default function History () {
                     <li
                       className="link-list-item list-group-item d-flex align-items-center justify-content-between pb-3"
                     >
-                      <a className="link-nav" href="/"
-                        >Please finish your payment for vespa for Vespa Rental Jogja</a
-                      >
+                      <p className="link-nav">Please finish your payment for vespa for Vespa Rental Jogja</p>
                       <FaChevronRight className='link-nav-icon ms-5' />
                     </li>
                     <li
                       className="link-list-item list-group-item d-flex align-items-center justify-content-between pb-3"
                     >
-                      <a className="link-nav" href="/">Your payment has been confirmed!</a>
+                      <p className="link-nav" href="/">Your payment has been confirmed!</p>
                       <FaChevronRight className='link-nav-icon ms-5' />
                     </li>
                   </ul>
