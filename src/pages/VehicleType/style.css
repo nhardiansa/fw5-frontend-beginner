@@ -12,7 +12,7 @@ html {
 
 /* Main start */
 main.vehicle-type {
-  padding: 3.125rem 0 !important;
+  padding-top: 3.125rem;
 }
 
 main.vehicle-type .vehicle-list {

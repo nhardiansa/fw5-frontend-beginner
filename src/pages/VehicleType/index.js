@@ -1,176 +1,130 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
-import constants from '../../config/constants';
 import { capitalize } from '../../helpers/stringFormat';
 import Layout from '../../components/Layout';
 import VehicleImage from '../../components/VehicleImage/VehicleImage';
+import imagePlaceholder from '../../assets/img/vehicle-placeholder.png';
 
 import './style.css';
+import { useSelector } from 'react-redux';
+import Spinner from '../../components/Spinner';
 
 export const VehicleType = () => {
-  const { baseURL } = constants;
-  const [popular, setPopular] = useState([]);
-  const [motorbike, setMotorbike] = useState([]);
-  const [car, setCar] = useState([]);
-  const [bike, setBike] = useState([]);
+  // const { baseURL } = constants;
+  const { vehicleReducer } = useSelector(state => state);
+  const { listVehiclesOfEveryTypes } = vehicleReducer;
+  const [vehicles, setVehicles] = useState([]);
+
+  // const [motorbike, setMotorbike] = useState([]);
+  // const [car, setCar] = useState([]);
+  // const [bike, setBike] = useState([]);
 
   useEffect(() => {
-    getVehicle('/vehicles/popular?limit=4', setPopular);
-    getVehicle('/vehicles/filter?limit=4&category_id=3', setMotorbike);
-    getVehicle('/vehicles/filter?limit=4&category_id=2', setCar);
-    getVehicle('/vehicles/filter?limit=4&category_id=4', setBike);
-    console.log('getVehicle');
-  }, []);
+    console.log(vehicles);
+    // console.log(listVehiclesOfEveryTypes, searchVehicleLoading);
+    // getVehicle('/vehicles/filter?limit=4&category_id=3', setMotorbike);
+    // getVehicle('/vehicles/filter?limit=4&category_id=2', setCar);
+    // getVehicle('/vehicles/filter?limit=4&category_id=4', setBike);
+    // console.log('getVehicle');
+  }, [vehicles]);
 
-  const getVehicle = async (uri, stateReducer) => {
-    try {
-      const { data } = await axios.get(`${baseURL}${uri}`);
-      stateReducer(data.results);
-    } catch (error) {
-      console.log(error);
+  // const getVehicle = async (uri, stateReducer) => {
+  //   try {
+  //     const { data } = await axios.get(`${baseURL}${uri}`);
+  //     stateReducer(data.results);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  useEffect(() => {
+    if (listVehiclesOfEveryTypes.length > 0) {
+      const sectionData = types.map((type, i) => {
+        return {
+          title: type.title,
+          vehicles: listVehiclesOfEveryTypes[i],
+          link: `/vehicles/more/${type.endpoint}`
+        };
+      });
+      setVehicles(sectionData);
     }
+  }, [listVehiclesOfEveryTypes]);
+
+  const types = [
+    {
+      title: 'Popular in town',
+      endpoint: 'popular'
+    },
+    {
+      title: 'Cars',
+      endpoint: 'cars'
+    },
+    {
+      title: 'Motorbikes',
+      endpoint: 'motorbikes'
+    },
+    {
+      title: 'Bikes',
+      endpoint: 'bikes'
+    }
+  ];
+
+  const itemsDisplay = (items) => {
+    return items.map((el, i) => {
+      const img = el.image || imagePlaceholder;
+      return (
+        <VehicleImage
+          to={`/vehicles/${el.id}`}
+          alt={el.name}
+          key={i}
+          src={img}
+          name={capitalize(el.name)}
+          location={capitalize(el.location)}
+          className='p-0 pe-md-4 col-12 col-md-3'
+        />
+      );
+    });
+  };
+
+  const renderSections = (sectionData) => {
+    return sectionData.map((el, i) => (
+      <section key={i} className="cars vehicle-list">
+        <div
+          className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
+        >
+          <h2>{el.title}</h2>
+          <Link to={el.link} className="d-md-block d-none"
+            >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
+          ></Link>
+        </div>
+        <div
+          className="popular-vehicles row justify-content-center justify-content-md-start"
+        >
+          {
+          el.vehicles.length > 0
+            ? itemsDisplay(el.vehicles)
+            : <div className="col-12 text-center">
+              <Spinner />
+            </div>
+          }
+        </div>
+        <Link to={el.link} className="d-block d-md-none text-center mt-4"
+          >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
+        ></Link>
+      </section>
+    )
+    );
   };
 
   return (
     <Layout isLogged={true}>
-      <main className="vehicle-type container px-lg-4 px-5">
-        {/* <!-- Popular in town --> */}
-        <section className="popular vehicle-list">
-          <div
-            className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
-          >
-            <h2>Popular in town</h2>
-            <Link to='more?popular=1' className="d-md-block d-none"
-              >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-            ></Link>
-          </div>
-          <div
-            className="popular-vehicles row justify-content-center justify-content-md-start"
-          >
-            {
-              popular.map((el, i) => {
-                const img = el.image || 'https://via.placeholder.com/261x333?text=Popular+in+town';
-                return (
-                  <VehicleImage
-                    to={`/vehicles/${el.id}`}
-                    key={i}
-                    src={img}
-                    name={capitalize(el.name)}
-                    location={capitalize(el.location)}
-                    className='p-0 pe-md-4 col-12 col-md-3'
-                  />
-                );
-              })
-            }
-          </div>
-          <Link to='more?popular=1' className="d-block d-md-none text-center mt-4"
-            >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-          ></Link>
-        </section>
-
-        {/* <!-- Cars --> */}
-        <section className="cars vehicle-list">
-          <div
-            className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
-          >
-            <h2>Cars</h2>
-            <Link to='more?category_id=2' className="d-md-block d-none"
-              >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-            ></Link>
-          </div>
-          <div
-            className="popular-vehicles row justify-content-center justify-content-md-start"
-          >
-            {
-              car.map((el, i) => {
-                const img = el.image || 'https://via.placeholder.com/261x333?text=Cars';
-                return (
-                  <VehicleImage
-                    to={`/vehicles/${el.id}`}
-                    key={i}
-                    src={img}
-                    name={capitalize(el.name)}
-                    location={capitalize(el.location)}
-                    className='p-0 pe-md-4 col-12 col-md-3'
-                  />
-                );
-              })
-            }
-          </div>
-          <Link to='more?category_id=2' className="d-block d-md-none text-center mt-4"
-            >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-          ></Link>
-        </section>
-
-        {/* <!-- Motorbike --> */}
-        <section className="motorbike vehicle-list">
-          <div
-            className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
-          >
-            <h2>Motorbike</h2>
-            <Link to='more?category_id=3' className="d-md-block d-none"
-              >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-            ></Link>
-          </div>
-          <div
-            className="popular-vehicles row justify-content-center justify-content-md-start"
-          >
-            {
-              motorbike.map((el, i) => {
-                const img = el.image || 'https://via.placeholder.com/261?text=Motorbike';
-                return (
-                  <VehicleImage
-                    to={`/vehicles/${el.id}`}
-                    key={i}
-                    src={img}
-                    name={capitalize(el.name)}
-                    location={capitalize(el.location)}
-                    className='p-0 pe-md-4 col-12 col-md-3'
-                  />
-                );
-              })
-            }
-          </div>
-          <Link to='more?category_id=3' className="d-block d-md-none text-center mt-4"
-            >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-          ></Link>
-        </section>
-
-        {/* <!-- Bike --> */}
-        <section className="bike vehicle-list">
-          <div
-            className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
-          >
-            <h2>Bikes</h2>
-            <Link to='more?category_id=4' className="d-md-block d-none"
-              >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-            ></Link>
-          </div>
-          <div
-            className="popular-vehicles row justify-content-center justify-content-md-start"
-          >
-            {
-              bike.map((el, i) => {
-                const img = el.image || 'https://via.placeholder.com/261x333?text=Bike';
-                return (
-                  <VehicleImage
-                    to={`/vehicles/${el.id}`}
-                    key={i}
-                    src={img}
-                    name={capitalize(el.name)}
-                    location={capitalize(el.location)}
-                    className='p-0 pe-md-4 col-12 col-md-3'
-                  />
-                );
-              })
-            }
-          </div>
-          <Link to='more?category_id=4' className="d-block d-md-none text-center mt-4">
-            View all <span><i className="icon fa-solid fa-chevron-right"></i></span>
-          </Link>
-        </section>
+      <main className={`${listVehiclesOfEveryTypes.length > 1 ? '' : 'vh-75 d-flex justify-content-center align-items-center'} vehicle-type container px-lg-4 px-5`}>
+        {
+          listVehiclesOfEveryTypes.length > 1
+            ? renderSections(vehicles)
+            : <Spinner variant={'primary'} style={{ width: '8rem', height: '8rem' }} />
+        }
       </main>
     </Layout>
   );
