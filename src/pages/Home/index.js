@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { FaChevronDown, FaStar } from 'react-icons/fa';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 
@@ -11,31 +10,20 @@ import { capitalize } from '../../helpers/stringFormat';
 import testimonialImage from '../../assets/img/testimonial-user-pict/edward-newgate.png';
 import navigationIcon from '../../assets/img/circle-chevron-arrow.svg';
 
-import constants from '../../config/constants';
 import './style.css';
 import Button from '../../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeDataToSearchVehicle, searchVehicle } from '../../redux/actions/vehicle';
 
 export const Home = () => {
-  const { baseURL } = constants;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { selectData, vehicleReducer } = useSelector(state => state);
-  const { dataToSearchVehicle } = vehicleReducer;
+  const { dataToSearchVehicle, listVehiclesOfEveryTypes } = vehicleReducer;
 
-  const [popular, setPopular] = useState([]);
   const [types, setTypes] = useState([]);
   const [locations, setLocations] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (popular.length === 0) {
-      getVehicles('/vehicles/popular?limit=4', setPopular);
-    }
-  }, [popular]);
 
   useEffect(() => {
     if (types.length === 0) {
@@ -46,17 +34,6 @@ export const Home = () => {
       setLocations(selectData.locations);
     }
   }, [selectData]);
-
-  const getVehicles = async (uri, stateReducer) => {
-    try {
-      const { data } = await axios.get(baseURL + uri);
-      stateReducer(data.results);
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-      alert(JSON.stringify(error.message));
-    }
-  };
 
   const selectHandler = (e) => {
     const { name, value } = e.target;
@@ -82,6 +59,25 @@ export const Home = () => {
       dispatch(searchVehicle(dataToSearchVehicle));
       navigate('/search');
     }
+  };
+
+  const displayPopular = (popular) => {
+    return (
+      <div className="popular-vehicles row">
+        {
+          popular.map((vehicle, idx) => (
+            <VehicleImage
+              to={`/vehicles/${vehicle.id}`}
+              key={idx}
+              src={vehicle.image || 'https://via.placeholder.com/300x200?text=Popular+Vehicle'}
+              name={capitalize(vehicle.name)}
+              location={capitalize(vehicle.location)}
+              className='p-0 pe-md-4 col-12 col-md-3'
+            />
+          ))
+        }
+      </div>
+    );
   };
 
   return (
@@ -177,40 +173,23 @@ export const Home = () => {
 
       {/* =============== Popular =============== */}
       <section className="popular container px-lg-4 px-5">
-        <div
-          className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
+        <div className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
         >
           <h2>Popular in town</h2>
-          <Link to='/vehicles/more?popular=1' className="d-md-block d-none" href="/vehicle-type.html"
+          <Link to='/vehicles/more/popular' className="d-md-block d-none" href="/vehicle-type.html"
             >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
           ></Link>
         </div>
-        {
-          isLoading &&
-          <Skeleton
-            count={4}
-            height={250}
-            containerClassName='popular-vehicles row h-100'
-            wrapper={({ children }) => (<div className='mb-3 m-md-0 pe-md-4 col-12 col-md-3'>{children}</div>)}
-          />
+        { listVehiclesOfEveryTypes.length > 0
+          ? displayPopular(listVehiclesOfEveryTypes[0])
+          : <Skeleton
+              count={4}
+              height={250}
+              containerClassName='popular-vehicles row h-100'
+              wrapper={({ children }) => (<div className='mb-3 m-md-0 pe-md-4 col-12 col-md-3'>{children}</div>)}
+            />
         }
-        { !isLoading &&
-          <div className="popular-vehicles row">
-            {
-              popular.map((vehicle, idx) => (
-                <VehicleImage
-                  to={`/vehicles/${vehicle.id}`}
-                  key={idx}
-                  src={vehicle.image || 'https://via.placeholder.com/300x200?text=Popular+Vehicle'}
-                  name={capitalize(vehicle.name)}
-                  location={capitalize(vehicle.location)}
-                  className='p-0 pe-md-4 col-12 col-md-3'
-                />
-              ))
-            }
-          </div>
-        }
-        <Link to='/vehicles/more?popular=1' className="d-block d-md-none text-center mt-4" href="/"
+        <Link to='/vehicles/more/popular' className="d-block d-md-none text-center mt-4" href="/"
           >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
         ></Link>
       </section>
