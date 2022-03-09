@@ -1,3 +1,5 @@
-import { queryFormat } from './stringFormat';
+import image from '../assets/img/vehicle-placeholder.png';
 
-export const imagePlaceholder = (name) => `https://via.placeholder.com/500x335?text=${queryFormat(name)}`;
+export const imagePlaceholder = () => {
+  return image;
+};
