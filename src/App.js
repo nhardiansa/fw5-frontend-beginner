@@ -19,13 +19,13 @@ import Search from './pages/Search';
 
 import { PrivateRoute, PublicRoute } from './components/Routes';
 import { getSelectData } from './redux/actions/selectData';
+import { getVehicleListEveryType } from './redux/actions/vehicle';
 
 export default function App () {
-  const { auth, selectData } = useSelector(state => state);
+  const { selectData } = useSelector(state => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(auth, 'app');
     const user = JSON.parse(localStorage.getItem('user')) || null;
     if (user) {
       dispatch(login(user));
@@ -38,7 +38,11 @@ export default function App () {
     if (!locations.length || !types.length) {
       dispatch(getSelectData());
     }
-  }, []);
+
+    if (types.length > 0) {
+      dispatch(getVehicleListEveryType(types));
+    }
+  }, [selectData.types]);
 
   return (
       <>
@@ -49,18 +53,19 @@ export default function App () {
           <Route path="/forgotPassword" element={<PublicRoute restricted={true} page={<ForgotPassword />} />} />
           <Route path="/verify" element={<PublicRoute restricted={true} page={<ForgotPassword />} />} />
 
-          <Route path="/" element={<Home />} />
-          <Route path="/vehicles" element={<VehicleType />} />
-          <Route path="/vehicles/more" element={<Search viewMore={true} />} />
-          <Route path='/vehicles/:id' element={<VehicleDetail />} />
-          <Route path='/search' element={<Search />} />
+          <Route path="/" element={<PublicRoute page={<Home /> }/>} />
+          <Route path="/vehicles" element={ <PublicRoute page={<VehicleType />} /> } />
+          <Route path="/vehicles/more/:type" element={ <PublicRoute page={<Search />} /> } />
+          <Route path='/vehicles/:id' element={ <PublicRoute page={<VehicleDetail />} /> } />
+          <Route path='/search' element={ <PublicRoute page={<Search />} /> } />
 
           <Route path="/profile" element={<PrivateRoute restricted={true} page={<Profile />} />} />
+          <Route path="/changePassword" element={<PrivateRoute restricted={true} page={<ForgotPassword />} />} />
 
           <Route path="/histories" element={ <PrivateRoute restricted={true} page={<History />} /> } />
-          <Route path="/reservation" element={ <PrivateRoute page={<Reservation />} /> } />
-          <Route path="/payment" element={ <PrivateRoute page={<Payment />} /> } />
-          <Route path='*' element={<Home />} />
+          <Route path="/reservation" element={ <PrivateRoute restricted={true} page={<Reservation />} /> } />
+          <Route path="/payment" element={ <PrivateRoute restricted={true} page={<Payment />} /> } />
+          <Route path='*' element={<PublicRoute page={<Home /> } />} />
         </Routes>
       </BrowserRouter>
       </>

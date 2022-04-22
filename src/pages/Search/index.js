@@ -27,10 +27,16 @@ export default function Search () {
   const [title, setTitle] = useState('');
 
   useEffect(() => {
-    pageName(type);
-    console.log(getQueryParams());
-    dispatch(changeDataToSearchVehicle(getQueryParams()));
-  }, [type]);
+    if (types.length > 0) {
+      defaultDataPage(type);
+    }
+
+    const queryParams = getQueryParams();
+    console.log(queryParams);
+    dispatch(changeDataToSearchVehicle({
+      ...queryParams
+    }));
+  }, [types]);
 
   useEffect(() => {
     const queryParamsLength = Object.keys(getQueryParams()).length;
@@ -83,22 +89,34 @@ export default function Search () {
     return Object.fromEntries([...searchParams]);
   };
 
-  const pageName = (type) => {
+  const defaultDataPage = (type) => {
     switch (type) {
       case 'popular': {
         setTitle('Popular in town');
+        setSearchParams({
+          popularity: 'desc'
+        });
         break;
       }
       case 'motorbikes': {
         setTitle('Motorbikes');
+        setSearchParams({
+          category_id: types.find(el => el.name === 'motorbike').id
+        });
         break;
       }
       case 'cars': {
         setTitle('Cars');
+        setSearchParams({
+          category_id: types.find(el => el.name === 'car').id
+        });
         break;
       }
       case 'bikes': {
         setTitle('Bikes');
+        setSearchParams({
+          category_id: types.find(el => el.name === 'bike').id
+        });
         break;
       }
       default:
@@ -158,16 +176,20 @@ export default function Search () {
                   }
                 </select>
               </div>
-              <div className="filter-input me-2 col-6 col-md">
-                <select onChange={selectHandler} name='category_id' className="filter-input form-select" aria-label="Default select example">
-                  <option defaultValue>Type</option>
-                  {
-                    types.map(type => (
-                      <option key={type.id} selected={dataToSearchVehicle.category_id === `${type.id}`} value={type.id}>{capitalize(type.name)}</option>
-                    ))
-                  }
-                </select>
-              </div>
+              {
+                (type === 'popular' || !type) && (
+                  <div className="filter-input me-2 col-6 col-md">
+                    <select onChange={selectHandler} name='category_id' className="filter-input form-select" aria-label="Default select example">
+                      <option defaultValue>Type</option>
+                      {
+                        types.map(type => (
+                          <option key={type.id} selected={dataToSearchVehicle.category_id === `${type.id}`} value={type.id}>{capitalize(type.name)}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                )
+              }
               <div className="filter-input me-2 col-6 col-md">
                 <select onChange={selectHandler} name='prepayment' className="filter-input form-select" aria-label="Default select example">
                   <option defaultValue>Payment</option>
