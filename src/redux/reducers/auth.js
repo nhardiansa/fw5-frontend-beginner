@@ -1,9 +1,11 @@
-import { LOGIN, LOGOUT, ON_LOGIN_FULFILLED, ON_LOGIN_PENDING, ON_LOGIN_REJECTED } from '../types/auth';
+import { CLEAR_REGISTER_DATA, LOGIN, LOGOUT, ON_LOGIN_FULFILLED, ON_LOGIN_PENDING, ON_LOGIN_REJECTED, REGISTER } from '../types/auth';
 
 const initialState = {
   user: null,
   isLoading: false,
-  error: null
+  error: null,
+
+  registeredEmail: null
 };
 
 const auth = (state = initialState, action) => {
@@ -40,6 +42,16 @@ const auth = (state = initialState, action) => {
       state.isLoading = false;
       state.error = null;
       window.localStorage.setItem('user', JSON.stringify(results));
+      return { ...state };
+    }
+
+    case REGISTER : {
+      state.registeredEmail = action.payload;
+      return { ...state };
+    }
+
+    case CLEAR_REGISTER_DATA : {
+      state.registeredEmail = null;
       return { ...state };
     }
 
