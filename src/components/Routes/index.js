@@ -1,8 +1,10 @@
-import { Navigate } from 'react-router-dom';
+// import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const isLogin = () => {
-  const storage = window.localStorage;
-  const user = storage.getItem('user');
+const isLogin = (auth) => {
+  console.log(auth);
+  const user = auth?.user;
 
   if (user) {
     return true;
@@ -12,13 +14,13 @@ const isLogin = () => {
 };
 
 export const PublicRoute = ({ restricted, page }) => {
-  return (
-    (isLogin() && restricted) ? <Navigate to='/' /> : page
-  );
+  const { auth } = useSelector((state) => state);
+
+  return isLogin(auth) && restricted ? <Navigate to="/" /> : page;
 };
 
 export const PrivateRoute = ({ restricted, page }) => {
-  return (
-    (!isLogin() && restricted) ? <Navigate to='/login' /> : page
-  );
+  const { auth } = useSelector((state) => state);
+
+  return !isLogin(auth) && restricted ? <Navigate to="/login" /> : page;
 };
