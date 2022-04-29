@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-import VehicleImage from '../../components/VehicleImage/VehicleImage';
+import VehicleImage from "../../components/VehicleImage/VehicleImage";
 
-import Layout from '../../components/Layout';
-import { capitalize } from '../../helpers/stringFormat';
+import Layout from "../../components/Layout";
+import { capitalize } from "../../helpers/stringFormat";
 
-import './style.css';
-import constants from '../../config/constants';
+import "./style.css";
+import constants from "../../config/constants";
 
 export const ViewMore = () => {
   const { baseURL } = constants;
@@ -24,22 +24,22 @@ export const ViewMore = () => {
 
   const mapVehicleData = (type) => {
     switch (type) {
-      case 'motorbike':
-        getVehicle('/vehicles/filter?limit=16&category_id=3', setVehicles);
+      case "motorbike":
+        getVehicle("/vehicles/filter?limit=16&category_id=3", setVehicles);
         break;
-      case 'car':
-        getVehicle('/vehicles/filter?limit=16&category_id=2', setVehicles);
+      case "car":
+        getVehicle("/vehicles/filter?limit=16&category_id=2", setVehicles);
         break;
-      case 'bike':
-        getVehicle('/vehicles/filter?limit=16&category_id=4', setVehicles);
+      case "bike":
+        getVehicle("/vehicles/filter?limit=16&category_id=4", setVehicles);
         break;
       default:
-        getVehicle('/vehicles/popular?limit=16', setVehicles);
+        getVehicle("/vehicles/popular?limit=16", setVehicles);
         break;
     }
   };
 
-  const getVehicle = async (uri, stateReducer) => {
+  const getVehicle = async(uri, stateReducer) => {
     try {
       if (uri) {
         const { data } = await axios.get(baseURL + uri);
@@ -60,15 +60,15 @@ export const ViewMore = () => {
 
   const renderVehicles = () => {
     return (
-      <main className={vehicles.length === 0 ? 'vh-100' : ''}>
-        <div className={'view-more-wrapper container d-flex flex-column'}>
+      <main className={vehicles.length === 0 ? "vh-100" : ""}>
+        <div className={"view-more-wrapper container d-flex flex-column"}>
           {
-            type === 'popular' &&
+            type === "popular" &&
             <h1 className="view-more-title text-center text-md-start">Popular in town</h1>
           }
           {
-            type !== 'popular' &&
-            <h1 className="view-more-title text-center text-md-start">{capitalize(type) + 's'}</h1>
+            type !== "popular" &&
+            <h1 className="view-more-title text-center text-md-start">{capitalize(type) + "s"}</h1>
           }
           {
             vehicles.length > 0 &&
@@ -82,7 +82,7 @@ export const ViewMore = () => {
             {
               vehicles.length > 0 &&
                 vehicles.map((el, i) => {
-                  const img = el.image || 'https://via.placeholder.com/261x333?text=Popular+in+town';
+                  const img = el.image || "https://via.placeholder.com/261x333?text=Popular+in+town";
                   return (
                     <VehicleImage
                       to={`/vehicles/${el.id}`}
@@ -102,7 +102,7 @@ export const ViewMore = () => {
           }
           {
             pageInfo.nextPage === null &&
-            <p className={`no-items mt-5 align-self-center ${vehicles.length === 0 && 'h-100'} `}>There is no vehicle left</p>
+            <p className={`no-items mt-5 align-self-center ${vehicles.length === 0 && "h-100"} `}>There is no vehicle left</p>
           }
         </div>
       </main>

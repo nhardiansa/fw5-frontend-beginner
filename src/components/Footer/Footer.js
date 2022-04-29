@@ -1,10 +1,10 @@
-import { Component } from 'react';
-import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
-import carWheel from '../../assets/img/car-wheel.png';
-import './Footer.css';
+import { Component } from "react";
+import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import carWheel from "../../assets/img/car-wheel.png";
+import "./Footer.css";
 
 export default class Footer extends Component {
-  render () {
+  render() {
     return (
       <footer className='mt-0'>
         <div className="wrapper container">
