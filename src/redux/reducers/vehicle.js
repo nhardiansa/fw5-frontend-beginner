@@ -1,4 +1,31 @@
-import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_DELETED_VEHICLE_PAYMENT, CLEAR_SEARCH_VEHICLE_LIST, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, DATA_TO_SEARCH_VEHICLE, DELETE_VEHICLE_PAYMENT, FINISH_PAYMENT, GET_VEHICLE_DETAILS, GET_VEHICLE_LIST_EVERY_TYPE, GET_VEHICLE_PAYMENT_DETAILS, GET_VEHICLE_PAYMENT_LIST, LOAD_MORE_SEARCH_VEHICLE_LIST, LOAD_MORE_VEHICLE_PAYMENT_LIST, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, RETURN_VEHICLE, SAVE_VEHICLE_DETAILS, SEARCH_VEHICLE } from "../types/vehicle";
+import Swal from "sweetalert2";
+import {
+  BOOK_VEHICLE,
+  BOOK_VEHICLE_DECREASE_QTY,
+  BOOK_VEHICLE_INCREASE_QTY,
+  CLEAR_BOOKED_VEHICLE,
+  CLEAR_DELETED_VEHICLE_PAYMENT,
+  CLEAR_SEARCH_VEHICLE_LIST,
+  CLEAR_VEHICLE_DETAILS,
+  CLEAR_VEHICLE_PAYMENT,
+  CLEAR_VEHICLE_RESERVATION,
+  DATA_TO_SEARCH_VEHICLE,
+  DELETE_VEHICLE_PAYMENT,
+  FINISH_PAYMENT,
+  GET_VEHICLE_DETAILS,
+  GET_VEHICLE_LIST_EVERY_TYPE,
+  GET_VEHICLE_PAYMENT_DETAILS,
+  GET_VEHICLE_PAYMENT_LIST,
+  LOAD_MORE_SEARCH_VEHICLE_LIST,
+  LOAD_MORE_VEHICLE_PAYMENT_LIST,
+  MAKE_VEHICLE_PAYMENT,
+  MAKE_VEHICLE_RESERVATION,
+  RESERVATION_QTY_DECREASE,
+  RESERVATION_QTY_INCREASE,
+  RETURN_VEHICLE,
+  SAVE_VEHICLE_DETAILS,
+  SEARCH_VEHICLE,
+} from "../types/vehicle";
 
 const initialState = {
   bookedVehicle: null,
@@ -35,7 +62,7 @@ const initialState = {
 
   dataToSearchVehicle: {},
 
-  error: null
+  error: null,
 };
 
 const vehicleReducer = (state = initialState, action) => {
@@ -237,7 +264,11 @@ const vehicleReducer = (state = initialState, action) => {
       const { message } = action.payload.response.data;
       state.paymentDeleteLoading = false;
       state.paymentDeleteError = message;
-      alert(`Can't delete this payment because ${message}`);
+      Swal.fire({
+        title: "Failed",
+        text: `Can't delete this payment because ${message}`,
+        icon: "error",
+      });
       state.paymentDeleteSuccess = null;
       return { ...state };
     }
@@ -260,7 +291,11 @@ const vehicleReducer = (state = initialState, action) => {
       state.paymentData = results;
       state.paymentFinishError = null;
       state.paymentFinishLoading = false;
-      alert("Payment Successful");
+      Swal.fire({
+        title: "Success",
+        text: "Payment has been paid",
+        icon: "success",
+      });
       return { ...state };
     }
 
@@ -285,7 +320,11 @@ const vehicleReducer = (state = initialState, action) => {
       state.paymentData = results;
       state.returningVehicleError = null;
       state.returningVehicleLoading = false;
-      alert("Vehicle returned successfully");
+      Swal.fire({
+        title: "Success",
+        text: "Vehicle has been returned",
+        icon: "success",
+      });
       return { ...state };
     }
 
@@ -318,7 +357,11 @@ const vehicleReducer = (state = initialState, action) => {
       state.searchVehicleList = [];
       state.searchVehicleListPagination = {};
       state.searchVehicleError = message;
-      alert(`Can't search vehicle because ${message}`);
+      Swal.fire({
+        title: "Failed",
+        text: `Can't search vehicle because ${message}`,
+        icon: "error",
+      });
       state.searchVehicleLoading = false;
       return { ...state };
     }
@@ -341,7 +384,6 @@ const vehicleReducer = (state = initialState, action) => {
     case LOAD_MORE_SEARCH_VEHICLE_LIST + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.searchVehicleError = message;
-      alert(`Can't load more vehicle because ${message}`);
       state.loadMoreLoading = false;
       return { ...state };
     }
@@ -370,7 +412,7 @@ const vehicleReducer = (state = initialState, action) => {
       const results = action.payload;
 
       console.log(action.payload.data);
-      state.listVehiclesOfEveryTypes = results.map(({ data }) => (data.results));
+      state.listVehiclesOfEveryTypes = results.map(({ data }) => data.results);
       state.searchVehicleLoading = false;
       state.listVehiclesOfEveryTypesError = null;
       return { ...state };
@@ -380,7 +422,11 @@ const vehicleReducer = (state = initialState, action) => {
       const { message } = action.payload.response.data;
       state.listVehiclesOfEveryTypes = [];
       state.listVehiclesOfEveryTypesError = message;
-      alert(`Can't get list of vehicle because ${message}`);
+      Swal.fire({
+        title: "Failed",
+        text: `Can't get vehicle list because ${message}`,
+        icon: "error",
+      });
       state.searchVehicleLoading = false;
       return { ...state };
     }
