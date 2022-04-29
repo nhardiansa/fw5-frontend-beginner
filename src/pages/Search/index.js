@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
-import { FaFilter } from 'react-icons/fa';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { FaFilter } from "react-icons/fa";
+import { useParams, useSearchParams } from "react-router-dom";
 
-import Button from '../../components/Button';
-import Layout from '../../components/Layout';
-import VehicleImage from '../../components/VehicleImage/VehicleImage';
-import { capitalize } from '../../helpers/stringFormat';
+import Button from "../../components/Button";
+import Layout from "../../components/Layout";
+import VehicleImage from "../../components/VehicleImage/VehicleImage";
+import { capitalize } from "../../helpers/stringFormat";
 
-import './style.css';
-import Spinner from '../../components/Spinner';
-import { imagePlaceholder } from '../../helpers/media';
-import { clearEmptyObject } from '../../helpers/dataFilter';
-import { useDispatch, useSelector } from 'react-redux';
-import { searchVehicle, changeDataToSearchVehicle } from '../../redux/actions/vehicle';
+import "./style.css";
+import Spinner from "../../components/Spinner";
+import { imagePlaceholder } from "../../helpers/media";
+import { clearEmptyObject } from "../../helpers/dataFilter";
+import { useDispatch, useSelector } from "react-redux";
+import { searchVehicle, changeDataToSearchVehicle } from "../../redux/actions/vehicle";
 
-export default function Search () {
+export default function Search() {
   const { type } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function Search () {
   const { searchVehicleList, searchVehicleListPagination, dataToSearchVehicle, searchVehicleLoading, loadMoreLoading } = vehicleReducer;
   const { locations, types } = selectData;
 
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     if (types.length > 0) {
@@ -43,7 +43,7 @@ export default function Search () {
     const dataToSearchLength = Object.keys(dataToSearchVehicle).length;
 
     if (!queryParamsLength && !dataToSearchLength) {
-      console.log('no data');
+      console.log("no data");
     }
 
     if (!queryParamsLength && dataToSearchLength) {
@@ -68,7 +68,7 @@ export default function Search () {
     if (selectedElement === null) {
       dispatch(changeDataToSearchVehicle({
         ...dataToSearchVehicle,
-        [name]: ''
+        [name]: ""
       }));
     } else {
       dispatch(changeDataToSearchVehicle({
@@ -79,8 +79,8 @@ export default function Search () {
   };
 
   const getFilterData = () => {
-    const filterBar = document.querySelector('#collapse-filter-sorter');
-    filterBar.classList.toggle('show');
+    const filterBar = document.querySelector("#collapse-filter-sorter");
+    filterBar.classList.toggle("show");
     setSearchParams(clearEmptyObject(dataToSearchVehicle));
     dispatch(searchVehicle(dataToSearchVehicle));
   };
@@ -91,36 +91,36 @@ export default function Search () {
 
   const defaultDataPage = (type) => {
     switch (type) {
-      case 'popular': {
-        setTitle('Popular in town');
+      case "popular": {
+        setTitle("Popular in town");
         setSearchParams({
-          popularity: 'desc'
+          popularity: "desc"
         });
         break;
       }
-      case 'motorbikes': {
-        setTitle('Motorbikes');
+      case "motorbikes": {
+        setTitle("Motorbikes");
         setSearchParams({
-          category_id: types.find(el => el.name === 'motorbike').id
+          category_id: types.find(el => el.name === "motorbike").id
         });
         break;
       }
-      case 'cars': {
-        setTitle('Cars');
+      case "cars": {
+        setTitle("Cars");
         setSearchParams({
-          category_id: types.find(el => el.name === 'car').id
+          category_id: types.find(el => el.name === "car").id
         });
         break;
       }
-      case 'bikes': {
-        setTitle('Bikes');
+      case "bikes": {
+        setTitle("Bikes");
         setSearchParams({
-          category_id: types.find(el => el.name === 'bike').id
+          category_id: types.find(el => el.name === "bike").id
         });
         break;
       }
       default:
-        setTitle('Search results');
+        setTitle("Search results");
         break;
     }
   };
@@ -153,7 +153,7 @@ export default function Search () {
 
   return (
     <Layout>
-      <main className={`view-more container ${searchVehicleList.length < 1 ? 'vh-100' : ''}`}>
+      <main className={`view-more container ${searchVehicleList.length < 1 ? "vh-100" : ""}`}>
         {
           title
             ? <h1 className='ps-lg-4 mt-lg-5 mb-5 mb-lg-0 text-center text-lg-start fs-1 fw-bold d-lg-inline'>{title}</h1>
@@ -177,7 +177,7 @@ export default function Search () {
                 </select>
               </div>
               {
-                (type === 'popular' || !type) && (
+                (type === "popular" || !type) && (
                   <div className="filter-input me-2 col-6 col-md">
                     <select onChange={selectHandler} name='category_id' className="filter-input form-select" aria-label="Default select example">
                       <option defaultValue>Type</option>
@@ -193,8 +193,8 @@ export default function Search () {
               <div className="filter-input me-2 col-6 col-md">
                 <select onChange={selectHandler} name='prepayment' className="filter-input form-select" aria-label="Default select example">
                   <option defaultValue>Payment</option>
-                  <option value="0" selected={dataToSearchVehicle.prepayment === '0'} >Only cash</option>
-                  <option value="1" selected={dataToSearchVehicle.prepayment === '1'}>Can prepayment</option>
+                  <option value="0" selected={dataToSearchVehicle.prepayment === "0"} >Only cash</option>
+                  <option value="1" selected={dataToSearchVehicle.prepayment === "1"}>Can prepayment</option>
                 </select>
               </div>
             </div>
@@ -203,24 +203,24 @@ export default function Search () {
               <div className="sorter-input me-2 col-6 col-md">
                 <select onChange={selectHandler} name='created' className="filter-input form-select" aria-label="Default select example">
                   <option defaultValue>Date added</option>
-                  <option selected={dataToSearchVehicle.created === 'desc'} value="desc">Latest to added</option>
-                  <option selected={dataToSearchVehicle.created === 'asc'} value="asc">Old to added</option>
+                  <option selected={dataToSearchVehicle.created === "desc"} value="desc">Latest to added</option>
+                  <option selected={dataToSearchVehicle.created === "asc"} value="asc">Old to added</option>
                 </select>
               </div>
               <div className="sorter-input me-2 col-6 col-md">
                 <select onChange={selectHandler} name='sort_price' className="sorter-input form-select" aria-label="Default select example">
                   <option defaultValue>Harga</option>
-                  <option selected={dataToSearchVehicle.sort_price === 'asc'} value="asc" >Cheapest</option>
-                  <option selected={dataToSearchVehicle.sort_price === 'desc'} value="desc" >Highest</option>
+                  <option selected={dataToSearchVehicle.sort_price === "asc"} value="asc" >Cheapest</option>
+                  <option selected={dataToSearchVehicle.sort_price === "desc"} value="desc" >Highest</option>
                 </select>
               </div>
             </div>
             <Button onClick={getFilterData} className='filter-btn ms-2 mt-3 px-4 rounded-pill'>Filter</Button>
           </div>
         </div>
-        <div className={`${searchVehicleLoading ? 'justify-content-center align-items-center h-75' : ''} results container row m-0 mt-4 mt-md-5`}>
+        <div className={`${searchVehicleLoading ? "justify-content-center align-items-center h-75" : ""} results container row m-0 mt-4 mt-md-5`}>
           {
-            searchVehicleLoading ? <Spinner variant='secondary' style={{ width: '7rem', height: '7rem' }} /> : displayResults(searchVehicleList)
+            searchVehicleLoading ? <Spinner variant='secondary' style={{ width: "7rem", height: "7rem" }} /> : displayResults(searchVehicleList)
           }
         </div>
         {

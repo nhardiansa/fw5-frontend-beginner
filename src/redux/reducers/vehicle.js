@@ -1,4 +1,31 @@
-import { BOOK_VEHICLE, BOOK_VEHICLE_DECREASE_QTY, BOOK_VEHICLE_INCREASE_QTY, CLEAR_BOOKED_VEHICLE, CLEAR_DELETED_VEHICLE_PAYMENT, CLEAR_SEARCH_VEHICLE_LIST, CLEAR_VEHICLE_DETAILS, CLEAR_VEHICLE_PAYMENT, CLEAR_VEHICLE_RESERVATION, DATA_TO_SEARCH_VEHICLE, DELETE_VEHICLE_PAYMENT, FINISH_PAYMENT, GET_VEHICLE_DETAILS, GET_VEHICLE_LIST_EVERY_TYPE, GET_VEHICLE_PAYMENT_DETAILS, GET_VEHICLE_PAYMENT_LIST, LOAD_MORE_SEARCH_VEHICLE_LIST, LOAD_MORE_VEHICLE_PAYMENT_LIST, MAKE_VEHICLE_PAYMENT, MAKE_VEHICLE_RESERVATION, RESERVATION_QTY_DECREASE, RESERVATION_QTY_INCREASE, RETURN_VEHICLE, SAVE_VEHICLE_DETAILS, SEARCH_VEHICLE } from '../types/vehicle';
+import Swal from "sweetalert2";
+import {
+  BOOK_VEHICLE,
+  BOOK_VEHICLE_DECREASE_QTY,
+  BOOK_VEHICLE_INCREASE_QTY,
+  CLEAR_BOOKED_VEHICLE,
+  CLEAR_DELETED_VEHICLE_PAYMENT,
+  CLEAR_SEARCH_VEHICLE_LIST,
+  CLEAR_VEHICLE_DETAILS,
+  CLEAR_VEHICLE_PAYMENT,
+  CLEAR_VEHICLE_RESERVATION,
+  DATA_TO_SEARCH_VEHICLE,
+  DELETE_VEHICLE_PAYMENT,
+  FINISH_PAYMENT,
+  GET_VEHICLE_DETAILS,
+  GET_VEHICLE_LIST_EVERY_TYPE,
+  GET_VEHICLE_PAYMENT_DETAILS,
+  GET_VEHICLE_PAYMENT_LIST,
+  LOAD_MORE_SEARCH_VEHICLE_LIST,
+  LOAD_MORE_VEHICLE_PAYMENT_LIST,
+  MAKE_VEHICLE_PAYMENT,
+  MAKE_VEHICLE_RESERVATION,
+  RESERVATION_QTY_DECREASE,
+  RESERVATION_QTY_INCREASE,
+  RETURN_VEHICLE,
+  SAVE_VEHICLE_DETAILS,
+  SEARCH_VEHICLE,
+} from "../types/vehicle";
 
 const initialState = {
   bookedVehicle: null,
@@ -35,7 +62,7 @@ const initialState = {
 
   dataToSearchVehicle: {},
 
-  error: null
+  error: null,
 };
 
 const vehicleReducer = (state = initialState, action) => {
@@ -64,18 +91,18 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case GET_VEHICLE_DETAILS + '_PENDING': {
+    case GET_VEHICLE_DETAILS + "_PENDING": {
       state.vehicleDetails = null;
       return { ...state };
     }
 
-    case GET_VEHICLE_DETAILS + '_FULFILLED': {
+    case GET_VEHICLE_DETAILS + "_FULFILLED": {
       const { results } = action.payload.data;
       state.vehicleDetails = results;
       return { ...state };
     }
 
-    case GET_VEHICLE_DETAILS + '_REJECTED': {
+    case GET_VEHICLE_DETAILS + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.vehicleDetails = null;
       state.error = message;
@@ -116,14 +143,14 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case MAKE_VEHICLE_PAYMENT + '_PENDING': {
+    case MAKE_VEHICLE_PAYMENT + "_PENDING": {
       state.paymentLoading = true;
       state.paymentError = null;
       state.paymentData = null;
       return { ...state };
     }
 
-    case MAKE_VEHICLE_PAYMENT + '_FULFILLED': {
+    case MAKE_VEHICLE_PAYMENT + "_FULFILLED": {
       const { results } = action.payload.data;
       state.paymentData = results;
       state.paymentError = null;
@@ -131,7 +158,7 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case MAKE_VEHICLE_PAYMENT + '_REJECTED': {
+    case MAKE_VEHICLE_PAYMENT + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.paymentError = message;
       state.paymentData = null;
@@ -147,7 +174,7 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case GET_VEHICLE_PAYMENT_LIST + '_PENDING': {
+    case GET_VEHICLE_PAYMENT_LIST + "_PENDING": {
       state.listPagination = null;
       state.paymentList = null;
       state.paymentLoading = true;
@@ -155,7 +182,7 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case GET_VEHICLE_PAYMENT_LIST + '_FULFILLED': {
+    case GET_VEHICLE_PAYMENT_LIST + "_FULFILLED": {
       const { results, pageInfo } = action.payload.data;
       state.listPagination = pageInfo;
       state.paymentList = results;
@@ -164,7 +191,7 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case GET_VEHICLE_PAYMENT_LIST + '_REJECTED': {
+    case GET_VEHICLE_PAYMENT_LIST + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.paymentError = message;
       state.paymentList = null;
@@ -173,13 +200,13 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case LOAD_MORE_VEHICLE_PAYMENT_LIST + '_PENDING': {
+    case LOAD_MORE_VEHICLE_PAYMENT_LIST + "_PENDING": {
       state.paymentLoading = true;
       state.paymentError = null;
       return { ...state };
     }
 
-    case LOAD_MORE_VEHICLE_PAYMENT_LIST + '_FULFILLED': {
+    case LOAD_MORE_VEHICLE_PAYMENT_LIST + "_FULFILLED": {
       const { results, pageInfo } = action.payload.data;
       state.listPagination = pageInfo;
       state.paymentList = [...state.paymentList, ...results];
@@ -188,21 +215,21 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case LOAD_MORE_VEHICLE_PAYMENT_LIST + '_REJECTED': {
+    case LOAD_MORE_VEHICLE_PAYMENT_LIST + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.paymentError = message;
       state.paymentLoading = false;
       return { ...state };
     }
 
-    case GET_VEHICLE_PAYMENT_DETAILS + '_PENDING': {
+    case GET_VEHICLE_PAYMENT_DETAILS + "_PENDING": {
       state.paymentLoading = true;
       state.paymentError = null;
       state.paymentData = null;
       return { ...state };
     }
 
-    case GET_VEHICLE_PAYMENT_DETAILS + '_FULFILLED': {
+    case GET_VEHICLE_PAYMENT_DETAILS + "_FULFILLED": {
       const { results } = action.payload.data;
       state.paymentData = results;
       state.paymentError = null;
@@ -210,7 +237,7 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case GET_VEHICLE_PAYMENT_DETAILS + '_REJECTED': {
+    case GET_VEHICLE_PAYMENT_DETAILS + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.paymentError = message;
       state.paymentData = null;
@@ -218,14 +245,14 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case DELETE_VEHICLE_PAYMENT + '_PENDING': {
+    case DELETE_VEHICLE_PAYMENT + "_PENDING": {
       state.paymentDeleteLoading = true;
       state.paymentDeleteError = null;
       state.paymentDeleteSuccess = null;
       return { ...state };
     }
 
-    case DELETE_VEHICLE_PAYMENT + '_FULFILLED': {
+    case DELETE_VEHICLE_PAYMENT + "_FULFILLED": {
       const { results } = action.payload.data;
       state.paymentDeleteLoading = false;
       state.paymentDeleteError = null;
@@ -233,11 +260,15 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case DELETE_VEHICLE_PAYMENT + '_REJECTED': {
+    case DELETE_VEHICLE_PAYMENT + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.paymentDeleteLoading = false;
       state.paymentDeleteError = message;
-      alert(`Can't delete this payment because ${message}`);
+      Swal.fire({
+        title: "Failed",
+        text: `Can't delete this payment because ${message}`,
+        icon: "error",
+      });
       state.paymentDeleteSuccess = null;
       return { ...state };
     }
@@ -247,24 +278,28 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case FINISH_PAYMENT + '_PENDING': {
+    case FINISH_PAYMENT + "_PENDING": {
       state.paymentFinishLoading = true;
       state.paymentFinishError = null;
       state.paymentFinishSuccess = null;
       return { ...state };
     }
 
-    case FINISH_PAYMENT + '_FULFILLED': {
+    case FINISH_PAYMENT + "_FULFILLED": {
       const { results } = action.payload.data;
       state.paymentFinishSuccess = results;
       state.paymentData = results;
       state.paymentFinishError = null;
       state.paymentFinishLoading = false;
-      alert('Payment Successful');
+      Swal.fire({
+        title: "Success",
+        text: "Payment has been paid",
+        icon: "success",
+      });
       return { ...state };
     }
 
-    case FINISH_PAYMENT + '_REJECTED': {
+    case FINISH_PAYMENT + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.paymentFinishError = message;
       state.paymentFinishSuccess = null;
@@ -272,24 +307,28 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case RETURN_VEHICLE + '_PENDING': {
+    case RETURN_VEHICLE + "_PENDING": {
       state.returningVehicleLoading = true;
       state.returningVehicleError = null;
       state.returningVehicleSuccess = null;
       return { ...state };
     }
 
-    case RETURN_VEHICLE + '_FULFILLED': {
+    case RETURN_VEHICLE + "_FULFILLED": {
       const { results } = action.payload.data;
       state.returningVehicleSuccess = results;
       state.paymentData = results;
       state.returningVehicleError = null;
       state.returningVehicleLoading = false;
-      alert('Vehicle returned successfully');
+      Swal.fire({
+        title: "Success",
+        text: "Vehicle has been returned",
+        icon: "success",
+      });
       return { ...state };
     }
 
-    case RETURN_VEHICLE + '_REJECTED': {
+    case RETURN_VEHICLE + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.returningVehicleError = message;
       state.returningVehicleSuccess = null;
@@ -297,14 +336,14 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case SEARCH_VEHICLE + '_PENDING': {
+    case SEARCH_VEHICLE + "_PENDING": {
       state.searchVehicleLoading = true;
       state.searchVehicleError = null;
       state.searchVehicleList = [];
       return { ...state };
     }
 
-    case SEARCH_VEHICLE + '_FULFILLED': {
+    case SEARCH_VEHICLE + "_FULFILLED": {
       const { results, pageInfo } = action.payload.data;
       state.searchVehicleList = results;
       state.searchVehicleListPagination = pageInfo;
@@ -313,23 +352,27 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case SEARCH_VEHICLE + '_REJECTED': {
+    case SEARCH_VEHICLE + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.searchVehicleList = [];
       state.searchVehicleListPagination = {};
       state.searchVehicleError = message;
-      alert(`Can't search vehicle because ${message}`);
+      Swal.fire({
+        title: "Failed",
+        text: `Can't search vehicle because ${message}`,
+        icon: "error",
+      });
       state.searchVehicleLoading = false;
       return { ...state };
     }
 
-    case LOAD_MORE_SEARCH_VEHICLE_LIST + '_PENDING': {
+    case LOAD_MORE_SEARCH_VEHICLE_LIST + "_PENDING": {
       state.loadMoreLoading = true;
       state.searchVehicleError = null;
       return { ...state };
     }
 
-    case LOAD_MORE_SEARCH_VEHICLE_LIST + '_FULFILLED': {
+    case LOAD_MORE_SEARCH_VEHICLE_LIST + "_FULFILLED": {
       const { results, pageInfo } = action.payload.data;
       state.searchVehicleList = [...state.searchVehicleList, ...results];
       state.searchVehicleListPagination = pageInfo;
@@ -338,10 +381,9 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case LOAD_MORE_SEARCH_VEHICLE_LIST + '_REJECTED': {
+    case LOAD_MORE_SEARCH_VEHICLE_LIST + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.searchVehicleError = message;
-      alert(`Can't load more vehicle because ${message}`);
       state.loadMoreLoading = false;
       return { ...state };
     }
@@ -359,28 +401,32 @@ const vehicleReducer = (state = initialState, action) => {
       return { ...state };
     }
 
-    case GET_VEHICLE_LIST_EVERY_TYPE + '_PENDING': {
+    case GET_VEHICLE_LIST_EVERY_TYPE + "_PENDING": {
       state.searchVehicleLoading = true;
       state.listVehiclesOfEveryTypesError = null;
       state.listVehiclesOfEveryTypes = [];
       return { ...state };
     }
 
-    case GET_VEHICLE_LIST_EVERY_TYPE + '_FULFILLED': {
+    case GET_VEHICLE_LIST_EVERY_TYPE + "_FULFILLED": {
       const results = action.payload;
 
       console.log(action.payload.data);
-      state.listVehiclesOfEveryTypes = results.map(({ data }) => (data.results));
+      state.listVehiclesOfEveryTypes = results.map(({ data }) => data.results);
       state.searchVehicleLoading = false;
       state.listVehiclesOfEveryTypesError = null;
       return { ...state };
     }
 
-    case GET_VEHICLE_LIST_EVERY_TYPE + '_REJECTED': {
+    case GET_VEHICLE_LIST_EVERY_TYPE + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.listVehiclesOfEveryTypes = [];
       state.listVehiclesOfEveryTypesError = message;
-      alert(`Can't get list of vehicle because ${message}`);
+      Swal.fire({
+        title: "Failed",
+        text: `Can't get vehicle list because ${message}`,
+        icon: "error",
+      });
       state.searchVehicleLoading = false;
       return { ...state };
     }

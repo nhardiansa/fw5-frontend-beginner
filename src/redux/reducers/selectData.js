@@ -1,8 +1,8 @@
-import { GET_DATA_SELECT_FULFILLED, GET_DATA_SELECT_PENDING, GET_DATA_SELECT_REJECTED } from '../types/selectData';
+import { GET_DATA_SELECT_FULFILLED, GET_DATA_SELECT_PENDING, GET_DATA_SELECT_REJECTED } from "../types/selectData";
 
 const initialState = {
   isLoading: true,
-  errorMessage: '',
+  errorMessage: "",
   locations: [],
   types: []
 };

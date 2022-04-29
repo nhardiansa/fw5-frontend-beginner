@@ -24,6 +24,7 @@ import { capitalize, dateFormatter } from "../../helpers/stringFormat";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { clearEmptyObject } from "../../helpers/dataFilter";
 import { axiosInstance } from "../../helpers/http";
+import Swal from "sweetalert2";
 
 export default function History() {
   const navigate = useNavigate();
@@ -62,7 +63,11 @@ export default function History() {
 
     if (paymentDeleteSuccess !== null || changePage) {
       if (paymentDeleteSuccess !== null) {
-        alert("Delete Success");
+        Swal.fire({
+          title: "Success",
+          text: "Invoice deleted successfully",
+          icon: "success",
+        });
       }
       // setSearchParams(queries);
       setTrigger(!trigger);
@@ -103,13 +108,18 @@ export default function History() {
     }
   };
 
-  const deleteHandler = (e) => {
+  const deleteHandler = async (e) => {
     e.preventDefault();
     console.log(e.target.id);
-    const doIt = window.confirm(
-      "Are you sure you want to delete this payment?"
-    );
-    if (doIt) {
+    const doIt = await Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to delete this invoice?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    });
+    console.log(doIt);
+    if (doIt.isConfirmed) {
       dispatch(deleteVehiclePayment(Number(e.target.id), token));
     }
   };
@@ -167,7 +177,11 @@ export default function History() {
       }
     } catch (error) {
       console.error(error.response);
-      alert(error.response.data.message);
+      Swal.fire({
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+      });
       setTypes([]);
     }
   };

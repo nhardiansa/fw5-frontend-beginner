@@ -1,3 +1,4 @@
+/* eslint-disable space-before-function-paren */
 /* eslint-disable multiline-ternary */
 import { FaChevronLeft, FaMinus, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +24,7 @@ import {
 } from "../../helpers/stringFormat";
 import Input from "../../components/Input";
 import Spinner from "../../components/Spinner";
+import Swal from "sweetalert2";
 
 export const Reservation = () => {
   const dispatch = useDispatch();
@@ -68,7 +70,11 @@ export const Reservation = () => {
 
     if (paymentError) {
       console.log("payment error");
-      alert(paymentError);
+      Swal.fire({
+        title: "Error",
+        text: paymentError,
+        icon: "error",
+      });
     }
 
     return () => {
@@ -136,7 +142,7 @@ export const Reservation = () => {
     }
   };
 
-  const goToPaymentHandler = () => {
+  const goToPaymentHandler = async () => {
     const startRent = new Date(dateRent);
     const endRent = new Date(
       startRent.setDate(startRent.getDate() + Number(countDay))
@@ -160,18 +166,31 @@ export const Reservation = () => {
     };
     console.log(dataToSend);
 
-    const goToPaid =
-      confirm(`If you click OK, you will be redirected to payment page.
-    \n
-    Vehicle: ${capitalize(vehicleDetails.name)}
-    Total Payment: ${totalPayment}
-    Start Rent: ${dateFormatter(dateRent)}
-    End Rent: ${dateFormatter(endRent)}
-    Total Day: ${countDay}
-    Payment: not yet
-    `);
+    const goToPaid = await Swal.fire({
+      title: "Confirmation",
+      text: `If you click OK, you will be redirected to payment page.
+      \n
+      Vehicle: ${capitalize(vehicleDetails.name)}
+      Total Payment: ${totalPayment}
+      Start Rent: ${dateFormatter(dateRent)}
+      End Rent: ${dateFormatter(endRent)}
+      Total Day: ${countDay}
+      Paid: not yet`,
+      html: `
+        <p>Vehicle: ${capitalize(vehicleDetails.name)}</p>
+        <p>Total Payment: ${totalPayment}</p>
+        <p>Start Rent: ${dateFormatter(dateRent)}</p>
+        <p>End Rent: ${dateFormatter(endRent)}</p>
+        <p>Total Day: ${countDay}</p>
+        <p>Paid: not yet</p>
+      `,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      cancelButtonText: "Cancel",
+    });
 
-    if (!goToPaid) {
+    if (!goToPaid.isConfirmed) {
       return 0;
     }
 
