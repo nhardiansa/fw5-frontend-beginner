@@ -1,4 +1,4 @@
-import { INCREASE, DECREASE } from '../types/counter';
+import { INCREASE, DECREASE } from "../types/counter";
 
 export const increase = () => {
   return {

@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 
-import { onLogin } from '../../redux/actions/auth';
+import { onLogin } from "../../redux/actions/auth";
 
-import sideImg from '../../assets/img/side-login-img.png';
-import carWheel from '../../assets/img/car-wheel.png';
-import googleIcon from '../../assets/img/google-icon.svg';
+import sideImg from "../../assets/img/side-login-img.png";
+import carWheel from "../../assets/img/car-wheel.png";
+import googleIcon from "../../assets/img/google-icon.svg";
 
-import './style.css';
-import Button from '../../components/Button';
+import "./style.css";
+import Button from "../../components/Button";
 
 export const Login = () => {
   const { auth } = useSelector(state => state);
   const dispatch = useDispatch();
 
-  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
     setLoginData({
@@ -25,7 +25,7 @@ export const Login = () => {
     });
   };
 
-  const submitHandler = async (e) => {
+  const submitHandler = async(e) => {
     try {
       e.preventDefault();
       const { email, password } = loginData;

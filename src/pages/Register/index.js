@@ -1,19 +1,19 @@
-import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
-import { axiosInstance } from '../../helpers/http';
-import qs from 'qs';
-import Spinner from '../../components/Spinner';
+import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import { axiosInstance } from "../../helpers/http";
+import qs from "qs";
+import Spinner from "../../components/Spinner";
 
-import sideImg from '../../assets/img/side-login-img.png';
-import googleIcon from '../../assets/img/google-icon.svg';
-import logo from '../../assets/img/car-wheel.png';
+import sideImg from "../../assets/img/side-login-img.png";
+import googleIcon from "../../assets/img/google-icon.svg";
+import logo from "../../assets/img/car-wheel.png";
 
-import './style.css';
-import { Link, useNavigate } from 'react-router-dom';
-import Button from '../../components/Button';
-import { useState } from 'react';
-import { clearEmptyObject } from '../../helpers/dataFilter';
+import "./style.css";
+import { Link, useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
+import { useState } from "react";
+import { clearEmptyObject } from "../../helpers/dataFilter";
 
-export default function Register () {
+export default function Register() {
   const navigate = useNavigate();
   // const history = useHi();
   const [registerData, setRegisterData] = useState({});
@@ -31,20 +31,20 @@ export default function Register () {
     const data = clearEmptyObject(registerData);
 
     if (Object.keys(data).length === 0) {
-      return alert('Please fill all the fields');
+      return alert("Please fill all the fields");
     }
 
     if (data.password !== data.confirmPassword) {
-      return alert('Passwords do not match');
+      return alert("Passwords do not match");
     }
 
     setIsLoading(true);
-    axiosInstance().post('/auth/register', qs.stringify(data))
+    axiosInstance().post("/auth/register", qs.stringify(data))
       .then(res => {
         if (res.status === 201) {
           setIsLoading(false);
-          alert('Registration successful');
-          navigate('/verify');
+          alert("Registration successful");
+          navigate("/verify");
         }
       })
       .catch(err => {
@@ -76,7 +76,7 @@ export default function Register () {
               <input name='confirmPassword' onChange={changeHandler} className="mb-3" type="password" placeholder="Confirm password" />
               <Button type='submit' className="login-btn mt-4" disabled={isLoading} >
                 {
-                  isLoading ? <Spinner /> : 'Sign Up'
+                  isLoading ? <Spinner /> : "Sign Up"
                 }
               </Button>
             </form>

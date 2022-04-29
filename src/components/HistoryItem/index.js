@@ -1,16 +1,16 @@
-import { Component } from 'react';
-import Button from '../Button';
-import style from './style.module.css';
+import { Component } from "react";
+import Button from "../Button";
+import style from "./style.module.css";
 
 export default class HistoryItem extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       clicked: false
     };
   }
 
-  onClick (e) {
+  onClick(e) {
     if (e.target.classList.contains(style.itemRecognition)) {
       this.setState({
         clicked: !this.state.clicked
@@ -18,7 +18,7 @@ export default class HistoryItem extends Component {
     }
   }
 
-  render () {
+  render() {
     const { clicked } = this.state;
     const {
       image,
@@ -33,14 +33,14 @@ export default class HistoryItem extends Component {
       historyId
     } = this.props;
 
-    const notPaidText = payment ? 'Not returned yet' : 'Not paid yet';
+    const notPaidText = payment ? "Not returned yet" : "Not paid yet";
     return (
       <div
         onClick={this.onClick.bind(this)}
         id='historyItem'
         className={`${style.itemRecognition} ${classNameContainer} ${style.historyItem} d-flex align-items-center position-relative`}
       >
-        <div className={`${style.itemRecognition} ${style.detailWrapper} ${clicked ? style.detailWrapperClicked : ''} d-flex align-items-center position-relative`}>
+        <div className={`${style.itemRecognition} ${style.detailWrapper} ${clicked ? style.detailWrapperClicked : ""} d-flex align-items-center position-relative`}>
           <img
             id='historyImg'
             src={image}
@@ -62,9 +62,9 @@ export default class HistoryItem extends Component {
             }
           </div>
         </div>
-        <div className={`${style.itemRecognition} ${style.button} ${this.state.clicked ? style.clicked : ''} position-absolute d-flex flex-column`}>
-          <Button className={'my-1 py-2 px-3'} id={historyId} onClick={detailClicked} >Detail</Button>
-          <Button className={`${style.itemRecognition} my-1 py-2 px-3`} id={historyId} variant={'dangerBtn'} onClick={deleteClicked} >Delete</Button>
+        <div className={`${style.itemRecognition} ${style.button} ${this.state.clicked ? style.clicked : ""} position-absolute d-flex flex-column`}>
+          <Button className={"my-1 py-2 px-3"} id={historyId} onClick={detailClicked} >Detail</Button>
+          <Button className={`${style.itemRecognition} my-1 py-2 px-3`} id={historyId} variant={"dangerBtn"} onClick={deleteClicked} >Delete</Button>
         </div>
       </div>
     );

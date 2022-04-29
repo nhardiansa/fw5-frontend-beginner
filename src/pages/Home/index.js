@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
-import { FaChevronDown, FaStar } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
+import { useEffect, useState } from "react";
+import { FaChevronDown, FaStar } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
 
-import VehicleImage from '../../components/VehicleImage/VehicleImage';
-import Layout from '../../components/Layout';
-import { capitalize } from '../../helpers/stringFormat';
+import VehicleImage from "../../components/VehicleImage/VehicleImage";
+import Layout from "../../components/Layout";
+import { capitalize } from "../../helpers/stringFormat";
 
-import testimonialImage from '../../assets/img/testimonial-user-pict/edward-newgate.png';
-import navigationIcon from '../../assets/img/circle-chevron-arrow.svg';
+import testimonialImage from "../../assets/img/testimonial-user-pict/edward-newgate.png";
+import navigationIcon from "../../assets/img/circle-chevron-arrow.svg";
 
-import './style.css';
-import Button from '../../components/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeDataToSearchVehicle, searchVehicle } from '../../redux/actions/vehicle';
+import "./style.css";
+import Button from "../../components/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { changeDataToSearchVehicle, searchVehicle } from "../../redux/actions/vehicle";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ export const Home = () => {
     if (selectedElement === null) {
       dispatch(changeDataToSearchVehicle({
         ...dataToSearchVehicle,
-        [name]: ''
+        [name]: ""
       }));
     } else {
       dispatch(changeDataToSearchVehicle({
@@ -57,7 +57,7 @@ export const Home = () => {
     const dataToSearchLength = Object.keys(dataToSearchVehicle).length;
     if (dataToSearchLength) {
       dispatch(searchVehicle(dataToSearchVehicle));
-      navigate('/search');
+      navigate("/search");
     }
   };
 
@@ -69,7 +69,7 @@ export const Home = () => {
             <VehicleImage
               to={`/vehicles/${vehicle.id}`}
               key={idx}
-              src={vehicle.image || 'https://via.placeholder.com/300x200?text=Popular+Vehicle'}
+              src={vehicle.image || "https://via.placeholder.com/300x200?text=Popular+Vehicle"}
               name={capitalize(vehicle.name)}
               location={capitalize(vehicle.location)}
               className='p-0 pe-md-4 col-12 col-md-3'

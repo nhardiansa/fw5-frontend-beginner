@@ -1,4 +1,4 @@
-import { GET_USER_FULFILLED, GET_USER_PENDING, GET_USER_REJECTED, LOGOUT_USER, UPDATE_USER } from '../types/user';
+import { GET_USER_FULFILLED, GET_USER_PENDING, GET_USER_REJECTED, LOGOUT_USER, UPDATE_USER } from "../types/user";
 
 const initialState = {
   profile: null,
@@ -38,13 +38,13 @@ const user = (state = initialState, action) => {
       return { ...state };
     }
 
-    case UPDATE_USER + '_PENDING': {
+    case UPDATE_USER + "_PENDING": {
       state.isLoading = true;
       state.error = null;
       return { ...state };
     }
 
-    case UPDATE_USER + '_FULFILLED': {
+    case UPDATE_USER + "_FULFILLED": {
       const { results } = action.payload.data;
       state.profile = results;
       state.isLoading = false;
@@ -52,7 +52,7 @@ const user = (state = initialState, action) => {
       return { ...state };
     }
 
-    case UPDATE_USER + '_REJECTED': {
+    case UPDATE_USER + "_REJECTED": {
       const { message } = action.payload.response.data;
       state.error = message;
       state.isLoading = false;

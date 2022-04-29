@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import { capitalize } from '../../helpers/stringFormat';
-import Layout from '../../components/Layout';
-import VehicleImage from '../../components/VehicleImage/VehicleImage';
-import imagePlaceholder from '../../assets/img/vehicle-placeholder.png';
+import { capitalize } from "../../helpers/stringFormat";
+import Layout from "../../components/Layout";
+import VehicleImage from "../../components/VehicleImage/VehicleImage";
+import imagePlaceholder from "../../assets/img/vehicle-placeholder.png";
 
-import './style.css';
-import { useSelector } from 'react-redux';
-import Spinner from '../../components/Spinner';
+import "./style.css";
+import { useSelector } from "react-redux";
+import Spinner from "../../components/Spinner";
 
 export const VehicleType = () => {
   // const { baseURL } = constants;
@@ -53,20 +53,20 @@ export const VehicleType = () => {
 
   const types = [
     {
-      title: 'Popular in town',
-      endpoint: 'popular'
+      title: "Popular in town",
+      endpoint: "popular"
     },
     {
-      title: 'Cars',
-      endpoint: 'cars'
+      title: "Cars",
+      endpoint: "cars"
     },
     {
-      title: 'Motorbikes',
-      endpoint: 'motorbikes'
+      title: "Motorbikes",
+      endpoint: "motorbikes"
     },
     {
-      title: 'Bikes',
-      endpoint: 'bikes'
+      title: "Bikes",
+      endpoint: "bikes"
     }
   ];
 
@@ -119,11 +119,11 @@ export const VehicleType = () => {
 
   return (
     <Layout isLogged={true}>
-      <main className={`${listVehiclesOfEveryTypes.length > 1 ? '' : 'vh-75 d-flex justify-content-center align-items-center'} vehicle-type container px-lg-4 px-5`}>
+      <main className={`${listVehiclesOfEveryTypes.length > 1 ? "" : "vh-75 d-flex justify-content-center align-items-center"} vehicle-type container px-lg-4 px-5`}>
         {
           listVehiclesOfEveryTypes.length > 1
             ? renderSections(vehicles)
-            : <Spinner variant={'primary'} style={{ width: '8rem', height: '8rem' }} />
+            : <Spinner variant={"primary"} style={{ width: "8rem", height: "8rem" }} />
         }
       </main>
     </Layout>
