@@ -2,7 +2,7 @@
 import { createStore, applyMiddleware } from "redux";
 import promise from "redux-promise-middleware";
 import { persistStore } from "redux-persist";
-import logger from "redux-logger";
+// import logger from "redux-logger";
 // import thunk from "redux-thunk";
 
 import rootReducer from "./reducers";
@@ -16,7 +16,7 @@ import rootReducer from "./reducers";
 // );
 
 export default () => {
-  const store = createStore(rootReducer, applyMiddleware(promise, logger));
+  const store = createStore(rootReducer, applyMiddleware(promise));
   const persistor = persistStore(store);
   return { store, persistor };
 };
