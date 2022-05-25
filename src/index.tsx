@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
@@ -9,7 +9,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import reduxStore from "../src/redux/store";
+import reduxStore from "./redux/store";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import "./global.css";
