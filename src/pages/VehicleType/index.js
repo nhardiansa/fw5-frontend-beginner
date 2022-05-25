@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -8,11 +9,12 @@ import imagePlaceholder from "../../assets/img/vehicle-placeholder.png";
 
 import "./style.css";
 import { useSelector } from "react-redux";
-import Spinner from "../../components/Spinner";
+// import Spinner from "../../components/Spinner";
+import Spinner from "../../components/SpinnerTs/index.tsx";
 
 export const VehicleType = () => {
   // const { baseURL } = constants;
-  const { vehicleReducer } = useSelector(state => state);
+  const { vehicleReducer } = useSelector((state) => state);
   const { listVehiclesOfEveryTypes } = vehicleReducer;
   const [vehicles, setVehicles] = useState([]);
 
@@ -44,7 +46,7 @@ export const VehicleType = () => {
         return {
           title: type.title,
           vehicles: listVehiclesOfEveryTypes[i],
-          link: `/vehicles/more/${type.endpoint}`
+          link: `/vehicles/more/${type.endpoint}`,
         };
       });
       setVehicles(sectionData);
@@ -54,20 +56,20 @@ export const VehicleType = () => {
   const types = [
     {
       title: "Popular in town",
-      endpoint: "popular"
+      endpoint: "popular",
     },
     {
       title: "Cars",
-      endpoint: "cars"
+      endpoint: "cars",
     },
     {
       title: "Motorbikes",
-      endpoint: "motorbikes"
+      endpoint: "motorbikes",
     },
     {
       title: "Bikes",
-      endpoint: "bikes"
-    }
+      endpoint: "bikes",
+    },
   ];
 
   const itemsDisplay = (items) => {
@@ -81,7 +83,7 @@ export const VehicleType = () => {
           src={img}
           name={capitalize(el.name)}
           location={capitalize(el.location)}
-          className='p-0 pe-md-4 col-12 col-md-3'
+          className="p-0 pe-md-4 col-12 col-md-3"
         />
       );
     });
@@ -90,41 +92,52 @@ export const VehicleType = () => {
   const renderSections = (sectionData) => {
     return sectionData.map((el, i) => (
       <section key={i} className="cars vehicle-list">
-        <div
-          className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center"
-        >
+        <div className="head-section d-flex justify-content-center justify-content-md-start justify-content-md-between w-100 mb-5 mb-lg-0 align-items-center">
           <h2>{el.title}</h2>
-          <Link to={el.link} className="d-md-block d-none"
-            >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-          ></Link>
+          <Link to={el.link} className="d-md-block d-none">
+            View all{" "}
+            <span>
+              <i className="icon fa-solid fa-chevron-right"></i>
+            </span>
+          </Link>
         </div>
-        <div
-          className="popular-vehicles row justify-content-center justify-content-md-start"
-        >
-          {
-          el.vehicles.length > 0
-            ? itemsDisplay(el.vehicles)
-            : <div className="col-12 text-center">
+        <div className="popular-vehicles row justify-content-center justify-content-md-start">
+          {el.vehicles.length > 0 ? (
+            itemsDisplay(el.vehicles)
+          ) : (
+            <div className="col-12 text-center">
               <Spinner />
             </div>
-          }
+          )}
         </div>
-        <Link to={el.link} className="d-block d-md-none text-center mt-4"
-          >View all <span><i className="icon fa-solid fa-chevron-right"></i></span
-        ></Link>
+        <Link to={el.link} className="d-block d-md-none text-center mt-4">
+          View all{" "}
+          <span>
+            <i className="icon fa-solid fa-chevron-right"></i>
+          </span>
+        </Link>
       </section>
-    )
-    );
+    ));
   };
 
   return (
     <Layout isLogged={true}>
-      <main className={`${listVehiclesOfEveryTypes.length > 1 ? "" : "vh-75 d-flex justify-content-center align-items-center"} vehicle-type container px-lg-4 px-5`}>
-        {
+      <main
+        className={`${
           listVehiclesOfEveryTypes.length > 1
-            ? renderSections(vehicles)
-            : <Spinner variant={"primary"} style={{ width: "8rem", height: "8rem" }} />
-        }
+            ? ""
+            : "vh-75 d-flex justify-content-center align-items-center"
+        } vehicle-type container px-lg-4 px-5`}
+      >
+        {listVehiclesOfEveryTypes.length > 1 ? (
+          renderSections(vehicles)
+        ) : (
+          <Spinner
+            grow={true}
+            variant={"primary"}
+            style={{ width: "8rem", height: "8rem" }}
+          />
+        )}
       </main>
     </Layout>
   );
